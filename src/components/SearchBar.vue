@@ -9,7 +9,6 @@ export default {
   name: 'SearchBar',
   methods: {
     onInput(event) {
-      console.log(event.target.value);
       this.$emit('search-query', event.target.value);
     },
   },

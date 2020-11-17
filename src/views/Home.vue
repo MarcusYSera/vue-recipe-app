@@ -1,6 +1,6 @@
 <template>
   <div class="home">
-    <SearchBar />
+    <SearchBar @search-query="onSearchTerm" />
   </div>
 </template>
 
@@ -12,6 +12,11 @@ export default {
   name: 'Home',
   components: {
     SearchBar,
+  },
+  methods: {
+    onSearchTerm(term) {
+      console.log(term);
+    },
   },
 };
 </script>
