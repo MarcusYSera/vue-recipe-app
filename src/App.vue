@@ -1,8 +1,9 @@
 <template>
   <div class="grid-container main">
     <header>
-      <router-link to="/">home</router-link> |
-      <router-link to="/about">about</router-link>
+      <router-link to="/">home</router-link>
+      <!-- | -->
+      <!-- <router-link to="/about">about</router-link> -->
     </header>
     <router-view />
     <footer>copyright sera-consulting</footer>
@@ -15,7 +16,6 @@ export default { name: 'App' };
 
 <style>
 html {
-  /* font-size: 1.25vw; */
   font-size: 16px;
 }
 body {
@@ -43,7 +43,6 @@ body {
   -moz-box-sizing: border-box;
   box-sizing: border-box;
 }
-
 </style>
 
 <style scoped>

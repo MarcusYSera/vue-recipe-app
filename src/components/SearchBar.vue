@@ -15,4 +15,13 @@ export default {
 };
 </script>
 
-<style></style>
+<style scoped>
+input {
+  width: 75%;
+  color: black;
+}
+div {
+  text-align: center;
+  margin: 20px;
+}
+</style>
