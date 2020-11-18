@@ -1,17 +1,17 @@
 <template>
   <div>
     hello
-    <iframe
-      src="../assets/pdf/test.pdf"
-      type="application/pdf"
-      width="100%"
-      height="600px"
-    ></iframe>
+    <a href="@/assets/img/test.pdf"></a>
   </div>
 </template>
 
 <script>
-export default { name: 'Recipe' };
+export default {
+  name: 'Recipe',
+  data() {
+    return { iframe: { src: window.location.href } };
+  },
+};
 </script>
 
 <style></style>
