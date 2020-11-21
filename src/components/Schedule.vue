@@ -1,5 +1,7 @@
 <template>
-  <div>Schedule</div>
+  <article>
+    
+  </article>
 </template>
 
 <script>

@@ -1,17 +1,23 @@
 <template>
   <div class="grid-container main">
-    <header>
-      <router-link to="/">home</router-link>
-      <!-- | -->
-      <!-- <router-link to="/about">about</router-link> -->
-    </header>
-    <router-view />
-    <footer>copyright sera-consulting</footer>
+    <!-- <header> -->
+    <HamburgerNav class="hamNav"></HamburgerNav>
+    <!-- <router-link to="/">home</router-link> -->
+    <!-- | -->
+    <!-- <router-link to="/about">about</router-link> -->
+    <!-- </header> -->
+    <router-view class="mainContent" />
+    <footer class="bottomFooter">copyright sera-consulting</footer>
   </div>
 </template>
 
 <script>
-export default { name: 'App' };
+import HamburgerNav from '@/components/HamburgerNav';
+
+export default {
+  name: 'App',
+  components: { HamburgerNav },
+};
 </script>
 
 <style>
@@ -48,7 +54,19 @@ body {
 <style scoped>
 .main {
   height: 100%;
-  grid-template-rows: 5% 1fr 5%;
+  grid-template-areas: 'navi mainContent' 'bottomFooter bottomFooter';
+  grid-template-rows: 1fr 5%;
+  grid-template-columns: 10% 1fr;
   padding: 2%;
+}
+.hamNav {
+  grid-area: navi;
+}
+.mainContent {
+  grid-area: mainContent;
+}
+.bottomFooter {
+  grid-area: bottomFooter;
+  justify-self: center;
 }
 </style>
