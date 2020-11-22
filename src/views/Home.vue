@@ -1,25 +1,20 @@
 <template>
   <div class="home">
-    <SearchBar @search-query="onSearchTerm" />
     <Schedule></Schedule>
+    <Calendar></Calendar>
   </div>
 </template>
 
 <script>
 // @ is an alias to /src
-import SearchBar from '@/components/SearchBar.vue';
 import Schedule from '@/components/Schedule.vue';
+import Calendar from '@/components/Calendar.vue';
 
 export default {
   name: 'Home',
   components: {
-    SearchBar,
     Schedule,
-  },
-  methods: {
-    onSearchTerm(term) {
-      console.log(term);
-    },
+    Calendar,
   },
 };
 </script>

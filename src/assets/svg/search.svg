@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="24px" height="23px" viewBox="0 0 24 23" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>search-icon</title>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Desktop-Dashboard" transform="translate(-916.000000, -49.000000)">
+            <g id="central-panel" transform="translate(201.000000, 0.000000)">
+                <rect id="Rectangle" fill="#FFFFFF" x="0" y="0" width="825" height="1024"></rect>
+                <g id="header" transform="translate(79.034745, 47.349304)" stroke="#8998B4" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.1408364">
+                    <g id="search-icon" transform="translate(637.358764, 2.281894)">
+                        <line x1="20.887754" y1="21.1075209" x2="14.6778812" y2="14.832312" id="Shape"></line>
+                        <ellipse id="Oval" cx="8.46800838" cy="8.55710306" rx="8.46800838" ry="8.55710306"></ellipse>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

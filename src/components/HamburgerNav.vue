@@ -61,8 +61,8 @@ export default {
 }
 .hamburgerMenu:focus {
   outline: none;
-  background-color: lightgreen;
+  /* background-color: lightgreen; */
 }
-.itemTwo {
-}
+/* .itemTwo {
+} */
 </style>
