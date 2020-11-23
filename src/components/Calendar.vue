@@ -1,5 +1,5 @@
 <template>
-  <div>Calendar</div>
+  <aside class="calendar">Calendar</aside>
 </template>
 
 <script>
@@ -8,4 +8,11 @@ export default {
 };
 </script>
 
-<style scoped></style>
+<style scoped>
+aside {
+  width: 100%;
+}
+.calendar {
+  grid-area: calendarview;
+}
+</style>

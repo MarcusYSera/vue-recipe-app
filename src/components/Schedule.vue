@@ -1,5 +1,5 @@
 <template>
-  <main>
+  <main class="flex-container column schedule-main">
     <header class="flex-container row schedule-header">
       <div>{{ currentDate }} {{ currentMonth }}</div>
       <div class="flex-container row schedule-header-right">
@@ -9,10 +9,12 @@
           @click="clickedSearch"
         />
         <SearchBar @search-query="onSearchTerm" v-else></SearchBar>
-        <img src="@/assets/svg/calOpenIcon.svg" @click="openCalendar" />
+        <button class="calButton">
+          <img src="@/assets/svg/calOpenIcon.svg" @click="openCalendar" />
+        </button>
       </div>
     </header>
-    <article></article>
+    <article class="dayview">Day to day view</article>
   </main>
 </template>
 
@@ -32,7 +34,9 @@ export default {
     };
   },
   methods: {
-    // openCalendar() {},
+    openCalendar() {
+      this.$emit('open-cal', true);
+    },
     onSearchTerm(term) {
       console.log(term);
     },
@@ -58,10 +62,28 @@ export default {
 </script>
 
 <style scoped>
+.schedule-main {
+  width: 100%;
+}
 .schedule-header {
   justify-content: space-between;
+  grid-area: header;
 }
-.schedule-header-right > * {
-  padding-left: 20px;
+.dayview {
+  grid-area: dayview;
+}
+.schedule-header-right > img {
+  padding-right: 20px;
+}
+.calButton {
+  padding: 0;
+  border: none;
+  background-color: #fff;
+}
+.calButton:focus {
+  outline: none;
+}
+.calButton:hover {
+  cursor: pointer;
 }
 </style>
