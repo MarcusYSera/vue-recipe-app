@@ -3,12 +3,7 @@
     <header class="flex-container row schedule-header">
       <div>{{ currentDate }} {{ currentMonth }}</div>
       <div class="flex-container row schedule-header-right">
-        <img
-          src="@/assets/svg/search.svg"
-          v-if="!searchOpen"
-          @click="clickedSearch"
-        />
-        <SearchBar @search-query="onSearchTerm" v-else></SearchBar>
+        <SearchBar @search-query="onSearchTerm"></SearchBar>
         <button class="calButton">
           <img src="@/assets/svg/calOpenIcon.svg" @click="openCalendar" />
         </button>
@@ -26,7 +21,6 @@ export default {
   components: { SearchBar },
   data() {
     return {
-      searchOpen: false,
       currentMonth: null,
       currentDate: null,
       hour: null,
@@ -39,9 +33,6 @@ export default {
     },
     onSearchTerm(term) {
       console.log(term);
-    },
-    clickedSearch() {
-      this.searchOpen = !this.searchOpen;
     },
     createDate() {
       let options = { month: 'long', day: 'numeric' };

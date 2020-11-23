@@ -26,6 +26,17 @@ export default {
     clickedHamburger() {
       this.open = !this.open;
     },
+    closeNav(e) {
+      if (!this.$el.contains(e.target)) {
+        this.open = false;
+      }
+    },
+  },
+  mounted() {
+    document.addEventListener('click', this.closeNav);
+  },
+  beforeUnmount() {
+    document.removeEventListener('click', this.closeNav);
   },
 };
 </script>
