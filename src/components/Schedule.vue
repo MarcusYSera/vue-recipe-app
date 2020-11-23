@@ -1,15 +1,25 @@
 <template>
   <article class="flex-container column schedule-article">
     <header class="flex-container row schedule-header">
-      <div>{{ currentDate }} {{ currentMonth }}</div>
-      <div class="flex-container row schedule-header-right">
+      <section>{{ currentDate }} {{ currentMonth }}</section>
+      <nav class="flex-container row schedule-header-right">
         <SearchBar @search-query="onSearchTerm"></SearchBar>
         <button class="calButton">
           <img src="@/assets/svg/calOpenIcon.svg" @click="openCalendar" />
         </button>
-      </div>
+      </nav>
     </header>
-    <article class="dayview">Day to day view</article>
+    <article class="dayview">
+      <section class="flex-container column">
+        <!-- have this viewable for a full 24 hours around the current day and auto open to the current time-->
+        <time>{{ hour }}:{{ minute }}</time>
+        <time>{{ hour }}:{{ minute }}</time>
+        <time>{{ hour }}:{{ minute }}</time>
+      </section>
+      <section>
+        <p>to do</p>
+      </section>
+    </article>
   </article>
 </template>
 
