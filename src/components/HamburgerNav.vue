@@ -1,29 +1,17 @@
 <template>
-  <div class="flex-container main column">
-    <button @click="clickedHamburger" class="hamburgerMenu itemOne">
-      <img src="@/assets/svg/hamburger.svg" />
+  <header class="flex-container column hamburger-nav-header">
+    <button @click="clickedHamburger" class="hamburgerMenu-button itemOne">
+      <img class="hamburger-icon" src="@/assets/svg/hamburger.svg" />
     </button>
-    <ul v-if="open" class="flex-container column secondary itemTwo">
-      <li>
-        <h3><a>Schedule</a></h3>
-      </li>
-      <li>
-        <h3><a>Recipe</a></h3>
-      </li>
-      <li>
-        <h3><a>Profile</a></h3>
-      </li>
-      <li>
-        <h3><a>Settings</a></h3>
-      </li>
-      <li v-if="signedIn">
-        <h3><a>Sign Out</a></h3>
-      </li>
-      <li v-else>
-        <h3><a>Sign In</a></h3>
-      </li>
-    </ul>
-  </div>
+    <nav v-if="open" class="flex-container column secondary itemTwo">
+      <h3><a>Schedule</a></h3>
+      <h3><a>Recipe</a></h3>
+      <h3><a>Profile</a></h3>
+      <h3><a>Settings</a></h3>
+      <h3 v-if="signedIn"><a>Sign Out</a></h3>
+      <h3 v-else><a>Sign In</a></h3>
+    </nav>
+  </header>
 </template>
 
 <script>
@@ -43,26 +31,25 @@ export default {
 </script>
 
 <style scoped>
-.main {
+.hamburger-nav-header {
   justify-content: flex-start;
   align-items: center;
+  padding: 0 2.5rem 0 2rem;
 }
-.secondary > li {
+.secondary > * {
   padding-top: 4.5vh;
   list-style-type: none;
 }
-.hamburgerMenu {
+.hamburgerMenu-button {
   border: none;
   background-color: #fff;
   padding: 0;
 }
-.hamburgerMenu:hover {
+.hamburgerMenu-button:hover {
   background-color: lightgrey;
 }
-.hamburgerMenu:focus {
+.hamburgerMenu-button:focus {
   outline: none;
   /* background-color: lightgreen; */
 }
-/* .itemTwo {
-} */
 </style>

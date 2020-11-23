@@ -1,5 +1,5 @@
 <template>
-  <main class="flex-container column schedule-main">
+  <article class="flex-container column schedule-article">
     <header class="flex-container row schedule-header">
       <div>{{ currentDate }} {{ currentMonth }}</div>
       <div class="flex-container row schedule-header-right">
@@ -15,7 +15,7 @@
       </div>
     </header>
     <article class="dayview">Day to day view</article>
-  </main>
+  </article>
 </template>
 
 <script>
@@ -62,7 +62,8 @@ export default {
 </script>
 
 <style scoped>
-.schedule-main {
+.schedule-article {
+  flex: auto;
   width: 100%;
 }
 .schedule-header {

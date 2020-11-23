@@ -1,8 +1,8 @@
 <template>
-  <div class="grid-container home">
+  <main class="flex-container row home-main">
     <Schedule @open-cal="openCal"></Schedule>
     <Calendar v-if="openCalendar"></Calendar>
-  </div>
+  </main>
 </template>
 
 <script>
@@ -30,9 +30,10 @@ export default {
 </script>
 
 <style scoped>
-.home {
-  grid-template-columns: 1fr auto;
-  grid-template-rows: 1fr 10fr;
-  grid-template-areas: 'header header' 'dayview calendarview';
-}
+/* .schedule-article {
+  flex: 1;
+} */
+/* .calendar-article {
+  flex: 0;
+} */
 </style>

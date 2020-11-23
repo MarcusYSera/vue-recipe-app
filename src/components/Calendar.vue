@@ -1,5 +1,7 @@
 <template>
-  <aside class="calendar">Calendar</aside>
+  <article class="calendar-article">
+    <header>Calendar</header>
+  </article>
 </template>
 
 <script>
@@ -9,8 +11,8 @@ export default {
 </script>
 
 <style scoped>
-aside {
-  width: 100%;
+.calendar-article {
+  flex: initial;
 }
 .calendar {
   grid-area: calendarview;

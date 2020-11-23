@@ -1,12 +1,12 @@
 <template>
-  <div class="grid-container main">
+  <div class="grid-container app-main">
     <!-- <header> -->
     <HamburgerNav class="hamNav"></HamburgerNav>
     <!-- <router-link to="/">home</router-link> -->
     <!-- | -->
     <!-- <router-link to="/about">about</router-link> -->
     <!-- </header> -->
-    <router-view class="mainContent" />
+    <router-view class="main-content-grid-area" />
     <footer class="bottomFooter">copyright sera-consulting</footer>
   </div>
 </template>
@@ -52,17 +52,17 @@ body {
 </style>
 
 <style scoped>
-.main {
+.app-main {
   height: 100%;
   grid-template-areas: 'navi mainContent' 'bottomFooter bottomFooter';
-  grid-template-rows: 1fr 5%;
-  grid-template-columns: 10% 1fr;
+  grid-template-rows: 1fr 0.5%;
+  grid-template-columns: auto 1fr;
   padding: 2%;
 }
 .hamNav {
   grid-area: navi;
 }
-.mainContent {
+.main-content-grid-area {
   grid-area: mainContent;
 }
 .bottomFooter {
