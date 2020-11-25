@@ -69,6 +69,7 @@ export default {
 }
 .schedule-header {
   justify-content: space-between;
+  align-items: center;
   grid-area: header;
 }
 .dayview {

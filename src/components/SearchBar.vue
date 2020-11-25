@@ -1,6 +1,6 @@
 <template>
   <aside class="searchbar-aside">
-    <button @click="clickedSearch">
+    <button @click="clickedSearch" class="search-button">
       <img src="@/assets/svg/search.svg" />
     </button>
     <input
@@ -43,6 +43,14 @@ export default {
 </script>
 
 <style scoped>
+.search-button {
+  border: 0;
+  background-color: #fff;
+  padding: 0;
+}
+.search-button:focus {
+  outline: none;
+}
 input {
   width: 75%;
   color: black;
