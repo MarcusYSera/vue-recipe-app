@@ -58,5 +58,8 @@ input {
 .searchbar-aside {
   text-align: center;
   margin: 20px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
 }
 </style>
