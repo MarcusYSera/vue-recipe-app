@@ -8,6 +8,7 @@
       v-if="searchOpen"
       type="text"
       placeholder="Search Bar"
+      ref="searchInput"
     />
   </aside>
 </template>
@@ -24,6 +25,9 @@ export default {
     clickedSearch() {
       this.searchOpen = !this.searchOpen;
     },
+    focusOnInput() {
+      this.$refs.searchInput.focus();
+    },
     onInput(event) {
       this.$emit('search-query', event.target.value);
     },
@@ -38,6 +42,11 @@ export default {
   },
   beforeUnmount() {
     document.removeEventListener('click', this.closeSearch);
+  },
+  updated() {
+    if (this.searchOpen === true) {
+      this.focusOnInput();
+    }
   },
 };
 </script>
@@ -57,7 +66,7 @@ input {
 }
 .searchbar-aside {
   text-align: center;
-  margin: 20px;
+  margin: 1rem;
   display: flex;
   flex-direction: row;
   justify-content: space-around;

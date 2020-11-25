@@ -45,7 +45,7 @@ export default {
 .hamburger-nav-header {
   justify-content: flex-start;
   align-items: center;
-  padding: 0 2.5rem 0 2rem;
+  padding: 1rem 2.5rem 0 2rem;
 }
 .secondary > * {
   padding-top: 4.5vh;
