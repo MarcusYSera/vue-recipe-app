@@ -11,10 +11,8 @@
     </header>
     <article class="dayview">
       <section class="flex-container column">
+        <TimeBar />
         <!-- have this viewable for a full 24 hours around the current day and auto open to the current time-->
-        <time>{{ hour }}:{{ minute }}</time>
-        <time>{{ hour }}:{{ minute }}</time>
-        <time>{{ hour }}:{{ minute }}</time>
       </section>
       <section>
         <p>to do</p>
@@ -25,10 +23,11 @@
 
 <script>
 import SearchBar from '@/components/SearchBar';
+import TimeBar from '@/components/TimeBar';
 
 export default {
   name: 'Schedule',
-  components: { SearchBar },
+  components: { SearchBar, TimeBar },
   data() {
     return {
       currentMonth: null,
