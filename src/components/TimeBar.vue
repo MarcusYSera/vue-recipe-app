@@ -23,17 +23,24 @@ export default {
       for (let i = 0; i < this.hourData.length; i++) {
         let hour = this.hourData[i].split(':')[0];
         let minute = this.hourData[i].split(':')[1];
-        if (parseInt(hour) === 0) {
-          this.hourData[i] = '12:' + minute + ' A.M.';
-          console.log(this.hourData[i]);
-          continue;
+        if (parseInt(hour) < 12 || parseInt(hour) > 23) {
+          hour = parseInt(hour).toString();
+          minute = minute + ' A.M.';
         }
-        if (parseInt(hour) > 12 && parseInt(hour) < 24) {
-          hour = (parseInt(hour) - 12).toString();
+        if (parseInt(hour) === 0 || parseInt(hour) === 24) {
+          hour = '12';
+        }
+        if (
+          parseInt(hour) > 11 &&
+          parseInt(hour) < 24 &&
+          !minute.split(' ')[1]
+        ) {
+          if (parseInt(hour) > 12) {
+            hour = (parseInt(hour) - 12).toString();
+          }
           minute = minute + ' P.M.';
         }
         this.hourData[i] = [hour, minute].join(':');
-        // console.log(this.hourData[i]);
       }
     }
   },

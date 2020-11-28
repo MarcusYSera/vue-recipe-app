@@ -9,11 +9,11 @@
         </button>
       </nav>
     </header>
-    <article class="dayview">
+    <article class="flex-container row dayview">
       <TimeBar />
       <!-- have this viewable for a full 24 hours around the current day and auto open to the current time-->
       <section>
-        <p>to do</p>
+        <p>to do section</p>
       </section>
     </article>
   </article>
@@ -71,7 +71,7 @@ export default {
   border-bottom: 0.15rem solid #f3f3f3;
 }
 .dayview {
-  margin-top: 1rem;
+  /* margin-top: 1rem; */
   grid-area: dayview;
 }
 .schedule-header-right > img {
