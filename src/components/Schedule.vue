@@ -10,10 +10,8 @@
       </nav>
     </header>
     <article class="dayview">
-      <section class="flex-container column">
-        <TimeBar />
-        <!-- have this viewable for a full 24 hours around the current day and auto open to the current time-->
-      </section>
+      <TimeBar />
+      <!-- have this viewable for a full 24 hours around the current day and auto open to the current time-->
       <section>
         <p>to do</p>
       </section>
@@ -70,8 +68,10 @@ export default {
   justify-content: space-between;
   align-items: center;
   grid-area: header;
+  border-bottom: 0.15rem solid #f3f3f3;
 }
 .dayview {
+  margin-top: 1rem;
   grid-area: dayview;
 }
 .schedule-header-right > img {

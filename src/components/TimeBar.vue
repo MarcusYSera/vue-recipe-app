@@ -1,7 +1,9 @@
 <template>
-  <time v-for="current in hourData" v-bind:key="current">
-    {{ current }}
-  </time>
+  <section class="flex-container column time-bar">
+    <time v-for="current in hourData" v-bind:key="current" class="time-item">
+      {{ current }}
+    </time>
+  </section>
 </template>
 
 <script>
@@ -38,4 +40,11 @@ export default {
 };
 </script>
 
-<style scoped></style>
+<style scoped>
+.time-bar {
+  justify-content: space-between;
+}
+.time-item {
+  margin-top: 3rem;
+}
+</style>
