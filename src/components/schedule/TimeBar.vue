@@ -1,6 +1,12 @@
 <template>
   <section class="flex-container column time-bar">
-    <time v-for="current in hourData" v-bind:key="current" class="time-item">
+    <time
+      v-for="current in hourData"
+      v-bind:key="current"
+      class="time-item"
+      ref="currentTime"
+      @click="clicked"
+    >
       {{ current }}
     </time>
   </section>
@@ -17,15 +23,19 @@ export default {
       twentyFour: false,
     };
   },
-  methods: {},
-  created() {
-    if (!this.twentyFour) {
+  methods: {
+    clicked() {
+      console.log(this.$refs.currentTime.innerHTML);
+    },
+    twelveHourFormat() {
       for (let i = 0; i < this.hourData.length; i++) {
         let hour = this.hourData[i].split(':')[0];
         let minute = this.hourData[i].split(':')[1];
         if (parseInt(hour) < 12 || parseInt(hour) > 23) {
           hour = parseInt(hour).toString();
-          minute = minute + ' A.M.';
+          if (!minute.split(' ')[1]) {
+            minute = minute + ' A.M.';
+          }
         }
         if (parseInt(hour) === 0 || parseInt(hour) === 24) {
           hour = '12';
@@ -42,6 +52,11 @@ export default {
         }
         this.hourData[i] = [hour, minute].join(':');
       }
+    },
+  },
+  created() {
+    if (!this.twentyFour) {
+      this.twelveHourFormat();
     }
   },
 };
@@ -49,6 +64,7 @@ export default {
 
 <style scoped>
 .time-bar {
+  grid-area: time;
   justify-content: space-between;
 }
 .time-item {

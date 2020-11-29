@@ -9,23 +9,54 @@
         </button>
       </nav>
     </header>
-    <article class="flex-container row dayview">
+    <article class="grid-container dayview">
       <TimeBar />
       <!-- have this viewable for a full 24 hours around the current day and auto open to the current time-->
-      <section>
-        <p>to do section</p>
-      </section>
+      <ToDo></ToDo>
     </article>
   </article>
 </template>
 
+<style scoped>
+.schedule-article {
+  flex: auto;
+  width: 100%;
+}
+.schedule-header {
+  justify-content: space-between;
+  align-items: center;
+  grid-area: header;
+  border-bottom: 0.15rem solid #f3f3f3;
+}
+.dayview {
+  /* margin-top: 1rem; */
+  grid-area: dayview;
+  grid-template: 'time todo';
+}
+.schedule-header-right > img {
+  padding-right: 20px;
+}
+.calButton {
+  padding: 0;
+  border: none;
+  background-color: #fff;
+}
+.calButton:focus {
+  outline: none;
+}
+.calButton:hover {
+  cursor: pointer;
+}
+</style>
+
 <script>
-import SearchBar from '@/components/SearchBar';
-import TimeBar from '@/components/TimeBar';
+import SearchBar from '@/components/schedule/SearchBar';
+import TimeBar from '@/components/schedule/TimeBar';
+import ToDo from '@/components/schedule/ToDo';
 
 export default {
   name: 'Schedule',
-  components: { SearchBar, TimeBar },
+  components: { SearchBar, TimeBar, ToDo },
   data() {
     return {
       currentMonth: null,
@@ -58,34 +89,3 @@ export default {
   },
 };
 </script>
-
-<style scoped>
-.schedule-article {
-  flex: auto;
-  width: 100%;
-}
-.schedule-header {
-  justify-content: space-between;
-  align-items: center;
-  grid-area: header;
-  border-bottom: 0.15rem solid #f3f3f3;
-}
-.dayview {
-  /* margin-top: 1rem; */
-  grid-area: dayview;
-}
-.schedule-header-right > img {
-  padding-right: 20px;
-}
-.calButton {
-  padding: 0;
-  border: none;
-  background-color: #fff;
-}
-.calButton:focus {
-  outline: none;
-}
-.calButton:hover {
-  cursor: pointer;
-}
-</style>
