@@ -1,9 +1,8 @@
 <template>
   <article class="flex-container column todo-article">
-    <section>
-      <h3>Example of a Tasks</h3>
-      <!-- <time>1:00 A.M.</time> -->
-      <time hidden>1:00 A.M.</time>
+    <section class="task-item-one">
+      <h3>Example of a Task at 1:00 A.M.</h3>
+      <time hidden ref="taskTime">1:00 A.M.</time>
       <p>
         Lorem ipsum, dolor sit amet consectetur adipisicing elit. Beatae,
         facilis ab. Vero dolorum nihil, laborum, recusandae doloremque hic
@@ -11,26 +10,37 @@
         Possimus, repudiandae recusandae. Incidunt?
       </p>
     </section>
-    <section>
-      <h3>Example of a Tasks</h3>
+    <!-- <section class="task-item-two">
+      <h3>Example of a Task</h3>
       <p>
         Lorem ipsum, dolor sit amet consectetur adipisicing elit. Beatae,
         facilis ab. Vero dolorum nihil, laborum, recusandae doloremque hic
         corporis at harum reprehenderit facilis cupiditate dolores amet.
         Possimus, repudiandae recusandae. Incidunt?
       </p>
-    </section>
+    </section> -->
   </article>
 </template>
 
 <script>
 export default {
   name: 'ToDo',
+  mounted() {
+    this.$emit('time-of-task', this.$refs.taskTime.innerHTML);
+  },
 };
 </script>
 
 <style scoped>
 .todo-article {
   grid-area: todo;
+}
+.task-item-one {
+  border-left: 2px solid #3d83f9;
+  background-color: #3d83f915;
+}
+.task-item-two {
+  border-left: 2px solid #eea57c;
+  background-color: #eea57c15;
 }
 </style>

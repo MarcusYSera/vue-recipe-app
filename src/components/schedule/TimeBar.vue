@@ -1,11 +1,10 @@
 <template>
   <section class="flex-container column time-bar">
     <time
-      v-for="current in hourData"
-      v-bind:key="current"
+      v-for="(current, index) in hourData"
+      :key="index"
       class="time-item"
-      ref="currentTime"
-      @click="clicked"
+      :ref="setTimeRef"
     >
       {{ current }}
     </time>
@@ -21,12 +20,10 @@ export default {
     return {
       hourData: twentyFourData,
       twentyFour: false,
+      timeRefs: [],
     };
   },
   methods: {
-    clicked() {
-      console.log(this.$refs.currentTime.innerHTML);
-    },
     twelveHourFormat() {
       for (let i = 0; i < this.hourData.length; i++) {
         let hour = this.hourData[i].split(':')[0];
@@ -53,11 +50,20 @@ export default {
         this.hourData[i] = [hour, minute].join(':');
       }
     },
+    setTimeRef(el) {
+      this.timeRefs.push(el);
+    },
   },
-  created() {
+  mounted() {
     if (!this.twentyFour) {
       this.twelveHourFormat();
     }
+  },
+  beforeUpdate() {
+    this.timeRefs = [];
+  },
+  updated() {
+    this.$emit('time-from-timebar', this.timeRefs);
   },
 };
 </script>

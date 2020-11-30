@@ -10,9 +10,9 @@
       </nav>
     </header>
     <article class="grid-container dayview">
-      <TimeBar />
+      <TimeBar @time-from-timebar="timeFromTimebar"></TimeBar>
       <!-- have this viewable for a full 24 hours around the current day and auto open to the current time-->
-      <ToDo></ToDo>
+      <ToDo @time-of-task="timeOfTask"></ToDo>
     </article>
   </article>
 </template>
@@ -66,8 +66,14 @@ export default {
     };
   },
   methods: {
+    timeFromTimebar(timeArr) {
+      console.log(timeArr[0].innerHTML);
+    },
+    // timeOfTask(y) {
+    //   console.log(y);
+    // },
     openCalendar() {
-      this.$emit('open-cal', true);
+      this.$emit('open-cal');
     },
     onSearchTerm(term) {
       console.log(term);
