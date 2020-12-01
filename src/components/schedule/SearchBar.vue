@@ -1,6 +1,6 @@
 <template>
   <aside class="searchbar-aside">
-    <button @click="clickedSearch" class="search-button">
+    <button @click.prevent="clickedSearch" class="search-button">
       <img src="@/assets/svg/search.svg" />
     </button>
     <input

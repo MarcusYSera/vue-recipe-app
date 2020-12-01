@@ -1,6 +1,6 @@
 <template>
   <article class="flex-container column todo-article">
-    <section class="task-item-one">
+    <section class="task-item one">
       <h3>Example of a Task at 1:00 A.M.</h3>
       <time hidden ref="taskTime">1:00 A.M.</time>
       <p>
@@ -10,7 +10,7 @@
         Possimus, repudiandae recusandae. Incidunt?
       </p>
     </section>
-    <!-- <section class="task-item-two">
+    <section class="task-item two">
       <h3>Example of a Task</h3>
       <p>
         Lorem ipsum, dolor sit amet consectetur adipisicing elit. Beatae,
@@ -18,7 +18,43 @@
         corporis at harum reprehenderit facilis cupiditate dolores amet.
         Possimus, repudiandae recusandae. Incidunt?
       </p>
-    </section> -->
+    </section>
+    <section class="task-item three">
+      <h3>Example of a Task</h3>
+      <p>
+        Lorem ipsum, dolor sit amet consectetur adipisicing elit. Beatae,
+        facilis ab. Vero dolorum nihil, laborum, recusandae doloremque hic
+        corporis at harum reprehenderit facilis cupiditate dolores amet.
+        Possimus, repudiandae recusandae. Incidunt?
+      </p>
+    </section>
+    <section class="task-item four">
+      <h3>Example of a Task</h3>
+      <p>
+        Lorem ipsum, dolor sit amet consectetur adipisicing elit. Beatae,
+        facilis ab. Vero dolorum nihil, laborum, recusandae doloremque hic
+        corporis at harum reprehenderit facilis cupiditate dolores amet.
+        Possimus, repudiandae recusandae. Incidunt?
+      </p>
+    </section>
+    <section class="task-item five">
+      <h3>Example of a Task</h3>
+      <p>
+        Lorem ipsum, dolor sit amet consectetur adipisicing elit. Beatae,
+        facilis ab. Vero dolorum nihil, laborum, recusandae doloremque hic
+        corporis at harum reprehenderit facilis cupiditate dolores amet.
+        Possimus, repudiandae recusandae. Incidunt?
+      </p>
+    </section>
+    <section class="task-item six">
+      <h3>Example of a Task</h3>
+      <p>
+        Lorem ipsum, dolor sit amet consectetur adipisicing elit. Beatae,
+        facilis ab. Vero dolorum nihil, laborum, recusandae doloremque hic
+        corporis at harum reprehenderit facilis cupiditate dolores amet.
+        Possimus, repudiandae recusandae. Incidunt?
+      </p>
+    </section>
   </article>
 </template>
 
@@ -35,12 +71,41 @@ export default {
 .todo-article {
   grid-area: todo;
 }
-.task-item-one {
+.task-item {
+  position: absolute;
+  max-height: 64px;
+  overflow: scroll;
+  overflow-x: hidden;
+}
+.one {
   border-left: 2px solid #3d83f9;
   background-color: #3d83f915;
+  margin-top: 20rem;
+  /* 3 rem + 1 rem for existing text */
 }
-.task-item-two {
+.two {
   border-left: 2px solid #eea57c;
   background-color: #eea57c15;
+  margin-top: 24rem;
+}
+.three {
+  border-left: 2px solid #50c878;
+  background-color: #50c87815;
+  margin-top: 16rem;
+}
+.four {
+  border-left: 2px solid #50c878;
+  background-color: #50c87815;
+  margin-top: 4rem;
+}
+.five {
+  border-left: 2px solid #50c878;
+  background-color: #50c87815;
+  margin-top: 8rem;
+}
+.six {
+  border-left: 2px solid #50c878;
+  background-color: #50c87815;
+  margin-top: 12rem;
 }
 </style>

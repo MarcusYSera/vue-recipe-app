@@ -5,12 +5,15 @@
       <nav class="flex-container row schedule-header-right">
         <SearchBar @search-query="onSearchTerm"></SearchBar>
         <button class="calButton">
-          <img src="@/assets/svg/calOpenIcon.svg" @click="openCalendar" />
+          <img
+            src="@/assets/svg/calOpenIcon.svg"
+            @click.prevent="openCalendar"
+          />
         </button>
       </nav>
     </header>
     <article class="grid-container dayview">
-      <TimeBar @time-from-timebar="timeFromTimebar"></TimeBar>
+      <TimeBar @time-ref="timeRefData"></TimeBar>
       <!-- have this viewable for a full 24 hours around the current day and auto open to the current time-->
       <ToDo @time-of-task="timeOfTask"></ToDo>
     </article>
@@ -31,7 +34,7 @@
 .dayview {
   /* margin-top: 1rem; */
   grid-area: dayview;
-  grid-template: 'time todo';
+  grid-template: 'time todo' / 5rem 1fr;
 }
 .schedule-header-right > img {
   padding-right: 20px;
@@ -63,15 +66,18 @@ export default {
       currentDate: null,
       hour: null,
       minute: null,
+      taskTime: null,
+      timeArr: null,
     };
   },
   methods: {
-    timeFromTimebar(timeArr) {
-      console.log(timeArr[0].innerHTML);
+    timeRefData(x) {
+      // console.log(x);
+      this.timeArr = x;
     },
-    // timeOfTask(y) {
-    //   console.log(y);
-    // },
+    timeOfTask(y) {
+      this.taskTime = y;
+    },
     openCalendar() {
       this.$emit('open-cal');
     },
@@ -93,5 +99,10 @@ export default {
   created() {
     this.createDate();
   },
+  // mounted() {
+  //   if (this.taskTime && this.timeArr) {
+  //     console.log(this.timeArr.findIndex(el => el === this.taskTime));
+  //   }
+  // },
 };
 </script>

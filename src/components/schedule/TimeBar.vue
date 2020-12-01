@@ -3,8 +3,9 @@
     <time
       v-for="(current, index) in hourData"
       :key="index"
+      :value="current"
       class="time-item"
-      :ref="setTimeRef"
+      :ref="current"
     >
       {{ current }}
     </time>
@@ -20,7 +21,6 @@ export default {
     return {
       hourData: twentyFourData,
       twentyFour: false,
-      timeRefs: [],
     };
   },
   methods: {
@@ -50,20 +50,18 @@ export default {
         this.hourData[i] = [hour, minute].join(':');
       }
     },
-    setTimeRef(el) {
-      this.timeRefs.push(el);
-    },
   },
   mounted() {
     if (!this.twentyFour) {
       this.twelveHourFormat();
     }
-  },
-  beforeUpdate() {
-    this.timeRefs = [];
+    this.$emit('time-ref', this.hourData);
   },
   updated() {
-    this.$emit('time-from-timebar', this.timeRefs);
+    this.$nextTick(() => {
+      let currentTime = this.$refs['6:00 P.M.'];
+      currentTime.scrollIntoView();
+    });
   },
 };
 </script>
