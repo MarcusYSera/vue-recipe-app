@@ -58,6 +58,7 @@ body {
   grid-template-rows: 1fr 0.5%;
   grid-template-columns: auto 1fr;
   padding: 2%;
+  overflow: hidden;
 }
 .hamNav {
   grid-area: navi;

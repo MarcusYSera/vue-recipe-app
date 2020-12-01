@@ -24,6 +24,7 @@
 .schedule-article {
   flex: auto;
   width: 100%;
+  height: 100%;
 }
 .schedule-header {
   justify-content: space-between;
@@ -35,6 +36,9 @@
   /* margin-top: 1rem; */
   grid-area: dayview;
   grid-template: 'time todo' / 5rem 1fr;
+  max-height: 100%;
+  overflow: scroll;
+  overflow-x: hidden;
 }
 .schedule-header-right > img {
   padding-right: 20px;

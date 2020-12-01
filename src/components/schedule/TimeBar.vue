@@ -24,6 +24,34 @@ export default {
     };
   },
   methods: {
+    roundTime(currentMin) {
+      let rounded = 0;
+      if (currentMin < 15) {
+        rounded = '00';
+      } else if (currentMin > 14 && currentMin < 30) {
+        rounded = '15';
+      } else if (currentMin > 29 && currentMin < 45) {
+        rounded = '30';
+      } else if (currentMin > 44) {
+        rounded = '45';
+      }
+      return rounded;
+    },
+    getCurrentTime() {
+      let rightNow = new Date();
+      let currentHour = rightNow.getHours();
+      let currentMin = rightNow.getMinutes();
+      currentMin = this.roundTime(currentMin);
+      if (currentHour > 12) {
+        currentHour = (currentHour - 12).toString();
+        currentMin = `${currentMin} P.M.`;
+      } else {
+        currentMin = `${currentMin} A.M.`;
+      }
+      console.log(`${currentHour}:${currentMin}`);
+      rightNow = `${currentHour}:${currentMin}`;
+      return rightNow;
+    },
     twelveHourFormat() {
       for (let i = 0; i < this.hourData.length; i++) {
         let hour = this.hourData[i].split(':')[0];
@@ -55,13 +83,12 @@ export default {
     if (!this.twentyFour) {
       this.twelveHourFormat();
     }
-    this.$emit('time-ref', this.hourData);
-  },
-  updated() {
+    let current = this.getCurrentTime();
     this.$nextTick(() => {
-      let currentTime = this.$refs['6:00 P.M.'];
+      let currentTime = this.$refs[current];
       currentTime.scrollIntoView();
     });
+    this.$emit('time-ref', this.hourData);
   },
 };
 </script>

@@ -1,6 +1,6 @@
 <template>
   <article class="calendar-article">
-    <header>Calendar</header>
+    <section>calendar</section>
   </article>
 </template>
 

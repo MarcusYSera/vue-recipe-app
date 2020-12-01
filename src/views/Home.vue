@@ -30,6 +30,10 @@ export default {
 </script>
 
 <style scoped>
+.home-main {
+  height: 100%;
+  overflow: hidden;
+}
 /* .schedule-article {
   flex: 1;
 } */

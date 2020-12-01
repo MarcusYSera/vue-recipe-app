@@ -70,9 +70,9 @@ export default {
 <style scoped>
 .todo-article {
   grid-area: todo;
+  width: 100%;
 }
 .task-item {
-  position: absolute;
   max-height: 64px;
   overflow: scroll;
   overflow-x: hidden;

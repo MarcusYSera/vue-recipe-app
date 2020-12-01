@@ -4,8 +4,8 @@
       <img class="hamburger-icon" src="@/assets/svg/hamburger.svg" />
     </button>
     <nav v-if="open" class="flex-container column secondary itemTwo">
-      <h3><a>Schedule</a></h3>
-      <h3><a>Recipe</a></h3>
+      <h3><router-link to="/">Schedule</router-link></h3>
+      <h3><router-link to="/about">Recipe</router-link></h3>
       <h3><a>Profile</a></h3>
       <h3><a>Settings</a></h3>
       <h3 v-if="signedIn"><a>Sign Out</a></h3>
@@ -43,6 +43,11 @@ export default {
 
 <style scoped>
 .hamburger-nav-header {
+  position: sticky;
+  position: -webkit-sticky;
+  height: 100%;
+  overflow: hidden;
+  top: 0;
   justify-content: flex-start;
   align-items: center;
   padding: 1rem 2.5rem 0 2rem;
