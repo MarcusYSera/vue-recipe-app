@@ -7,7 +7,7 @@
     <!-- <router-link to="/about">about</router-link> -->
     <!-- </header> -->
     <router-view class="main-content-grid-area" />
-    <footer class="bottomFooter">copyright sera-consulting</footer>
+    <!-- <footer class="bottomFooter">copyright sera-consulting</footer> -->
   </div>
 </template>
 
@@ -49,15 +49,26 @@ body {
   -moz-box-sizing: border-box;
   box-sizing: border-box;
 }
+*::-webkit-scrollbar {
+  border: none;
+  height: 1px;
+  width: 8px;
+  background-color: #ffffff;
+}
+*::-webkit-scrollbar-thumb {
+  background: #2a2e4140;
+  border-radius: 25px;
+}
 </style>
 
 <style scoped>
 .app-main {
   height: 100%;
-  grid-template-areas: 'navi mainContent' 'bottomFooter bottomFooter';
-  grid-template-rows: 1fr 0.5%;
+  grid-template-areas: 'navi mainContent';
+  /* grid-template-areas: 'navi mainContent' 'bottomFooter bottomFooter';
+  grid-template-rows: 1fr 0.5%; */
   grid-template-columns: auto 1fr;
-  padding: 2%;
+  /* padding: 2%; */
   overflow: hidden;
 }
 .hamNav {
@@ -66,8 +77,8 @@ body {
 .main-content-grid-area {
   grid-area: mainContent;
 }
-.bottomFooter {
+/* .bottomFooter {
   grid-area: bottomFooter;
   justify-self: center;
-}
+} */
 </style>

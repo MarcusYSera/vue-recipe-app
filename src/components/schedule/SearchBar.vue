@@ -66,7 +66,7 @@ input {
 }
 .searchbar-aside {
   text-align: center;
-  margin: 1rem;
+  margin: 0 1vw 0 0;
   display: flex;
   flex-direction: row;
   justify-content: space-around;

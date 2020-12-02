@@ -43,14 +43,11 @@ export default {
 
 <style scoped>
 .hamburger-nav-header {
-  position: sticky;
-  position: -webkit-sticky;
-  height: 100%;
+  height: 100vh;
   overflow: hidden;
-  top: 0;
   justify-content: flex-start;
   align-items: center;
-  padding: 1rem 2.5rem 0 2rem;
+  padding: 4vh 2vw 0 2vw;
 }
 .secondary > * {
   padding-top: 4.5vh;

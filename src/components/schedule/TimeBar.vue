@@ -48,7 +48,7 @@ export default {
       } else {
         currentMin = `${currentMin} A.M.`;
       }
-      console.log(`${currentHour}:${currentMin}`);
+      // console.log(`${currentHour}:${currentMin}`);
       rightNow = `${currentHour}:${currentMin}`;
       return rightNow;
     },

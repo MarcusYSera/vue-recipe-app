@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="11px" height="22px" viewBox="0 0 11 22" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>Shape</title>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Desktop-Schedule" transform="translate(-1078.000000, -49.000000)">
+            <g id="right-panel" transform="translate(1027.000000, 0.000000)">
+                <g id="background" transform="translate(0.142145, 0.000000)">
+                    <polygon id="BG-blur" points="0.857855362 0 412.857855 0 412.857855 1027 0.857855362 1027"></polygon>
+                    <polygon id="Color-burn/Exclusion-blending" fill-opacity="0.100000001" fill="#FFFFFF" style="mix-blend-mode: exclusion;" points="0.857855362 0 412.857855 0 412.857855 1027 0.857855362 1027"></polygon>
+                    <polygon id="Color/tint-Overlay" fill-opacity="0.699999988" fill="#2A2E41" points="0.857855362 0 412.857855 0 412.857855 1027 0.857855362 1027"></polygon>
+                </g>
+                <g id="month" transform="translate(0.000000, -0.000000)">
+                    <rect id="background" fill-opacity="0" fill="#D8D8D8" x="0" y="0" width="411.501199" height="122.438997"></rect>
+                    <g id="prev-icon" transform="translate(56.262002, 60.285363) scale(-1, 1) translate(-56.262002, -60.285363) translate(51.313200, 49.776602)" stroke="#FFFFFF" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.14333566">
+                        <polyline id="Shape" points="0 0 9.25877697 10.2986072 0 20.5972145"></polyline>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>
