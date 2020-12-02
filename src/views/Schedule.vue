@@ -79,7 +79,7 @@ export default {
 
 <style scoped>
 .home-main {
-  height: 99%;
+  /* height: 99%; */
   overflow: hidden;
 }
 .schedule-article {

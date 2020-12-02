@@ -1,5 +1,5 @@
 <template>
-  <aside class="calendar-article">
+  <aside class="calendar-aside">
     <header class="calendar-header">
       <button>
         <img src="@/assets/svg/prevArrow.svg" />
@@ -9,8 +9,8 @@
         <img src="@/assets/svg/nextArrow.svg" />
       </button>
     </header>
-    <article class="grid-template">
-      <section class="dayAbbreviations">
+    <article>
+      <section class="flex-container row dayAbbreviations">
         <h6>Sun</h6>
         <h6>Mon</h6>
         <h6>Tue</h6>
@@ -19,7 +19,11 @@
         <h6>Fri</h6>
         <h6>Sat</h6>
       </section>
-      <section class="dayNumerical" v-for="index in 30" :key="index">
+      <section
+        class="grid-container dayNumerical"
+        v-for="index in days"
+        :key="index"
+      >
         {{ index }}
       </section>
     </article>
@@ -32,21 +36,53 @@ export default {
   data() {
     return {
       month: null,
-      days: 30,
+      days: null,
+      currentDate: null,
     };
   },
-  methods: {},
+  methods: {
+    getCurrentMonth() {
+      const options = { month: 'long' };
+      this.month = new Date().toLocaleDateString(undefined, options);
+    },
+    getDaysInCurrentMonth() {
+      let [month, date, year] = new Date()
+        .toLocaleDateString(undefined)
+        .split('/');
+      this.currentDate = date;
+      let x = new Date(year, month, 0).toDateString();
+      this.days = parseInt(x.split(' ')[2]);
+    },
+  },
   mounted() {
-    const options = { month: 'long' };
-    this.month = new Date().toLocaleDateString(undefined, options);
+    this.getCurrentMonth();
+    this.getDaysInCurrentMonth();
   },
 };
 </script>
 
 <style scoped>
 .calendar-article {
+  grid-template:
+    'dayName dayName dayName dayName dayName dayName dayName' repeat(7, 1fr)
+    'numDay numDay numDay numDay numDay numDay numDay' repeat(7, 1fr)
+    'numDay numDay numDay numDay numDay numDay numDay' repeat(7, 1fr)
+    'numDay numDay numDay numDay numDay numDay numDay' repeat(7, 1fr)
+    'numDay numDay numDay numDay numDay numDay numDay' repeat(7, 1fr)
+    'numDay numDay numDay numDay numDay numDay numDay' repeat(7, 1fr)
+    'numDay numDay numDay numDay numDay numDay numDay' repeat(7, 1fr);
+}
+.dayAbbreviations {
+  grid-area: dayName;
+  justify-content: space-between;
+}
+.dayNumerical {
+  grid-area: numDay;
+}
+.calendar-aside {
   flex: initial;
   height: 100%;
+  width: 40vw;
   background: #2c3355af;
 }
 .calendar {
