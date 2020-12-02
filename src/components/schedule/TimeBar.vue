@@ -46,10 +46,14 @@ export default {
         currentHour = (currentHour - 12).toString();
         currentMin = `${currentMin} P.M.`;
       } else {
+        if (currentHour === 0) {
+          currentHour = '12';
+        }
         currentMin = `${currentMin} A.M.`;
       }
       // console.log(`${currentHour}:${currentMin}`);
       rightNow = `${currentHour}:${currentMin}`;
+      // console.log(rightNow);
       return rightNow;
     },
     twelveHourFormat() {

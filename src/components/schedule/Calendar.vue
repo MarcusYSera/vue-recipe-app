@@ -11,20 +11,23 @@
     </header>
     <article>
       <section class="flex-container row dayAbbreviations">
-        <h6>Sun</h6>
-        <h6>Mon</h6>
-        <h6>Tue</h6>
-        <h6>Wed</h6>
-        <h6>Thu</h6>
-        <h6>Fri</h6>
-        <h6>Sat</h6>
+        <h6 ref="0">Sun</h6>
+        <h6 ref="1">Mon</h6>
+        <h6 ref="2">Tue</h6>
+        <h6 ref="3">Wed</h6>
+        <h6 ref="4">Thu</h6>
+        <h6 ref="5">Fri</h6>
+        <h6 ref="6">Sat</h6>
       </section>
-      <section
-        class="grid-container dayNumerical"
-        v-for="index in days"
-        :key="index"
-      >
-        {{ index }}
+      <section class="grid-container dayNum">
+        <p v-for="(value, index) in startDate" :key="index"></p>
+        <p
+          v-for="index in days"
+          :key="index"
+          class="dayNum"
+        >
+          {{ index }}
+        </p>
       </section>
     </article>
   </aside>
@@ -38,20 +41,51 @@ export default {
       month: null,
       days: null,
       currentDate: null,
+      isToday: null,
     };
   },
   methods: {
     getCurrentMonth() {
-      const options = { month: 'long' };
-      this.month = new Date().toLocaleDateString(undefined, options);
+      const options = { month: 'long', day: 'numeric' };
+      [this.month, this.isToday] = new Date()
+        .toLocaleDateString(undefined, options)
+        .split(' ');
+      console.log(this.month);
+      console.log(this.isToday);
     },
     getDaysInCurrentMonth() {
-      let [month, date, year] = new Date()
-        .toLocaleDateString(undefined)
-        .split('/');
-      this.currentDate = date;
+      let [month, , year] = new Date().toLocaleDateString(undefined).split('/');
+      // this.currentDate = date;
       let x = new Date(year, month, 0).toDateString();
       this.days = parseInt(x.split(' ')[2]);
+    },
+    convertToNum(x) {
+      if (x === 'Sun') {
+        return 0;
+      } else if (x === 'Mon') {
+        return 1;
+      } else if (x === 'Tue') {
+        return 2;
+      } else if (x === 'Wed') {
+        return 3;
+      } else if (x === 'Thu') {
+        return 4;
+      } else if (x === 'Fri') {
+        return 5;
+      } else if (x === 'Sat') {
+        return 6;
+      }
+      return x;
+    },
+  },
+  computed: {
+    startDate() {
+      let [month, , year] = new Date().toLocaleDateString(undefined).split('/');
+      let x = new Date(year, month - 1, 1).toDateString();
+      x = x.split(' ')[0];
+      x = this.convertToNum(x);
+      // console.log(x);
+      return x;
     },
   },
   mounted() {
@@ -62,31 +96,23 @@ export default {
 </script>
 
 <style scoped>
-.calendar-article {
-  grid-template:
-    'dayName dayName dayName dayName dayName dayName dayName' repeat(7, 1fr)
-    'numDay numDay numDay numDay numDay numDay numDay' repeat(7, 1fr)
-    'numDay numDay numDay numDay numDay numDay numDay' repeat(7, 1fr)
-    'numDay numDay numDay numDay numDay numDay numDay' repeat(7, 1fr)
-    'numDay numDay numDay numDay numDay numDay numDay' repeat(7, 1fr)
-    'numDay numDay numDay numDay numDay numDay numDay' repeat(7, 1fr)
-    'numDay numDay numDay numDay numDay numDay numDay' repeat(7, 1fr);
+.dayNum {
+  justify-content: space-between;
+  grid-template: repeat(6, 1fr) / repeat(7, 1fr);
+  /* grid-template-rows: repeat(6, 1fr); */
+  /* grid-template-columns: repeat(7, 1fr); */
+}
+.today {
+  background-color: blue;
 }
 .dayAbbreviations {
-  grid-area: dayName;
   justify-content: space-between;
-}
-.dayNumerical {
-  grid-area: numDay;
 }
 .calendar-aside {
   flex: initial;
   height: 100%;
   width: 40vw;
   background: #2c3355af;
-}
-.calendar {
-  grid-area: calendarview;
 }
 .calendar-header {
   border-bottom: 2px solid black;

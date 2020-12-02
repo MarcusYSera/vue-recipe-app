@@ -3,7 +3,7 @@ const twentyFourHours = () => {
   // 1 AM - 11 PM & 12AM is the border/first dash and last dash/last border
   let time = ['00:00'];
   let current = '00:00';
-  for (let i = 0; i < 96; i++) {
+  for (let i = 0; i < 95; i++) {
     let hour = current.split(':')[0];
     let minute = current.split(':')[1];
     if (minute === '45') {
