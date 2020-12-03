@@ -25,6 +25,8 @@
           v-for="index in days"
           :key="index"
           class="dayNum"
+          @click="clickedDate(index)"
+          :class="'hello'"
         >
           {{ index }}
         </p>
@@ -45,6 +47,9 @@ export default {
     };
   },
   methods: {
+    clickedDate(x) {
+      this.$emit('calendar-click-date', x);
+    },
     getCurrentMonth() {
       const options = { month: 'long', day: 'numeric' };
       [this.month, this.isToday] = new Date()

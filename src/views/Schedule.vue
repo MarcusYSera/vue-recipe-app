@@ -16,7 +16,10 @@
         <ToDo @time-of-task="timeOfTask"></ToDo>
       </article>
     </article>
-    <Calendar v-if="openCalendar"></Calendar>
+    <Calendar
+      v-if="openCalendar"
+      @calendar-click-date="calClickDate"
+    ></Calendar>
   </main>
 </template>
 
@@ -41,6 +44,11 @@ export default {
     };
   },
   methods: {
+    calClickDate(x) {
+      // create new variable, to account for a today button which resets calendar view
+      this.currentDate = x;
+      console.log(x);
+    },
     timeRefData(x) {
       // console.log(x);
       this.timeArr = x;
