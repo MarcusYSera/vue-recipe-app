@@ -24,9 +24,8 @@
         <p
           v-for="index in days"
           :key="index"
-          class="dayNum"
           @click="clickedDate(index)"
-          :class="'hello'"
+          :class="{ dayNum: true, today: index === currentDate }"
         >
           {{ index }}
         </p>
@@ -43,7 +42,7 @@ export default {
       month: null,
       days: null,
       currentDate: null,
-      isToday: null,
+      currentMonth: null,
     };
   },
   methods: {
@@ -92,6 +91,14 @@ export default {
       // console.log(x);
       return x;
     },
+    isTodayComputed(x) {
+      console.log(x);
+      return x;
+    },
+  },
+  created() {
+    this.currentDate = new Date().getDate();
+    console.log(this.currentDate);
   },
   mounted() {
     this.getCurrentMonth();
