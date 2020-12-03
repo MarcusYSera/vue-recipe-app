@@ -1,5 +1,5 @@
 <template>
-  <aside class="calendar-aside">
+  <aside class=" flex-container column calendar-aside-main">
     <header class="calendar-header">
       <button>
         <img src="@/assets/svg/prevArrow.svg" />
@@ -9,7 +9,7 @@
         <img src="@/assets/svg/nextArrow.svg" />
       </button>
     </header>
-    <article>
+    <article class="flex-container column calendar-aside-body">
       <section class="flex-container row dayAbbreviations">
         <h6 ref="0">Sun</h6>
         <h6 ref="1">Mon</h6>
@@ -33,6 +33,42 @@
     </article>
   </aside>
 </template>
+
+<style scoped>
+.calendar-aside-main {
+  flex: initial;
+  /* height: 95%; */
+  width: 40vw;
+  background: #2c3355af;
+}
+.calendar-header {
+  border-bottom: 2px solid black;
+}
+.calendar-aside-body {
+  height: 40%;
+}
+.dayAbbreviations {
+  flex: 0;
+  justify-content: space-around;
+}
+.dayNum {
+  grid-template: repeat(6, 1fr) / repeat(7, 1fr);
+  flex: 1;
+  align-items: center;
+  justify-items: center;
+  /* height: 100%; */
+  /* grid-template-rows: repeat(6, 1fr); */
+  /* grid-template-columns: repeat(7, 1fr); */
+}
+.today {
+  background: url(../../assets/svg/calCircle.svg) no-repeat center;
+  height: 100%;
+  width: 100%;
+  text-align: center;
+  line-height: 3.2;
+  /* padding-top: 30%; */
+}
+</style>
 
 <script>
 export default {
@@ -106,27 +142,3 @@ export default {
   },
 };
 </script>
-
-<style scoped>
-.dayNum {
-  justify-content: space-between;
-  grid-template: repeat(6, 1fr) / repeat(7, 1fr);
-  /* grid-template-rows: repeat(6, 1fr); */
-  /* grid-template-columns: repeat(7, 1fr); */
-}
-.today {
-  background-color: blue;
-}
-.dayAbbreviations {
-  justify-content: space-between;
-}
-.calendar-aside {
-  flex: initial;
-  height: 100%;
-  width: 40vw;
-  background: #2c3355af;
-}
-.calendar-header {
-  border-bottom: 2px solid black;
-}
-</style>
