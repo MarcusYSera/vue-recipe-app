@@ -1,11 +1,11 @@
 <template>
   <aside class=" flex-container column calendar-aside-main">
-    <header class="calendar-header">
-      <button>
+    <header class="flex-container row calendar-header">
+      <button class="cal-button">
         <img src="@/assets/svg/prevArrow.svg" />
       </button>
-      <h3>{{ month }}</h3>
-      <button>
+      <h3 class="cal-month">{{ month }}</h3>
+      <button class="cal-button">
         <img src="@/assets/svg/nextArrow.svg" />
       </button>
     </header>
@@ -20,55 +20,22 @@
         <h6 ref="6">Sat</h6>
       </section>
       <section class="grid-container dayNum">
-        <p v-for="(value, index) in startDate" :key="index"></p>
-        <p
+        <div v-for="(value, index) in startDate" :key="index"></div>
+        <div
           v-for="index in days"
           :key="index"
           @click="clickedDate(index)"
           :class="{ dayNum: true, today: index === currentDate }"
         >
-          {{ index }}
-        </p>
+          <img src="@/assets/svg/calCircle.svg" v-if="index === currentDate" />
+          <p>
+            {{ index }}
+          </p>
+        </div>
       </section>
     </article>
   </aside>
 </template>
-
-<style scoped>
-.calendar-aside-main {
-  flex: initial;
-  /* height: 95%; */
-  width: 40vw;
-  background: #2c3355af;
-}
-.calendar-header {
-  border-bottom: 2px solid black;
-}
-.calendar-aside-body {
-  height: 40%;
-}
-.dayAbbreviations {
-  flex: 0;
-  justify-content: space-around;
-}
-.dayNum {
-  grid-template: repeat(6, 1fr) / repeat(7, 1fr);
-  flex: 1;
-  align-items: center;
-  justify-items: center;
-  /* height: 100%; */
-  /* grid-template-rows: repeat(6, 1fr); */
-  /* grid-template-columns: repeat(7, 1fr); */
-}
-.today {
-  background: url(../../assets/svg/calCircle.svg) no-repeat center;
-  height: 100%;
-  width: 100%;
-  text-align: center;
-  line-height: 3.2;
-  /* padding-top: 30%; */
-}
-</style>
 
 <script>
 export default {
@@ -142,3 +109,58 @@ export default {
   },
 };
 </script>
+
+<style scoped>
+.calendar-aside-main {
+  flex: initial;
+  /* height: 95%; */
+  width: 40vw;
+  background: #2c3355af;
+}
+.calendar-header {
+  justify-content: center;
+  border-bottom: 2px solid black;
+  padding: 4vh 0;
+}
+.cal-button {
+  padding: 0;
+  border: 0;
+  /* background-color: #2c3355af; */
+}
+.cal-button:focus {
+  outline: none;
+  /* border: none; */
+}
+.cal-button img {
+  width: 100%;
+  height: 100%;
+  /* background-color: #2c3355af; */
+}
+.cal-month {
+  margin: 0 1vw;
+}
+.calendar-aside-body {
+  height: 40%;
+}
+.dayAbbreviations {
+  flex: 0;
+  justify-content: space-around;
+}
+.dayNum {
+  grid-template: repeat(6, 1fr) / repeat(7, 1fr);
+  flex: 1;
+  align-items: center;
+  justify-items: center;
+  /* height: 100%; */
+  /* grid-template-rows: repeat(6, 1fr); */
+  /* grid-template-columns: repeat(7, 1fr); */
+}
+.today {
+  /* background: url(../../assets/svg/calCircle.svg) no-repeat center;
+  height: 100%;
+  width: 100%;
+  text-align: center;
+  line-height: 3.2; */
+  /* padding-top: 30%; */
+}
+</style>
