@@ -5,6 +5,7 @@
         <section>{{ currentDate }} {{ currentMonth }}</section>
         <nav class="flex-container row schedule-header-right">
           <SearchBar @search-query="onSearchTerm"></SearchBar>
+          <AddEvent></AddEvent>
           <button class="calButton">
             <img src="@/assets/svg/calOpenIcon.svg" @click.prevent="openCal" />
           </button>
@@ -28,10 +29,11 @@ import SearchBar from '@/components/schedule/SearchBar';
 import TimeBar from '@/components/schedule/TimeBar';
 import ToDo from '@/components/schedule/ToDo';
 import Calendar from '@/components/schedule/Calendar';
+import AddEvent from '@/components/schedule/AddEvent';
 
 export default {
   name: 'Schedule',
-  components: { SearchBar, TimeBar, ToDo, Calendar },
+  components: { SearchBar, TimeBar, ToDo, Calendar, AddEvent },
   data() {
     return {
       currentMonth: null,

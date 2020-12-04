@@ -4,12 +4,16 @@
       <img class="hamburger-icon" src="@/assets/svg/hamburger.svg" />
     </button>
     <nav v-if="open" class="flex-container column secondary itemTwo">
-      <h3><router-link to="/">Schedule</router-link></h3>
-      <h3><router-link to="/about">Recipe</router-link></h3>
-      <h3><a>Profile</a></h3>
-      <h3><a>Settings</a></h3>
-      <h3 v-if="signedIn"><a>Sign Out</a></h3>
-      <h3 v-else><a>Sign In</a></h3>
+      <h3
+        v-for="(category, index) in navCategories"
+        :key="index"
+        @click="itemOpen(category)"
+        :class="{ selectedButton: openItem === category }"
+      >
+        <router-link :to="category">{{ category }}</router-link>
+      </h3>
+      <h3 v-if="signedIn"><router-link>Sign Out</router-link></h3>
+      <h3 v-else><router-link to="signin">Sign In</router-link></h3>
     </nav>
   </header>
 </template>
@@ -20,9 +24,15 @@ export default {
   data() {
     return {
       open: false,
+      openItem: 'schedule',
+      signedIn: false,
+      navCategories: ['Schedule', 'Recipe', 'Profile'],
     };
   },
   methods: {
+    itemOpen(itemName) {
+      this.openItem = itemName;
+    },
     clickedHamburger() {
       this.open = !this.open;
     },
@@ -42,6 +52,10 @@ export default {
 </script>
 
 <style scoped>
+a {
+  text-decoration: none;
+  color: black;
+}
 .hamburger-nav-header {
   height: 100vh;
   overflow: hidden;
@@ -52,6 +66,10 @@ export default {
 .secondary > * {
   padding-top: 4.5vh;
   list-style-type: none;
+}
+.selectedButton {
+  border-left: 2px grey solid;
+  background-color: grey;
 }
 .hamburgerMenu-button {
   border: none;

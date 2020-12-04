@@ -25,12 +25,16 @@
           v-for="index in days"
           :key="index"
           @click="clickedDate(index)"
-          :class="{ dayNum: true, today: index === currentDate }"
+          class="dayNum-item"
         >
-          <img src="@/assets/svg/calCircle.svg" v-if="index === currentDate" />
           <p>
             {{ index }}
           </p>
+          <img
+            src="@/assets/svg/calCircle.svg"
+            v-if="index === currentDate"
+            class="today"
+          />
         </div>
       </section>
     </article>
@@ -149,13 +153,32 @@ export default {
 .dayNum {
   grid-template: repeat(6, 1fr) / repeat(7, 1fr);
   flex: 1;
-  align-items: center;
-  justify-items: center;
+  /* align-items: center;
+  justify-items: center; */
+  /* position: relative; */
   /* height: 100%; */
   /* grid-template-rows: repeat(6, 1fr); */
   /* grid-template-columns: repeat(7, 1fr); */
 }
+.dayNum-item {
+  height: 100%;
+  width: 100%;
+  position: relative;
+}
+.dayNum-item p {
+  position: absolute;
+  top: 30%;
+  left: 50%;
+  z-index: 1;
+}
+.dayNum-item img {
+  position: relative;
+  top: 20%;
+  left: 30%;
+  z-index: 0;
+}
 .today {
+  /* top:25vh; */
   /* background: url(../../assets/svg/calCircle.svg) no-repeat center;
   height: 100%;
   width: 100%;
