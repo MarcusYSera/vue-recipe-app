@@ -3,7 +3,9 @@
     <img src="@/assets/svg/addCircle.svg" />
   </button>
   <aside v-if="openAddEvent" class="add-container">
-    <input type="text" />
+    <input type="text" placeholder=" Add Recipe Name" />
+    <input type="text" placeholder="Select Date/Calendar Module " />
+    <button type="submit">Create</button>
   </aside>
 </template>
 
@@ -26,10 +28,10 @@ export default {
 <style scoped>
 .add-container {
   position: absolute;
-  height: 500px;
-  width: 400px;
-  top: 0;
-  left: 0;
+  height: 200px;
+  width: 250px;
+  top: 30px;
+  left: -200px;
   border: 1px solid black;
 }
 .add-button {

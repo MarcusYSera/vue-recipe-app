@@ -115,6 +115,7 @@ export default {
 }
 .schedule-header-right {
   position: relative;
+  /* width: 40vw; */
 }
 .schedule-header-right > img {
   padding-right: 20px;
