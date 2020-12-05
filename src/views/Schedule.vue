@@ -113,6 +113,9 @@ export default {
   overflow: scroll;
   overflow-x: hidden;
 }
+.schedule-header-right {
+  position: relative;
+}
 .schedule-header-right > img {
   padding-right: 20px;
 }
