@@ -6,6 +6,7 @@ node_modules/
 # local env files
 .env.local
 .env.*.local
+.env
 
 # Log files
 npm-debug.log*
@@ -23,8 +24,6 @@ pnpm-debug.log*
 *.sw?
 
 # express-postgres
-.env
-yarn-error.log
 nyc_output
 coverage
 build/
