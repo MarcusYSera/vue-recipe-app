@@ -11,14 +11,12 @@ install:
   - cd express-postgres
   - npm i
 after_success:
-  - cd express-postgres
   - npm run coverage
 before_script:
   - curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
   - chmod +x ./cc-test-reporter
   - ./cc-test-reporter before-build
 script:
-  - cd express-postgres
   - npm run test
 after_script:
-  - ./cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESUL
+  - ./cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT
