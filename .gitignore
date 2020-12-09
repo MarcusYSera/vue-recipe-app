@@ -24,6 +24,6 @@ pnpm-debug.log*
 *.sw?
 
 # express-postgres
-nyc_output
+.nyc_output
 coverage
 build/
