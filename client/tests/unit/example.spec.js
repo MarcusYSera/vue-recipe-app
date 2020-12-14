@@ -15,7 +15,7 @@ import Calendar from '@/components/schedule/Calendar.vue';
 describe('Schedule.vue', () => {
   it('should render', () => {
     let wrapper = mount(Schedule);
-    expect(wrapper.contains(Calendar)).toBE(true);
+    expect(wrapper.contains(Calendar)).toBe(true);
   });
   // it('contains component calendar', () => {
   // expect(Schedule.find(Calendar).exists()).to.be.true;
