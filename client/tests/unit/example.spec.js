@@ -1,7 +1,7 @@
-// import { expect } from 'chai';
-// import { shallowMount } from '@vue/test-utils';
-// import Schedule from '@/views/Schedule.vue';
-// import Calendar from '@/components/schedule/Calendar.vue';
+import { expect } from 'chai';
+import { mount } from '@vue/test-utils';
+import Schedule from '@/views/Schedule.vue';
+import Calendar from '@/components/schedule/Calendar.vue';
 
 // describe('HelloWorld.vue', () => {
 //   it('renders props.msg when passed', () => {
@@ -13,7 +13,10 @@
 //   });
 // });
 describe('Schedule.vue', () => {
-  it('should render', () => {});
+  it('should render', () => {
+    let wrapper = mount(Schedule);
+    expect(wrapper.contains(Calendar)).toBE(true);
+  });
   // it('contains component calendar', () => {
   // expect(Schedule.find(Calendar).exists()).to.be.true;
   // });
