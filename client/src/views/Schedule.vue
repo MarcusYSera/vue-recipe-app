@@ -17,10 +17,10 @@
         <ToDo @time-of-task="timeOfTask"></ToDo>
       </article>
     </article>
-    <Calendar
+    <CalendarComponent
       v-if="openCalendar"
       @calendar-click-date="calClickDate"
-    ></Calendar>
+    ></CalendarComponent>
   </main>
 </template>
 
@@ -28,12 +28,12 @@
 import SearchBar from '@/components/schedule/SearchBar';
 import TimeBar from '@/components/schedule/TimeBar';
 import ToDo from '@/components/schedule/ToDo';
-import Calendar from '@/components/schedule/Calendar';
+import CalendarComponent from '@/components/schedule/Calendar';
 import AddEvent from '@/components/schedule/AddEvent';
 
 export default {
   name: 'Schedule',
-  components: { SearchBar, TimeBar, ToDo, Calendar, AddEvent },
+  components: { SearchBar, TimeBar, ToDo, CalendarComponent, AddEvent },
   data() {
     return {
       currentMonth: null,

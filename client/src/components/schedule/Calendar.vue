@@ -43,7 +43,7 @@
 
 <script>
 export default {
-  name: 'Calendar',
+  name: 'CalendarComponent',
   data() {
     return {
       month: null,
