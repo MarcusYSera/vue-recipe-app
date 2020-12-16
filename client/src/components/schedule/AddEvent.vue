@@ -3,12 +3,14 @@
     <img src="@/assets/svg/addCircle.svg" />
   </button>
   <aside v-if="openAddEvent" class="add-container">
-    <input type="text" placeholder=" Add Recipe Name" v-model="recipeName" />
-    <input type="date" :value="currentDate" :min="currentDate" />
-    {{ currentDate }}
-    <input type="time" v-model="currentTime" />
-    {{ currentTime }}
-    <button type="submit">Create</button>
+    <form @submit.prevent="addEventOnSubmit">
+      <input type="text" placeholder=" Add Recipe Name" v-model="recipeName" />
+      <input type="date" v-model="currentDate" :min="currentDate" />
+      {{ currentDate }}
+      <input type="time" v-model="currentTime" />
+      {{ currentTime }}
+      <input type="submit" value="create" />
+    </form>
   </aside>
 </template>
 
@@ -19,34 +21,43 @@ export default {
     return {
       openAddEvent: false,
       recipeName: '',
+      currentTime: '',
+      currentDate: '',
     };
   },
-  computed: {
-    currentTime: {
-      get: () => {
-        let newTime = new Date()
-          .toLocaleTimeString(undefined, { hour12: false })
-          .split(':');
-        newTime.pop();
-        return newTime.join(':');
-      },
-      set: newValue => {
-        return newValue;
-      },
-    },
-    currentDate: () => {
-      let t = new Date().toLocaleDateString().split('/');
-      let holder = t.pop();
-      t.unshift(holder);
-      console.log(holder);
-      console.log(t.join('-'));
-      return t.join('-');
-    },
-  },
+  computed: {},
   methods: {
     openEvent() {
       this.openAddEvent = !this.openAddEvent;
     },
+    getCurrentTime() {
+      let newTime = new Date()
+        .toLocaleTimeString(undefined, { hour12: false })
+        .split(':');
+      newTime.pop();
+      return newTime.join(':');
+    },
+    getCurrentDate() {
+      let t = new Date().toLocaleDateString().split('/');
+      let holder = t.pop();
+      t.unshift(holder);
+      return t.join('-');
+    },
+    addEventOnSubmit() {
+      let newEvent = {
+        name: this.recipeName,
+        time: this.currentTime,
+        date: this.currentDate,
+      };
+      console.log(newEvent);
+      this.recipeName = '';
+      this.currentTime = this.getCurrentTime();
+      this.currentDate = this.getCurrentDate();
+    },
+  },
+  created() {
+    this.currentTime = this.getCurrentTime();
+    this.currentDate = this.getCurrentDate();
   },
 };
 </script>
