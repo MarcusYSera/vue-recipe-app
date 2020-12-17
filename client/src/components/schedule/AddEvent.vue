@@ -6,9 +6,7 @@
     <form @submit.prevent="addEventOnSubmit">
       <input type="text" placeholder=" Add Recipe Name" v-model="recipeName" />
       <input type="date" v-model="currentDate" :min="currentDate" />
-      {{ currentDate }}
       <input type="time" v-model="currentTime" />
-      {{ currentTime }}
       <input type="submit" value="create" />
     </form>
   </aside>
@@ -35,6 +33,9 @@ export default {
         .toLocaleTimeString(undefined, { hour12: false })
         .split(':');
       newTime.pop();
+      if (newTime[0] === '24') {
+        newTime[0] = '00';
+      }
       return newTime.join(':');
     },
     getCurrentDate() {
