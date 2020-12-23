@@ -5,9 +5,9 @@ const usersModel = new Model('users');
 export const usersPage = async (req, res) => {
   try {
     const data = await usersModel.select('first_name, last_name, email, password');
-    res.status(200).json({ messages: data.rows });
+    res.status(200).json({ users: data.rows });
   } catch (err) {
-    res.status(200).json({ messages: err.stack });
+    res.status(200).json({ users: err.stack });
   }
 };
 
@@ -17,8 +17,8 @@ export const addUser = async (req, res) => {
   const values = `'${firstName}', '${lastName}', '${email}', '${password}'`;
   try {
     const data = await usersModel.insertWithReturn(columns, values);
-    res.status(200).json({ messages: data.rows });
+    res.status(200).json({ users: data.rows });
   } catch (err) {
-    res.status(200).json({ messages: err.stack });
+    res.status(200).json({ users: err.stack });
   }
 };
