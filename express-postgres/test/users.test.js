@@ -13,8 +13,8 @@ describe('Users', () => {
 
   it('posts users', (done) => {
     const data = {
-      first_name: 'hello',
-      last_name: 'world',
+      firstName: 'hello',
+      lastName: 'world',
       email: 'test@gmail.com',
       password: '1234',
     };
@@ -24,6 +24,13 @@ describe('Users', () => {
       .expect(200)
       .end((err, res) => {
         expect(res.status).to.equal(200);
+        expect(res.body.users).to.be.instanceOf(Array);
+        res.body.users.forEach((u) => {
+          expect(u).to.have.property('first_name', data.firstName);
+          expect(u).to.have.property('last_name', data.lastName);
+          expect(u).to.have.property('email', data.email);
+          expect(u).to.have.property('password', data.password);
+        });
         done();
       });
   });

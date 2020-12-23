@@ -13,7 +13,7 @@ export const usersPage = async (req, res) => {
 
 export const addUser = async (req, res) => {
   const { firstName, lastName, email, password } = req.body;
-  const columns = 'firstName, lastName, email, password';
+  const columns = 'first_name, last_name, email, password';
   const values = `'${firstName}', '${lastName}', '${email}', '${password}'`;
   try {
     const data = await usersModel.insertWithReturn(columns, values);
