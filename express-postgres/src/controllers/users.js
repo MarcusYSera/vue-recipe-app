@@ -22,3 +22,9 @@ export const addUser = async (req, res) => {
     res.status(200).json({ users: err.stack });
   }
 };
+
+export const editUser = async (req, res) => {
+  const id = req.params.id;
+
+
+};
