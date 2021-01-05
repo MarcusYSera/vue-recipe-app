@@ -21,6 +21,13 @@ class Model {
       `;
     return this.pool.query(query);
   }
+
+  async updateWithReturn(columns, values) {
+    const query = `
+    UPDATE ${this.table}
+    `;
+    return this.pool.query(query);
+  }
 }
 
 export default Model;

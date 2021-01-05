@@ -15,6 +15,11 @@ app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
+
+// const db = require('./models/model');
+
+// db.sequelize.sync();
+
 app.use('/v1', indexRouter);
 
 export default app;
