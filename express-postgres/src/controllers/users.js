@@ -24,7 +24,14 @@ export const addUser = async (req, res) => {
 };
 
 export const editUser = async (req, res) => {
-  const id = req.params.id;
-
-
+  const { firstName, lastName, email, password } = req.body;
+  console.log(email);
+  const columns = 'first_name, last_name, email, password';
+  const values = `'${firstName}', '${lastName}', '${email}', '${password}'`;
+  try {
+    const data = await usersModel.updateWithReturn(columns, values);
+    res.status(200).json({ users: data.rows });
+  } catch (err) {
+    res.status(200).json({ users: err.stack });
+  }
 };

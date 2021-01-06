@@ -26,7 +26,7 @@ describe('Messages', () => {
         expect(res.status).to.equal(200);
         expect(res.body.messages).to.be.instanceOf(Array);
         res.body.messages.forEach((m) => {
-          expect(m).to.have.property('id');
+          // expect(m).to.have.property('message_id');
           expect(m).to.have.property('name', data.name);
           expect(m).to.have.property('message', data.message);
         });
