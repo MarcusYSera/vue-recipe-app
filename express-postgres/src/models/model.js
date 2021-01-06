@@ -4,6 +4,9 @@ class Model {
   constructor(table) {
     this.pool = pool;
     this.table = table;
+    const newArr = this.table.split('');
+    newArr.pop();
+    this.pKey = newArr.join('');
     this.pool.on('error', (err, client) => `Error, ${err}, on idle client${client}`);
   }
 
@@ -14,13 +17,10 @@ class Model {
   }
 
   async insertWithReturn(columns, values) {
-    const newArr = this.table.split('');
-    newArr.pop();
-    const pKey = newArr.join('');
     const query = `
       INSERT INTO ${this.table}(${columns})
       VALUES (${values})
-      RETURNING ${pKey}_id, ${columns}
+      RETURNING ${this.pKey}_id, ${columns}
     `;
     return this.pool.query(query);
   }
@@ -30,7 +30,7 @@ class Model {
       UPDATE ${this.table}
       SET (${values})
       WHERE email = ${values.email}
-      RETURNING *
+      RETURNING ${this.pKey}_id, ${columns}
     `;
     return this.pool.query(query);
   }
