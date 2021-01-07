@@ -43,4 +43,11 @@ describe('Users', () => {
         done();
       });
   });
+
+  it('updates users', (done) => {
+    const data = {
+      firstName: 'maiko'
+    };
+    server.post(`${BASE_URL}/users`)
+  });
 });

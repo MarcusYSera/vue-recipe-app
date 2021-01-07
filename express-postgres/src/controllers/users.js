@@ -25,7 +25,6 @@ export const addUser = async (req, res) => {
 
 export const editUser = async (req, res) => {
   const { firstName, lastName, email, password } = req.body;
-  console.log(email);
   const columns = 'first_name, last_name, email, password';
   const values = `'${firstName}', '${lastName}', '${email}', '${password}'`;
   try {
