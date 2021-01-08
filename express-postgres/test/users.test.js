@@ -46,7 +46,7 @@ describe('Users', () => {
 
   it('updates users', (done) => {
     const data = {
-      firstName: 'maiko',
+      firstName: 'm',
       email: 'maiko@gmail.com',
       password: 'hello',
     };

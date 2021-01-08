@@ -25,13 +25,11 @@ class Model {
     return this.pool.query(query);
   }
 
-  async updateWithReturn(email, columns, values) {
-    console.log(email);
-    console.log(values);
+  async updateWithReturn(clause, columns, values) {
     const query = `
       UPDATE ${this.table}
       SET ${values}
-      WHERE email='${email}'
+      WHERE ${clause}
       RETURNING ${this.pKey}_id, ${columns}
     `;
     return this.pool.query(query);

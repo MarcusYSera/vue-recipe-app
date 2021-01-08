@@ -26,6 +26,7 @@ export const addUser = async (req, res) => {
 export const editUser = async (req, res) => {
   const { firstName, lastName, email, password } = req.body;
   const columns = 'first_name, last_name, email, password';
+  const clause = `email = '${email}'`;
   const values = [];
   if (firstName) {
     values.push(`first_name = '${firstName}'`);
@@ -34,13 +35,13 @@ export const editUser = async (req, res) => {
     values.push(`last_name = '${lastName}'`);
   }
   if (email) {
-    values.push(`email = '${email}'`);
+    values.push(clause);
   }
   if (password) {
     values.push(`password = '${password}'`);
   }
   try {
-    const data = await usersModel.updateWithReturn(email, columns, values.join(','));
+    const data = await usersModel.updateWithReturn(clause, columns, values.join(','));
     res.status(200).json({ users: data.rows });
   } catch (err) {
     res.status(200).json({ users: err.stack });
