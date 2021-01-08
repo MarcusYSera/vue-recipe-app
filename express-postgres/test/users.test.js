@@ -27,7 +27,7 @@ describe('Users', () => {
       password: '1234',
     };
     server
-      .post(`${BASE_URL}/users`)
+      .post(`${BASE_URL}/users/create`)
       .send(data)
       .expect(200)
       .end((err, res) => {
@@ -46,8 +46,16 @@ describe('Users', () => {
 
   it('updates users', (done) => {
     const data = {
-      firstName: 'maiko'
+      firstName: 'maiko',
     };
-    server.post(`${BASE_URL}/users`)
+    server
+      .post(`${BASE_URL}/users/edit`)
+      .send(data)
+      .expect(200)
+      .end((err, res) => {
+        expect(res.status).to.equal(200);
+        // expect(res.body.users).to.be.instanceOf(Array);
+        done();
+      });
   });
 });
