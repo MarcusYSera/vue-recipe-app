@@ -28,22 +28,19 @@ export const editUser = async (req, res) => {
   const columns = 'first_name, last_name, email, password';
   const values = [];
   if (firstName) {
-    values.push(`first_name = ${firstName}`);
+    values.push(`first_name = '${firstName}'`);
   }
   if (lastName) {
-    values.push(`last_name = ${lastName}`);
+    values.push(`last_name = '${lastName}'`);
   }
   if (email) {
-    values.push(`email = ${email}`);
+    values.push(`email = '${email}'`);
   }
   if (password) {
-    values.push(`password = ${password}`);
-  }
-  if (values[1]) {
-    values.join(',');
+    values.push(`password = '${password}'`);
   }
   try {
-    const data = await usersModel.updateWithReturn(columns, values);
+    const data = await usersModel.updateWithReturn(email, columns, values.join(','));
     res.status(200).json({ users: data.rows });
   } catch (err) {
     res.status(200).json({ users: err.stack });

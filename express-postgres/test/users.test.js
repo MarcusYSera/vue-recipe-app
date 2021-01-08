@@ -47,6 +47,8 @@ describe('Users', () => {
   it('updates users', (done) => {
     const data = {
       firstName: 'maiko',
+      email: 'maiko@gmail.com',
+      password: 'hello',
     };
     server
       .post(`${BASE_URL}/users/edit`)
@@ -54,6 +56,7 @@ describe('Users', () => {
       .expect(200)
       .end((err, res) => {
         expect(res.status).to.equal(200);
+        console.log(res.body.users);
         // expect(res.body.users).to.be.instanceOf(Array);
         done();
       });
