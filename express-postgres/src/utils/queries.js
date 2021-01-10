@@ -1,7 +1,7 @@
 export const createMessageTable = `
 DROP TABLE IF EXISTS messages;
 CREATE TABLE IF NOT EXISTS messages (
-  message_id SERIAL PRIMARY KEY,
+  message_id uuid DEFAULT uuid_generate_v4 (),
   name VARCHAR DEFAULT '',
   message VARCHAR NOT NULL
   )
@@ -18,7 +18,7 @@ export const dropMessagesTable = 'DROP TABLE messages';
 export const createUserTable = `
   DROP TABLE IF EXISTS users;
   CREATE TABLE IF NOT EXISTS users (
-    user_id SERIAL PRIMARY KEY,
+    user_id uuid DEFAULT uuid_generate_v4 (),
     first_name VARCHAR DEFAULT '',
     last_name VARCHAR DEFAULT '',
     email VARCHAR DEFAULT '',
