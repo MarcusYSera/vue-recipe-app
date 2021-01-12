@@ -11,6 +11,12 @@ export const usersPage = async (req, res) => {
   }
 };
 
+export const LoginUser = async (req, res) => {
+  try {
+    const data = await usersModel.
+  }
+};
+
 export const addUser = async (req, res) => {
   const { firstName, lastName, email, password } = req.body;
   const columns = 'first_name, last_name, email, password';
