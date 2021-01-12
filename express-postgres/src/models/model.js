@@ -19,15 +19,6 @@ class Model {
     return this.pool.query(query);
   }
 
-  async findUserWithReturn(columns, clause, email) {
-    let query = `
-    SELECT ${columns}
-    FROM ${this.table}
-    WHERE email ='${this.email}'
-    `;
-    return this.pool.query(query);
-  }
-
   async insertWithReturn(columns, values) {
     const query = `
       INSERT INTO ${this.table}(${columns})

@@ -20,18 +20,20 @@ describe('Users', () => {
   });
 
   it('get user by email', (done) => {
+    const email = 'maiko@gmail.com';
     server
-      .get(`${BASE_URL}/users`)
+      .get(`${BASE_URL}/users/findBy/${email}`)
       .expect(200)
       .end((err, res) => {
         expect(res.status).to.equal(200);
-        res.body.users.forEach((u) => {
-          // expect(u).to.have.property('user_id');
-          expect(u).to.have.property('first_name');
-          expect(u).to.have.property('last_name');
-          expect(u).to.have.property('email');
-          expect(u).to.have.property('password');
-        });
+        console.log(res.body.users);
+        // res.body.users.forEach((u) => {
+        // expect(u).to.have.property('user_id');
+        // expect(u).to.have.property('first_name');
+        // expect(u).to.have.property('last_name');
+        // expect(u).to.have.property('email');
+        // expect(u).to.have.property('password');
+        // });
         done();
       });
   });
@@ -73,7 +75,7 @@ describe('Users', () => {
       .expect(200)
       .end((err, res) => {
         expect(res.status).to.equal(200);
-        console.log(res.body.users);
+        // console.log(res.body.users);
         // expect(res.body.users).to.be.instanceOf(Array);
         done();
       });

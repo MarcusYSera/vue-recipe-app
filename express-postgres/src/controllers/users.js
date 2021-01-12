@@ -11,9 +11,15 @@ export const usersPage = async (req, res) => {
   }
 };
 
-export const LoginUser = async (req, res) => {
+export const findUser = async (req, res) => {
+  const { email } = req.params;
+  const columns = 'first_name, last_name, email, password';
+  const clause = `WHERE email = '${email}'`;
   try {
-    const data = await usersModel.
+    const data = await usersModel.select(columns, clause);
+    res.status(200).json({ users: data.rows });
+  } catch (err) {
+    res.status(200).json({ users: err.stack });
   }
 };
 
