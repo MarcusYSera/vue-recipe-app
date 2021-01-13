@@ -26,14 +26,14 @@ describe('Users', () => {
       .expect(200)
       .end((err, res) => {
         expect(res.status).to.equal(200);
-        console.log(res.body.users);
-        // res.body.users.forEach((u) => {
+        // console.log(res.body.users);
+        res.body.users.forEach((u) => {
         // expect(u).to.have.property('user_id');
-        // expect(u).to.have.property('first_name');
-        // expect(u).to.have.property('last_name');
-        // expect(u).to.have.property('email');
-        // expect(u).to.have.property('password');
-        // });
+        expect(u).to.have.property('first_name');
+        expect(u).to.have.property('last_name');
+        expect(u).to.have.property('email');
+        expect(u).to.have.property('password');
+        });
         done();
       });
   });

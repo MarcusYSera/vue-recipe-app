@@ -6,7 +6,7 @@ import {
   usersPage,
   addUser,
   editUser,
-  findUser,
+  findUserByEmail,
 } from '../controllers';
 
 const indexRouter = express.Router();
@@ -17,7 +17,7 @@ indexRouter.get('/messages', messagesPage);
 indexRouter.post('/messages', addMessage);
 
 indexRouter.get('/users', usersPage);
-indexRouter.get('/users/findBy/:email', findUser);
+indexRouter.get('/users/findBy/:email', findUserByEmail);
 indexRouter.post('/users/create', addUser);
 indexRouter.post('/users/edit', editUser);
 
