@@ -21,6 +21,7 @@ export const createMessageTable = `
 DROP TABLE IF EXISTS messages;
 CREATE TABLE IF NOT EXISTS messages (
   message_id INT GENERATED ALWAYS AS IDENTITY,
+  user_id INT NOT NULL,
   message VARCHAR NOT NULL,
   PRIMARY KEY(message_id)
   )
@@ -33,7 +34,7 @@ alter table messages add foreign key (user_id) REFERENCES users(user_id);
 export const insertMessages = `
   INSERT INTO messages(message, user_id)
   VALUES ('first message', 1),
-  ('second message', 2)
+  ('second message',)
   `;
 
 export const dropMessagesTable = 'DROP TABLE messages';

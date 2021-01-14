@@ -18,7 +18,7 @@ describe('Messages', () => {
   });
 
   it('posts messages', (done) => {
-    const data = { message: 'new message' };
+    const data = { message: 'new message', userId: 1 };
     server
       .post(`${BASE_URL}/messages`)
       .send(data)
