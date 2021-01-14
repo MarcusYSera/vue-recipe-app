@@ -9,7 +9,7 @@ describe('Users', () => {
         expect(res.status).to.equal(200);
         expect(res.body.users).to.be.instanceOf(Array);
         res.body.users.forEach((u) => {
-          // expect(u).to.have.property('user_id');
+          expect(u).to.have.property('user_id');
           expect(u).to.have.property('first_name');
           expect(u).to.have.property('last_name');
           expect(u).to.have.property('email');

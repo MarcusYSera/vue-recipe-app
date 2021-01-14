@@ -1,28 +1,12 @@
-export const createMessageTable = `
-DROP TABLE IF EXISTS messages;
-CREATE TABLE IF NOT EXISTS messages (
-  message_id uuid DEFAULT uuid_generate_v4 (),
-  name VARCHAR DEFAULT '',
-  message VARCHAR NOT NULL
-  )
-  `;
-
-export const insertMessages = `
-  INSERT INTO messages(name, message)
-  VALUES ('chidimo', 'first message'),
-  ('orji', 'second message')
-  `;
-
-export const dropMessagesTable = 'DROP TABLE messages';
-
 export const createUserTable = `
   DROP TABLE IF EXISTS users;
   CREATE TABLE IF NOT EXISTS users (
-    user_id uuid DEFAULT uuid_generate_v4 (),
+    user_id INT GENERATED ALWAYS AS IDENTITY,
     first_name VARCHAR DEFAULT '',
     last_name VARCHAR DEFAULT '',
     email VARCHAR DEFAULT '',
-    password VARCHAR DEFAULT ''
+    password VARCHAR DEFAULT '',
+    PRIMARY KEY(user_id)
   )
   `;
 
@@ -32,3 +16,24 @@ export const insertUsers = `
 `;
 
 export const dropUsersTable = 'DROP TABLE users';
+
+export const createMessageTable = `
+DROP TABLE IF EXISTS messages;
+CREATE TABLE IF NOT EXISTS messages (
+  message_id INT GENERATED ALWAYS AS IDENTITY,
+  message VARCHAR NOT NULL,
+  PRIMARY KEY(message_id)
+  )
+  `;
+
+export const createUserMessageForeignKey = `
+alter table messages add foreign key (user_id) REFERENCES users(user_id);
+`;
+
+export const insertMessages = `
+  INSERT INTO messages(message, user_id)
+  VALUES ('first message', 1),
+  ('second message', 2)
+  `;
+
+export const dropMessagesTable = 'DROP TABLE messages';

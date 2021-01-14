@@ -6,6 +6,7 @@ import {
   insertUsers,
   dropUsersTable,
   createUserTable,
+  createUserMessageForeignKey,
 } from './queries';
 
 export const executeQueryArray = async (arr) =>
@@ -20,3 +21,4 @@ export const executeQueryArray = async (arr) =>
 export const dropTables = () => executeQueryArray([dropMessagesTable, dropUsersTable]);
 export const createTables = () => executeQueryArray([createMessageTable, createUserTable]);
 export const insertIntoTables = () => executeQueryArray([insertMessages, insertUsers]);
+export const insertForeignKeys = () => executeQueryArray([createUserMessageForeignKey]);
