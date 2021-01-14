@@ -2,6 +2,6 @@ import { createTables, insertIntoTables, insertForeignKeys } from './queryFuncti
 
 (async () => {
   await createTables();
-  await insertForeignKeys()
+  await insertForeignKeys();
   await insertIntoTables();
 })();

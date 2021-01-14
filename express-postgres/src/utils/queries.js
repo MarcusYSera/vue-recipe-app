@@ -12,7 +12,8 @@ export const createUserTable = `
 
 export const insertUsers = `
     INSERT INTO users(first_name, last_name, email, password)
-    VALUES ('maiko', 'imazawa', 'maiko@gmail.com', '1205'), ('markie', 'sera', 'msera@gmail.com', '0208')
+    VALUES ('maiko', 'imazawa', 'maiko@gmail.com', '1205'),
+    ('markie', 'sera', 'msera@gmail.com', '0208')
 `;
 
 export const dropUsersTable = 'DROP TABLE users';
@@ -21,7 +22,7 @@ export const createMessageTable = `
 DROP TABLE IF EXISTS messages;
 CREATE TABLE IF NOT EXISTS messages (
   message_id INT GENERATED ALWAYS AS IDENTITY,
-  user_id INT NOT NULL,
+  user_id INT DEFAULT 0,
   message VARCHAR NOT NULL,
   PRIMARY KEY(message_id)
   )
@@ -34,7 +35,7 @@ alter table messages add foreign key (user_id) REFERENCES users(user_id);
 export const insertMessages = `
   INSERT INTO messages(message, user_id)
   VALUES ('first message', 1),
-  ('second message',)
+  ('second message', 2)
   `;
 
 export const dropMessagesTable = 'DROP TABLE messages';
