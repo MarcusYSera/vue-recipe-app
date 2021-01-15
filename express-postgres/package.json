@@ -11,8 +11,9 @@
     "postpretty": "yarn lint --fix",
     "test": "nyc --reporter=html --reporter=text --reporter=lcov mocha -r @babel/register",
     "coverage": "nyc report --reporter=text-lcov | coveralls",
-    "runQuery": "babel-node ./src/utils/runQuery",
-    "clearQuery": "babel-node ./src/utils/clearQuery"
+    "createTableQuery": "babel-node ./src/utils/createTableQuery",
+    "insertQuery": "babel-node ./src/utils/insertQuery",
+    "dropAllTableQuery": "babel-node ./src/utils/dropAllTableQuery"
   },
   "dependencies": {
     "cookie-parser": "~1.4.4",

@@ -21,6 +21,7 @@ export const executeQueryArray = async (arr) =>
 export const dropForeignKeyTables = () => executeQueryArray([dropMessagesTable]);
 export const dropTables = () => executeQueryArray([dropUsersTable]);
 export const createForeignTables = () => executeQueryArray([createMessageTable]);
-export const createTables = () => executeQueryArray([createUserTable]);
-export const insertIntoTables = () => executeQueryArray([insertMessages, insertUsers]);
-export const insertForeignKeys = () => executeQueryArray([createUserMessageForeignKey]);
+export const createPrimaryTables = () => executeQueryArray([createUserTable]);
+export const insertPrimaryIntoTables = () => executeQueryArray([insertUsers]);
+export const insertForeignIntoTables = () => executeQueryArray([insertMessages]);
+export const addForeignKeys = () => executeQueryArray([createUserMessageForeignKey]);
