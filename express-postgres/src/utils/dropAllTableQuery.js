@@ -1,6 +1,6 @@
-import { dropForeignKeyTables, dropTables } from './queryFunctions';
+import { dropForeignKeyTables, dropPrimaryKeyTables } from './queryFunctions';
 
 (async () => {
   await dropForeignKeyTables();
-  await dropTables();
+  await dropPrimaryKeyTables();
 })();

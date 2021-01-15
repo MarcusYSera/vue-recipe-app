@@ -1,7 +1,7 @@
-import { createPrimaryTables, createForeignTables, addForeignKeys } from './queryFunctions';
+import { createPrimaryKeyTables, createForeignKeyTables, addForeignKeys } from './queryFunctions';
 
 (async () => {
-  await createPrimaryTables();
-  await createForeignTables();
+  await createPrimaryKeyTables();
+  await createForeignKeyTables();
   await addForeignKeys();
 })();

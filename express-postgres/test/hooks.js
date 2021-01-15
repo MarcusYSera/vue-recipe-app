@@ -1,20 +1,22 @@
 import {
-  dropTables,
+  dropPrimaryKeyTables,
   dropForeignKeyTables,
-  createTables,
-  createForeignTables,
-  insertIntoTables,
-  insertForeignKeys,
+  createPrimaryKeyTables,
+  createForeignKeyTables,
+  addForeignKeys,
+  insertPrimaryIntoTables,
+  insertForeignIntoTables,
 } from '../src/utils/queryFunctions';
 
 before(async () => {
-  await createTables();
-  await createForeignTables();
-  await insertForeignKeys();
-  await insertIntoTables();
+  await createPrimaryKeyTables();
+  await createForeignKeyTables();
+  await addForeignKeys();
+  await insertPrimaryIntoTables();
+  await insertForeignIntoTables();
 });
 
 after(async () => {
   await dropForeignKeyTables();
-  await dropTables();
+  await dropPrimaryKeyTables();
 });

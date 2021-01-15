@@ -1,11 +1,11 @@
 import { pool } from '../models/pool';
 import {
-  insertMessages,
-  dropMessagesTable,
-  createMessageTable,
-  insertUsers,
   dropUsersTable,
+  dropMessagesTable,
+  insertUsers,
+  insertMessages,
   createUserTable,
+  createMessageTable,
   createUserMessageForeignKey,
 } from './queries';
 
@@ -19,9 +19,9 @@ export const executeQueryArray = async (arr) =>
   });
 
 export const dropForeignKeyTables = () => executeQueryArray([dropMessagesTable]);
-export const dropTables = () => executeQueryArray([dropUsersTable]);
-export const createForeignTables = () => executeQueryArray([createMessageTable]);
-export const createPrimaryTables = () => executeQueryArray([createUserTable]);
+export const dropPrimaryKeyTables = () => executeQueryArray([dropUsersTable]);
+export const createForeignKeyTables = () => executeQueryArray([createMessageTable]);
+export const createPrimaryKeyTables = () => executeQueryArray([createUserTable]);
 export const insertPrimaryIntoTables = () => executeQueryArray([insertUsers]);
 export const insertForeignIntoTables = () => executeQueryArray([insertMessages]);
 export const addForeignKeys = () => executeQueryArray([createUserMessageForeignKey]);

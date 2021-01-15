@@ -11,14 +11,14 @@ describe('Messages', () => {
         res.body.messages.forEach((m) => {
           expect(m).to.have.property('message_id');
           expect(m).to.have.property('message');
-          // expect(m).to.have.property('user_id');
+          expect(m).to.have.property('user_fkid');
         });
         done();
       });
   });
 
   it('posts messages', (done) => {
-    const data = { message: 'new message', userId: 1 };
+    const data = { userFKID: 1, message: 'new message' };
     server
       .post(`${BASE_URL}/messages`)
       .send(data)
