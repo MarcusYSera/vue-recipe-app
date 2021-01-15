@@ -1,41 +1,41 @@
 export const createUserTable = `
-  DROP TABLE IF EXISTS users;
   CREATE TABLE IF NOT EXISTS users (
-    user_id INT GENERATED ALWAYS AS IDENTITY,
-    first_name VARCHAR DEFAULT '',
-    last_name VARCHAR DEFAULT '',
-    email VARCHAR DEFAULT '',
-    password VARCHAR DEFAULT '',
-    PRIMARY KEY(user_id)
-  )
+    USER_ID INT GENERATED ALWAYS AS IDENTITY,
+    FIRST_NAME VARCHAR DEFAULT '',
+    LAST_NAME VARCHAR DEFAULT '',
+    EMAIL VARCHAR DEFAULT '',
+    PASSWORD VARCHAR DEFAULT '',
+    PRIMARY KEY(USER_ID)
+  );
   `;
 
 export const insertUsers = `
-    INSERT INTO users(first_name, last_name, email, password)
-    VALUES ('maiko', 'imazawa', 'maiko@gmail.com', '1205'),
-    ('markie', 'sera', 'msera@gmail.com', '0208')
+  INSERT INTO users(FIRST_NAME, LAST_NAME, EMAIL, PASSWORD)
+  VALUES ('maiko', 'imazawa', 'maiko@gmail.com', '1205'),
+    ('markie', 'sera', 'msera@gmail.com', '0208');
 `;
 
-export const dropUsersTable = 'DROP TABLE users';
+export const dropUsersTable = 'DROP TABLE users;';
 
 export const createMessageTable = `
-DROP TABLE IF EXISTS messages;
-CREATE TABLE IF NOT EXISTS messages (
-  message_id INT GENERATED ALWAYS AS IDENTITY,
-  user_id INT DEFAULT 0,
-  message VARCHAR NOT NULL,
-  PRIMARY KEY(message_id)
-  )
-  `;
+  CREATE TABLE IF NOT EXISTS messages (
+    MESSAGE_ID INT GENERATED ALWAYS AS IDENTITY,
+    USER_FKID INT,
+    MESSAGE VARCHAR NOT NULL,
+    PRIMARY KEY(MESSAGE_ID)
+  );
+`;
 
 export const createUserMessageForeignKey = `
-alter table messages add foreign key (user_id) REFERENCES users(user_id);
+  ALTER TABLE messages
+  ADD FOREIGN KEY (USER_FKID)
+  REFERENCES users(USER_ID);
 `;
 
 export const insertMessages = `
-  INSERT INTO messages(message, user_id)
-  VALUES ('first message', 1),
-  ('second message', 2)
+  INSERT INTO messages(USER_FKID, MESSAGE)
+  VALUES (1,'first message'),
+  (2,'second message');
   `;
 
-export const dropMessagesTable = 'DROP TABLE messages';
+export const dropMessagesTable = 'DROP TABLE messages;';
