@@ -38,8 +38,9 @@ export const addUser = async (req, res) => {
 
 export const editUser = async (req, res) => {
   const { firstName, lastName, email, password } = req.body;
+  const { id } = req.params;
   const columns = 'first_name, last_name, email, password';
-  const clause = `email = '${email}'`;
+  const clause = `user_id = '${id}'`;
   const values = [];
   if (firstName) {
     values.push(`first_name = '${firstName}'`);

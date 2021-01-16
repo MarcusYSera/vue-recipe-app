@@ -19,6 +19,6 @@ indexRouter.post('/messages', addMessage);
 indexRouter.get('/users', usersPage);
 indexRouter.get('/users/findBy/:email', findUserByEmail);
 indexRouter.post('/users/create', addUser);
-indexRouter.post('/users/edit', editUser);
+indexRouter.put('/users/edit/:id', editUser);
 
 export default indexRouter;

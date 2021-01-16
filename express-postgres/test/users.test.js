@@ -28,11 +28,11 @@ describe('Users', () => {
         expect(res.status).to.equal(200);
         // console.log(res.body.users);
         res.body.users.forEach((u) => {
-        // expect(u).to.have.property('user_id');
-        expect(u).to.have.property('first_name');
-        expect(u).to.have.property('last_name');
-        expect(u).to.have.property('email');
-        expect(u).to.have.property('password');
+          // expect(u).to.have.property('user_id');
+          expect(u).to.have.property('first_name');
+          expect(u).to.have.property('last_name');
+          expect(u).to.have.property('email');
+          expect(u).to.have.property('password');
         });
         done();
       });
@@ -64,13 +64,14 @@ describe('Users', () => {
   });
 
   it('updates users', (done) => {
+    const id = 1;
     const data = {
       firstName: 'm',
       email: 'maiko@gmail.com',
       password: 'hello',
     };
     server
-      .post(`${BASE_URL}/users/edit`)
+      .put(`${BASE_URL}/users/edit/${id}`)
       .send(data)
       .expect(200)
       .end((err, res) => {
