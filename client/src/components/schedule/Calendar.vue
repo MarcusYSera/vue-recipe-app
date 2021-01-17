@@ -22,13 +22,13 @@
       <section class="grid-container dayNum">
         <!-- <div v-for="(value, index) in startDate" :key="index"></div> -->
         <div
-          v-for="index in days"
+          v-for="index in daysInMonth"
           :key="index"
           @click="clickedDate(index)"
           class="dayNum-item"
           :style="startDate"
         >
-          <p>
+          <p :class="{ circleToday: index === today }">
             {{ index }}
           </p>
           <!-- <img
@@ -48,9 +48,8 @@ export default {
   data() {
     return {
       month: null,
-      days: null,
-      currentDate: null,
-      currentMonth: null,
+      daysInMonth: null,
+      dayOfWeekNum: null,
     };
   },
   methods: {
@@ -59,49 +58,29 @@ export default {
     },
     getCurrentMonth() {
       const options = { month: 'long', day: 'numeric' };
-      [this.month, this.isToday] = new Date()
+      [this.month] = new Date()
         .toLocaleDateString(undefined, options)
         .split(' ');
     },
     getDaysInCurrentMonth() {
-      let [month, , year] = new Date().toLocaleDateString(undefined).split('/');
-      // this.currentDate = date;
-      let x = new Date(year, month, 0).toDateString();
-      this.days = parseInt(x.split(' ')[2]);
-    },
-    convertToNum(x) {
-      if (x === 'Sun') {
-        return 1;
-      } else if (x === 'Mon') {
-        return 2;
-      } else if (x === 'Tue') {
-        return 3;
-      } else if (x === 'Wed') {
-        return 4;
-      } else if (x === 'Thu') {
-        return 5;
-      } else if (x === 'Fri') {
-        return 6;
-      } else if (x === 'Sat') {
-        return 7;
-      }
-      return x;
+      var date = new Date();
+      this.daysInMonth = new Date(
+        date.getFullYear(),
+        date.getMonth() + 1,
+        0
+      ).getDate();
     },
   },
   computed: {
     startDate() {
-      let [month, , year] = new Date().toLocaleDateString(undefined).split('/');
-      let x = new Date(year, month - 1, 1).toDateString();
-      x = x.split(' ')[0];
-      x = this.convertToNum(x);
+      let date = new Date();
+      let firstOfMonth = new Date(date.getFullYear(), date.getMonth(), 1);
+      let x = new Date(firstOfMonth).getDay() + 1;
       return { '--grid-column': x };
-    },
-    isTodayComputed(x) {
-      return x;
     },
   },
   created() {
-    this.currentDate = new Date().getDate();
+    this.today = new Date().getDate();
   },
   mounted() {
     this.getCurrentMonth();
@@ -153,6 +132,10 @@ export default {
   height: 100%;
   width: 100%;
   position: relative;
+}
+.circleToday {
+  background-color: #7dcea0;
+  border-radius: 50%;
 }
 .dayNum-item:first-child {
   grid-column: var(--grid-column);
