@@ -98,12 +98,11 @@ export default {
 .calendar-aside-body {
   margin: 0 1vw;
   padding: 2vh 0;
-  border-top: 2px solid black;
+  border-top: 2px solid #f3f3f313;
 }
 .calendar-header {
   justify-content: center;
-  border-bottom: 2px solid #f3f3f3;
-  /* outline: 2px solid black; */
+  border-bottom: 2px solid rgba(0, 0, 0, 0.178);
   padding: 4vh 0;
   margin: 0 1vw;
 }
@@ -115,6 +114,9 @@ export default {
 }
 .cal-button:focus {
   outline: none;
+}
+.cal-button:hover {
+  color: white;
 }
 .cal-month {
   margin: 0 1vw;
