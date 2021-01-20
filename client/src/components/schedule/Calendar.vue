@@ -1,11 +1,11 @@
 <template>
   <aside class=" flex-container column calendar-aside-main">
     <header class="flex-container row calendar-header">
-      <button class="cal-button">
+      <button class="cal-button" @click="changeMonth('prev')">
         &lsaquo;
       </button>
       <h3 class="cal-month">{{ month }}</h3>
-      <button class="cal-button">
+      <button class="cal-button" @click="changeMonth('next')">
         &rsaquo;
       </button>
     </header>
@@ -48,11 +48,19 @@ export default {
   data() {
     return {
       month: null,
+      viewedDate: null,
       daysInMonth: null,
       dayOfWeekNum: null,
     };
   },
   methods: {
+    changeMonth(x) {
+      if (x === 'prev') {
+        console.log('prev');
+      } else if (x === 'next') {
+        console.log('next');
+      }
+    },
     clickedDate(x) {
       this.$emit('calendar-click-date', x);
     },
