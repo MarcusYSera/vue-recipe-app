@@ -2,11 +2,11 @@
   <aside class=" flex-container column calendar-aside-main">
     <header class="flex-container row calendar-header">
       <button class="cal-button">
-        <img src="@/assets/svg/prevArrow.svg" />
+        &lsaquo;
       </button>
       <h3 class="cal-month">{{ month }}</h3>
       <button class="cal-button">
-        <img src="@/assets/svg/nextArrow.svg" />
+        &rsaquo;
       </button>
     </header>
     <article class="flex-container column calendar-aside-body">
@@ -95,24 +95,30 @@ export default {
   width: 40vw;
   background: #2c3355af;
 }
+.calendar-aside-body {
+  margin: 0 1vw;
+  padding: 2vh 0;
+  border-top: 2px solid black;
+}
 .calendar-header {
   justify-content: center;
-  border-bottom: 2px solid black;
+  border-bottom: 2px solid #f3f3f3;
+  /* outline: 2px solid black; */
   padding: 4vh 0;
+  margin: 0 1vw;
 }
 .cal-button {
   padding: 0;
   border: 0;
+  background: none;
+  font-size: 1.5em;
 }
 .cal-button:focus {
   outline: none;
 }
-.cal-button img {
-  width: 100%;
-  height: 100%;
-}
 .cal-month {
   margin: 0 1vw;
+  padding-top: 0.33vh;
 }
 .calendar-aside-body {
   height: 40%;
