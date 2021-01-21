@@ -10,6 +10,12 @@
 
 ---
 
+Early Rendition of Schedule Page
+
+![Schedule](https://raw.githubusercontent.com/MarcusYSera/vue-recipe-app/master/img/ScheduleView_v1.png)
+
+---
+
 ### Notes
 
 - Vue3
