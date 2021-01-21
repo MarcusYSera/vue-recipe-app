@@ -4,7 +4,7 @@
       <button class="cal-button" @click="changeMonth('prev')">
         &lsaquo;
       </button>
-      <h3 class="cal-month">{{ month }}</h3>
+      <h3 class="cal-month">{{ month }} {{ displayedYear }}</h3>
       <button class="cal-button" @click="changeMonth('next')">
         &rsaquo;
       </button>
@@ -48,27 +48,46 @@ export default {
   data() {
     return {
       month: null,
-      viewedDate: null,
+      displayedDate: null,
+      displayedMonth: null,
+      displayedYear: null,
       daysInMonth: null,
       dayOfWeekNum: null,
     };
   },
   methods: {
+    calculateMonth(x, y) {
+      const options = { month: 'long' };
+      if ((x, y)) {
+        [this.month] = new Date(x, y)
+          .toLocaleDateString(undefined, options)
+          .split(' ');
+      } else {
+        [this.month] = new Date()
+          .toLocaleDateString(undefined, options)
+          .split(' ');
+      }
+    },
     changeMonth(x) {
       if (x === 'prev') {
-        console.log('prev');
+        this.displayedMonth = this.displayedDate.getMonth() - 1;
+        this.calculateMonth(this.displayedYear, this.displayedMonth);
+        if (this.displayedMonth === -1) {
+          this.displayedMonth = 11;
+          this.displayedYear--;
+        }
       } else if (x === 'next') {
-        console.log('next');
+        this.displayedMonth = this.displayedDate.getMonth() + 1;
+        this.calculateMonth(this.displayedYear, this.displayedMonth);
+        if (this.displayedMonth === 12) {
+          this.displayedMonth = 0;
+          this.displayedYear++;
+        }
       }
+      this.displayedDate = new Date(this.displayedYear, this.displayedMonth);
     },
     clickedDate(x) {
       this.$emit('calendar-click-date', x);
-    },
-    getCurrentMonth() {
-      const options = { month: 'long', day: 'numeric' };
-      [this.month] = new Date()
-        .toLocaleDateString(undefined, options)
-        .split(' ');
     },
     getDaysInCurrentMonth() {
       var date = new Date();
@@ -91,7 +110,9 @@ export default {
     this.today = new Date().getDate();
   },
   mounted() {
-    this.getCurrentMonth();
+    this.calculateMonth();
+    this.displayedDate = new Date();
+    this.displayedYear = this.displayedDate.getFullYear();
     this.getDaysInCurrentMonth();
   },
 };
