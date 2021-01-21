@@ -1,13 +1,18 @@
 <template>
   <aside class=" flex-container column calendar-aside-main">
-    <header class="flex-container row calendar-header">
-      <button class="cal-button" @click="changeMonth('prev')">
-        &lsaquo;
-      </button>
-      <h3 class="cal-month">{{ month }} {{ displayedYear }}</h3>
-      <button class="cal-button" @click="changeMonth('next')">
-        &rsaquo;
-      </button>
+    <header class="flex-container column calendar-header">
+      <nav class="flex-container row">
+        <button class="cal-button" @click="changeMonth('prev')">
+          &lsaquo;
+        </button>
+        <h3 class="cal-month">{{ month }} {{ displayedYear }}</h3>
+        <button class="cal-button" @click="changeMonth('next')">
+          &rsaquo;
+        </button>
+      </nav>
+      <p class="flex-container resetBtnDiv">
+        <button class="resetDateBtn" @click="resetDate()">Today</button>
+      </p>
     </header>
     <article class="flex-container column calendar-aside-body">
       <section class="grid-container dayAbbreviations">
@@ -27,7 +32,14 @@
           class="dayNum-item"
           :style="startDate"
         >
-          <p :class="{ circleToday: index === today }">
+          <p
+            :class="{
+              circleToday:
+                index === todayDay &&
+                month === todayMonth &&
+                displayedYear === todayYear,
+            }"
+          >
             {{ index }}
           </p>
         </div>
@@ -42,7 +54,9 @@ export default {
   data() {
     return {
       month: null,
-      today: null,
+      todayDay: null,
+      todayMonth: null,
+      todayYear: null,
       displayedDate: null,
       displayedMonth: null,
       displayedYear: null,
@@ -52,15 +66,16 @@ export default {
   },
   methods: {
     calculateMonth(x) {
-      const options = { month: 'long' };
+      const options = { month: 'long', day: 'numeric', year: 'numeric' };
       if (x) {
         [this.month] = new Date(this.displayedYear, this.displayedMonth)
           .toLocaleDateString(undefined, options)
           .split(' ');
       } else {
-        [this.month] = new Date()
+        [this.month, , this.todayYear] = new Date()
           .toLocaleDateString(undefined, options)
           .split(' ');
+        this.todayMonth = this.month;
       }
     },
     changeMonth(x) {
@@ -98,10 +113,15 @@ export default {
         0
       ).getDate();
     },
+    resetDate() {
+      this.calculateMonth();
+      this.displayedDate = new Date();
+      this.displayedYear = this.displayedDate.getFullYear().toString();
+      this.getDaysInCurrentMonth();
+    },
   },
   computed: {
     startDate() {
-      // let date = new Date();
       let firstOfMonth = new Date(
         this.displayedDate.getFullYear(),
         this.displayedDate.getMonth(),
@@ -112,13 +132,10 @@ export default {
     },
   },
   created() {
-    this.today = new Date().getDate();
+    this.todayDay = new Date().getDate();
   },
   mounted() {
-    this.calculateMonth();
-    this.displayedDate = new Date();
-    this.displayedYear = this.displayedDate.getFullYear();
-    this.getDaysInCurrentMonth();
+    this.resetDate();
   },
 };
 </script>
@@ -127,7 +144,18 @@ export default {
 .calendar-aside-main {
   flex: initial;
   width: 40vw;
-  background: #2c3355af;
+  background: #ffffff;
+  position: relative;
+}
+.calendar-aside-main:after {
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  background-color: #2a2e418f;
+  top: 0;
+  right: 0;
+  display: block;
+  content: '';
 }
 .calendar-aside-body {
   margin: 0 1vw;
@@ -135,26 +163,51 @@ export default {
   border-top: 2px solid #f3f3f313;
 }
 .calendar-header {
-  justify-content: center;
   border-bottom: 2px solid rgba(0, 0, 0, 0.178);
-  padding: 4vh 0;
+  padding: 4vh 0 1vh;
   margin: 0 1vw;
 }
-.cal-button {
+.calendar-header > * {
+  justify-content: center;
+}
+.calendar-header .cal-button {
   padding: 0;
   border: 0;
   background: none;
+}
+.resetBtnDiv {
+  padding: 1vh 0 0 0;
+}
+.cal-button,
+.dayNum-item p,
+.cal-month,
+.resetDateBtn,
+.dayAbbreviations {
+  z-index: 1;
+  color: #e4e4e4;
+}
+.calendar-header .cal-button {
   font-size: 1.5em;
 }
-.cal-button:focus {
+.resetDateBtn {
+  background: none;
+  border: 1px solid white;
+  border-radius: 20%;
+  width: 4em;
+}
+.cal-button:focus,
+.resetDateBtn:focus {
   outline: none;
 }
-.cal-button:hover {
+.cal-button:hover,
+.resetDateBtn:hover {
   color: white;
 }
 .cal-month {
   margin: 0 1vw;
   padding-top: 0.33vh;
+  width: 7em;
+  text-align: center;
 }
 .calendar-aside-body {
   height: 40%;
@@ -186,7 +239,6 @@ export default {
   position: absolute;
   top: 30%;
   left: 45%;
-  z-index: 1;
 }
 .dayNum-item img {
   position: relative;

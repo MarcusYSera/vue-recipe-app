@@ -67,7 +67,7 @@ export default {
       console.log(term);
     },
     createDate() {
-      let options = { month: 'long', year: 'numeric', day: 'numeric' };
+      let options = { month: 'long', day: 'numeric', year: 'numeric' };
       [
         this.currentMonth,
         this.currentDate,
