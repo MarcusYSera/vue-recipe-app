@@ -64,12 +64,12 @@ a {
   padding: 4vh 2vw 0 2vw;
 }
 .secondary > * {
-  padding-top: 4.5vh;
+  margin-top: 4.5vh;
   list-style-type: none;
 }
 .selectedButton {
-  border-left: 2px grey solid;
-  background-color: grey;
+  box-shadow: -0.25rem 0 0 0 grey;
+  /* background-color: grey; */
 }
 .hamburgerMenu-button {
   border: none;
