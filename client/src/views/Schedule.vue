@@ -2,7 +2,7 @@
   <main class="flex-container row home-main">
     <article class="flex-container column schedule-article">
       <header class="flex-container row schedule-header">
-        <section>{{ currentDate }} {{ currentMonth }}</section>
+        <section>{{ currentMonth }} {{ currentDate }}</section>
         <nav class="flex-container row schedule-header-right">
           <SearchBar @search-query="onSearchTerm"></SearchBar>
           <AddEvent></AddEvent>
@@ -38,6 +38,7 @@ export default {
     return {
       currentMonth: null,
       currentDate: null,
+      currentYear: null,
       // hour: null,
       // minute: null,
       taskTime: null,
@@ -48,8 +49,9 @@ export default {
   methods: {
     calClickDate(x) {
       // create new variable, to account for a today button which resets calendar view
-      this.currentDate = x;
-      console.log(x);
+      this.currentMonth = x.currentMonth;
+      this.currentDate = x.currentDate;
+      this.currentYear = x.currentYear;
     },
     timeRefData(x) {
       // console.log(x);
@@ -65,11 +67,13 @@ export default {
       console.log(term);
     },
     createDate() {
-      let options = { month: 'long', day: 'numeric' };
-
-      [this.currentMonth, this.currentDate] = new Date()
-        .toLocaleDateString('en-US', options)
-        .split(' ');
+      let options = { month: 'long', year: 'numeric', day: 'numeric' };
+      [
+        this.currentMonth,
+        this.currentDate,
+        this.currentYear,
+      ] = new Date().toLocaleDateString('en-US', options).split(' ');
+      this.currentDate = this.currentDate.split(',')[0];
       // .split('/');
       // [this.hour, this.minute] = new Date()
       //   .toLocaleTimeString('en-US')

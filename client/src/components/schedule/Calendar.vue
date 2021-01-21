@@ -20,7 +20,6 @@
         <h6 ref="6">Sat</h6>
       </section>
       <section class="grid-container dayNum">
-        <!-- <div v-for="(value, index) in startDate" :key="index"></div> -->
         <div
           v-for="index in daysInMonth"
           :key="index"
@@ -31,11 +30,6 @@
           <p :class="{ circleToday: index === today }">
             {{ index }}
           </p>
-          <!-- <img
-            src="@/assets/svg/calCircle.svg"
-            v-if="index === currentDate"
-            class="today"
-          /> -->
         </div>
       </section>
     </article>
@@ -48,6 +42,7 @@ export default {
   data() {
     return {
       month: null,
+      today: null,
       displayedDate: null,
       displayedMonth: null,
       displayedYear: null,
@@ -56,10 +51,10 @@ export default {
     };
   },
   methods: {
-    calculateMonth(x, y) {
+    calculateMonth(x) {
       const options = { month: 'long' };
-      if ((x, y)) {
-        [this.month] = new Date(x, y)
+      if (x) {
+        [this.month] = new Date(this.displayedYear, this.displayedMonth)
           .toLocaleDateString(undefined, options)
           .split(' ');
       } else {
@@ -71,37 +66,47 @@ export default {
     changeMonth(x) {
       if (x === 'prev') {
         this.displayedMonth = this.displayedDate.getMonth() - 1;
-        this.calculateMonth(this.displayedYear, this.displayedMonth);
+        this.calculateMonth(x);
         if (this.displayedMonth === -1) {
           this.displayedMonth = 11;
           this.displayedYear--;
         }
       } else if (x === 'next') {
         this.displayedMonth = this.displayedDate.getMonth() + 1;
-        this.calculateMonth(this.displayedYear, this.displayedMonth);
+        this.calculateMonth(x);
         if (this.displayedMonth === 12) {
           this.displayedMonth = 0;
           this.displayedYear++;
         }
       }
       this.displayedDate = new Date(this.displayedYear, this.displayedMonth);
+      this.getDaysInCurrentMonth();
     },
     clickedDate(x) {
-      this.$emit('calendar-click-date', x);
+      let newObj = {
+        currentDate: x,
+        currentMonth: this.month,
+        currentYear: this.displayedYear,
+      };
+      this.$emit('calendar-click-date', newObj);
     },
     getDaysInCurrentMonth() {
-      var date = new Date();
+      // var date = new Date();
       this.daysInMonth = new Date(
-        date.getFullYear(),
-        date.getMonth() + 1,
+        this.displayedDate.getFullYear(),
+        this.displayedDate.getMonth() + 1,
         0
       ).getDate();
     },
   },
   computed: {
     startDate() {
-      let date = new Date();
-      let firstOfMonth = new Date(date.getFullYear(), date.getMonth(), 1);
+      // let date = new Date();
+      let firstOfMonth = new Date(
+        this.displayedDate.getFullYear(),
+        this.displayedDate.getMonth(),
+        1
+      );
       let x = new Date(firstOfMonth).getDay() + 1;
       return { '--grid-column': x };
     },
