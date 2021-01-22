@@ -13,7 +13,7 @@
         <router-link :to="category">{{ category }}</router-link>
       </h3>
       <h3 v-if="signedIn"><router-link>Sign Out</router-link></h3>
-      <h3 v-else><router-link to="signin">Sign In</router-link></h3>
+      <h3 v-else><router-link to="login">Login</router-link></h3>
     </nav>
   </header>
 </template>

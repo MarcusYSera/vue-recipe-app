@@ -2,7 +2,9 @@ import { createRouter, createWebHistory } from 'vue-router';
 // import Home from '../views/Home.vue';
 import Schedule from '@/views/Schedule';
 import Profile from '@/views/Profile';
-import SignIn from '@/views/SignIn';
+
+import SignUp from '@/views/signup/SignUp';
+import Login from '@/views/signup/Login';
 
 const routes = [
   {
@@ -20,7 +22,8 @@ const routes = [
       import(/* webpackChunkName: "about" */ '../views/Recipe.vue'),
   },
   { path: '/profile', name: 'Profile', component: Profile },
-  { path: '/signin', name: 'SignIn', component: SignIn },
+  { path: '/signup', name: 'SignUp', component: SignUp },
+  { path: '/login', name: 'Login', component: Login },
   {
     path: '/:pathMatch(.*)*',
     redirect: '/schedule',
