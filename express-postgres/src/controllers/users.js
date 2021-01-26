@@ -17,7 +17,6 @@ export const findUserByEmail = async (req, res) => {
   const clause = `WHERE email = '${email}'`;
   try {
     const data = await usersModel.select(columns, clause);
-    console.log(data.rows[0]);
     res.status(200).json({ users: data.rows });
   } catch (err) {
     res.status(200).json({ users: err.stack });
@@ -28,6 +27,7 @@ export const addUser = async (req, res) => {
   const { firstName, lastName, email, password } = req.body;
   const columns = 'first_name, last_name, email, password';
   const values = `'${firstName}', '${lastName}', '${email}', '${password}'`;
+  
   try {
     const data = await usersModel.insertWithReturn(columns, values);
     res.status(200).json({ users: data.rows });
