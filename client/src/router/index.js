@@ -26,6 +26,7 @@ const routes = [
   { path: '/login', name: 'Login', component: Login },
   {
     path: '/:pathMatch(.*)*',
+    // path: '*',
     redirect: '/schedule',
   },
 ];
