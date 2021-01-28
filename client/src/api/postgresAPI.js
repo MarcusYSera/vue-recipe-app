@@ -16,4 +16,16 @@ export default {
       });
     return responseBack;
   },
+  async getUserByEmail(email) {
+    let responseBack = await axios
+      .get(`${POSTGRES_SERVER}/users/findBy/${email}`)
+      .then(res => {
+        // console.log(res.data.users);
+        return res.data.users;
+      })
+      .catch(err => {
+        return err;
+      });
+    return responseBack;
+  },
 };

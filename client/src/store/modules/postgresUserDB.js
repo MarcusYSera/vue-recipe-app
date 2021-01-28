@@ -5,7 +5,7 @@ const state = { user: null };
 const getters = { user: state => state.user };
 
 const actions = {
-  createUser: ({ commit }, newUser) => {
+  createUser({ commit }, newUser) {
     return new Promise((resolve, reject) => {
       // console.log('vuex newUserArr');
       // console.log(newUserArr);
@@ -21,6 +21,22 @@ const actions = {
             email: res.email,
           });
           resolve();
+        })
+        .catch(err => {
+          console.log(err);
+          reject(err);
+        });
+    });
+  },
+  getUserByEmail({ commit }, email) {
+    return new Promise((resolve, reject) => {
+      api
+        .getUserByEmail(email)
+        .then(res => {
+          // console.log('vuex res');
+          // console.log(res);
+          commit;
+          resolve(res);
         })
         .catch(err => {
           console.log(err);
