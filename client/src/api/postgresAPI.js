@@ -9,7 +9,8 @@ export default {
       .then(res => {
         // console.log('direct response from server');
         // console.log(res.data.users[0]);
-        return res.data.users[0];
+        // return res.data.users[0];
+        return res;
       })
       .catch(err => {
         return err;
@@ -21,7 +22,7 @@ export default {
       .get(`${POSTGRES_SERVER}/users/findBy/${email}`)
       .then(res => {
         // console.log(res.data.users);
-        return res.data.users;
+        return res;
       })
       .catch(err => {
         return err;

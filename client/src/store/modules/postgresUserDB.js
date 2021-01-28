@@ -1,24 +1,31 @@
 import api from '../../api/postgresAPI';
+// import router from '../../router';
 
 const state = { user: null };
 
-const getters = { user: state => state.user };
+const getters = {
+  user: state => state.user,
+  isLoggedIn: state => !!state.user,
+};
 
 const actions = {
   createUser({ commit }, newUser) {
     return new Promise((resolve, reject) => {
-      // console.log('vuex newUserArr');
-      // console.log(newUserArr);
       api
         .createUser(newUser)
         .then(res => {
-          // console.log('res back from api response');
-          // console.log(res);
-          commit('setNewUser', {
-            id: res.user_id,
-            firstName: res.first_name,
-            lastName: res.last_name,
-            email: res.email,
+          let { user_id, first_name, last_name, email } = res.data.users[0];
+          commit('setUser', {
+            id: user_id,
+            firstName: first_name,
+            lastName: last_name,
+            email: email,
+          });
+          window.localStorage.setItem('user', {
+            id: user_id,
+            firstName: first_name,
+            lastName: last_name,
+            email: email,
           });
           resolve();
         })
@@ -33,9 +40,21 @@ const actions = {
       api
         .getUserByEmail(email)
         .then(res => {
-          // console.log('vuex res');
-          // console.log(res);
-          commit;
+          if (res.data.users.length > 0) {
+            let { user_id, first_name, last_name, email } = res.data.users[0];
+            commit('setUser', {
+              id: user_id,
+              firstName: first_name,
+              lastName: last_name,
+              email: email,
+            });
+            window.localStorage.setItem('user', {
+              id: user_id,
+              firstName: first_name,
+              lastName: last_name,
+              email: email,
+            });
+          }
           resolve(res);
         })
         .catch(err => {
@@ -44,10 +63,14 @@ const actions = {
         });
     });
   },
+  logout: ({ commit }) => {
+    commit('setUser', null);
+    window.localStorage.clear();
+  },
 };
 
 const mutations = {
-  setNewUser: (state, newUser) => {
+  setUser: (state, newUser) => {
     state.user = newUser;
   },
 };

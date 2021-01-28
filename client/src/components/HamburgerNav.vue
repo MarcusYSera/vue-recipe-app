@@ -12,24 +12,31 @@
       >
         <router-link :to="{ name: category }">{{ category }}</router-link>
       </h3>
-      <h3 v-if="signedIn"><router-link>Sign Out</router-link></h3>
+      <h3 v-if="isLoggedIn" @click="logout">Sign Out</h3>
       <h3 v-else><router-link :to="{ name: 'login' }">Login</router-link></h3>
+      <p v-if="user">{{ user.firstName }}</p>
     </nav>
   </header>
 </template>
 
 <script>
+import { mapGetters, mapActions } from 'vuex';
+
 export default {
   name: 'HamburgerNav',
   data() {
     return {
       open: false,
       openItem: 'schedule',
-      signedIn: false,
+      // signedIn: false,
       navCategories: ['schedule', 'recipe', 'profile'],
     };
   },
+  computed: {
+    ...mapGetters(['isLoggedIn', 'user']),
+  },
   methods: {
+    ...mapActions(['logout']),
     itemOpen(itemName) {
       this.openItem = itemName;
     },

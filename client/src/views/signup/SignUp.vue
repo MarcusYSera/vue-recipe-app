@@ -41,6 +41,7 @@
 <script>
 import { mapActions, mapGetters } from 'vuex';
 import bcrypt from 'bcryptjs';
+import router from '../../router';
 
 export default {
   name: 'SignUp',
@@ -72,7 +73,7 @@ export default {
         this.errors.push('Invalid Email');
       } else {
         await this.getUserByEmail(this.email).then(async res => {
-          if (res.length > 0) {
+          if (res.data.users.length > 0) {
             this.errors.push('User Already Exists');
           }
         });
@@ -92,6 +93,7 @@ export default {
           password: this.password,
         };
         await this.createUser(newUser);
+        router.push('/schedule');
         this.firstName = '';
         this.lastName = '';
         this.email = '';

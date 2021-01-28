@@ -3,6 +3,7 @@
     <article class="flex-container column schedule-article">
       <header class="flex-container row schedule-header">
         <section>{{ currentMonth }} {{ currentDate }}</section>
+        <h4 v-if="user">{{ user.firstName }}</h4>
         <nav class="flex-container row schedule-header-right">
           <SearchBar @search-query="onSearchTerm"></SearchBar>
           <AddEvent></AddEvent>
@@ -31,6 +32,8 @@ import ToDo from '@/components/schedule/ToDo';
 import CalendarComponent from '@/components/schedule/Calendar';
 import AddEvent from '@/components/schedule/AddEvent';
 
+import { mapGetters } from 'vuex';
+
 export default {
   name: 'Schedule',
   components: { SearchBar, TimeBar, ToDo, CalendarComponent, AddEvent },
@@ -46,6 +49,7 @@ export default {
       openCalendar: false,
     };
   },
+  computed: { ...mapGetters(['user']) },
   methods: {
     calClickDate(x) {
       // create new variable, to account for a today button which resets calendar view
