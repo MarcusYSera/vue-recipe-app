@@ -1,8 +1,7 @@
 import { createStore } from 'vuex';
 
+import postgresUserDB from './modules/postgresUserDB';
+
 export default createStore({
-  state: {},
-  mutations: {},
-  actions: {},
-  modules: {},
+  modules: { postgresUserDB },
 });

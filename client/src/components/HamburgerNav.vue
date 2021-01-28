@@ -10,10 +10,10 @@
         @click="itemOpen(category)"
         :class="{ selectedButton: openItem === category }"
       >
-        <router-link :to="category">{{ category }}</router-link>
+        <router-link :to="{ name: category }">{{ category }}</router-link>
       </h3>
       <h3 v-if="signedIn"><router-link>Sign Out</router-link></h3>
-      <h3 v-else><router-link to="login">Login</router-link></h3>
+      <h3 v-else><router-link :to="{ name: 'login' }">Login</router-link></h3>
     </nav>
   </header>
 </template>
@@ -26,7 +26,7 @@ export default {
       open: false,
       openItem: 'schedule',
       signedIn: false,
-      navCategories: ['Schedule', 'Recipe', 'Profile'],
+      navCategories: ['schedule', 'recipe', 'profile'],
     };
   },
   methods: {

@@ -9,23 +9,24 @@ import Login from '@/views/signup/Login';
 const routes = [
   {
     path: '/schedule',
-    name: 'Schedule',
+    name: 'schedule',
     component: Schedule,
   },
   {
     path: '/recipe',
-    name: 'Recipe',
+    name: 'recipe',
     // route level code-splitting
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
     component: () =>
       import(/* webpackChunkName: "about" */ '../views/Recipe.vue'),
   },
-  { path: '/profile', name: 'Profile', component: Profile },
-  { path: '/signup', name: 'SignUp', component: SignUp },
-  { path: '/login', name: 'Login', component: Login },
+  { path: '/profile', name: 'profile', component: Profile },
+  { path: '/signup', name: 'signup', component: SignUp },
+  { path: '/login', name: 'login', component: Login },
   {
     path: '/:pathMatch(.*)*',
+    name: 'home',
     // path: '*',
     redirect: '/schedule',
   },
