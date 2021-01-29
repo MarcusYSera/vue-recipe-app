@@ -8,6 +8,7 @@ const app = express();
 
 const corsOptions = {
   origin: 'http://localhost:8080',
+  // origin: 'https://www.project-melon-bread.com',
 };
 app.use(cors(corsOptions));
 
