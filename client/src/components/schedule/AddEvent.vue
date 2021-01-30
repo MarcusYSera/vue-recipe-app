@@ -103,19 +103,20 @@ export default {
 
 <style scoped>
 .start-or-end-button-group button {
-  border-radius: 15%;
-  padding: 0 1.5vw;
+  border-radius: 8px;
+  padding: 0 1vw;
+  margin: 0 0.4vw;
 }
 .start-or-end-button-group > * {
-  height: 3vh;
+  height: 3.5vh;
   display: inline;
   position: relative;
 }
 .or-text {
   z-index: 100;
   margin: 0 -1vw;
-  padding: 0 0.5vw;
-  border-radius: 25px;
+  padding: 0 0.25vw;
+  border-radius: 12px;
   background-color: #ffffff;
 }
 .end-button {
@@ -144,7 +145,7 @@ export default {
   outline: none;
 }
 /* .addevent-form > * { */
-  /* margin: 1vh 2vw; */
+/* margin: 1vh 2vw; */
 /* } */
 .recipe-name,
 .start-or-end-button-group button {
@@ -177,6 +178,7 @@ export default {
   border: 1px solid #7dcea0;
   width: 30%;
   color: #7dcea0;
+  border-radius: 5px;
   background-color: #ffffff;
 }
 .recipe-name {

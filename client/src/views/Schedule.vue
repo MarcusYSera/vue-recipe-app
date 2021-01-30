@@ -32,7 +32,10 @@ import ToDo from '@/components/schedule/ToDo';
 import CalendarComponent from '@/components/schedule/Calendar';
 import AddEvent from '@/components/schedule/AddEvent';
 
-import { mapGetters } from 'vuex';
+import {
+  mapGetters,
+  // mapState,
+} from 'vuex';
 
 export default {
   name: 'Schedule',
@@ -49,7 +52,10 @@ export default {
       openCalendar: false,
     };
   },
-  computed: { ...mapGetters(['user']) },
+  computed: {
+    ...mapGetters(['user']),
+    // ...mapState(['user']),
+  },
   methods: {
     calClickDate(x) {
       // create new variable, to account for a today button which resets calendar view
@@ -85,13 +91,16 @@ export default {
     },
   },
   created() {
+    if (this.user) {
+      console.log(this.user);
+    }
     this.createDate();
   },
-  // mounted() {
-  //   if (this.taskTime && this.timeArr) {
-  //     console.log(this.timeArr.findIndex(el => el === this.taskTime));
-  //   }
-  // },
+  mounted() {
+    //   if (this.taskTime && this.timeArr) {
+    //     console.log(this.timeArr.findIndex(el => el === this.taskTime));
+    //   }
+  },
 };
 </script>
 

@@ -192,7 +192,6 @@ export default {
 .resetDateBtn {
   background: none;
   border: 1px solid white;
-  border-radius: 20%;
   width: 4em;
 }
 .cal-button:focus,

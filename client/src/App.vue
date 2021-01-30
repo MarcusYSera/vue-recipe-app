@@ -21,6 +21,9 @@ export default {
 </script>
 
 <style>
+button {
+  border-radius: 5px;
+}
 html {
   font-size: 16px;
 }

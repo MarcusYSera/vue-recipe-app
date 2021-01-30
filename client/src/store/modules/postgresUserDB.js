@@ -1,7 +1,7 @@
 import api from '../../api/postgresAPI';
 // import router from '../../router';
 
-const state = { user: null };
+const state = { user: JSON.parse(window.localStorage.getItem('user')) };
 
 const getters = {
   user: state => state.user,
@@ -21,12 +21,15 @@ const actions = {
             lastName: last_name,
             email: email,
           });
-          window.localStorage.setItem('user', {
-            id: user_id,
-            firstName: first_name,
-            lastName: last_name,
-            email: email,
-          });
+          window.localStorage.setItem(
+            'user',
+            JSON.stringify({
+              id: user_id,
+              firstName: first_name,
+              lastName: last_name,
+              email: email,
+            })
+          );
           resolve();
         })
         .catch(err => {
@@ -50,20 +53,21 @@ const actions = {
     });
   },
   login: ({ commit }, user) => {
-    console.log('login route');
-    console.log(user);
     commit('setUser', {
       id: user.user_id,
       firstName: user.first_name,
       lastName: user.last_name,
       email: user.email,
     });
-    window.localStorage.setItem('user', {
-      id: user.user_id,
-      firstName: user.first_name,
-      lastName: user.last_name,
-      email: user.email,
-    });
+    window.localStorage.setItem(
+      'user',
+      JSON.stringify({
+        id: user.user_id,
+        firstName: user.first_name,
+        lastName: user.last_name,
+        email: user.email,
+      })
+    );
   },
   logout: ({ commit }) => {
     commit('setUser', null);
