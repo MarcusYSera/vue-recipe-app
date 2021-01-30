@@ -143,12 +143,13 @@ export default {
   border-left: 1px solid #d9d9d9;
 }
 .login-input > * {
+  height: 4vh;
   border-style: solid;
   border-width: 1px;
   border-color: #d9d9d9;
-  margin: 1vh 2vh;
+  margin: 1vh 4vw;
 }
 .login-input button {
-  margin: 1vh 12vh;
+  margin: 1vh 10vw;
 }
 </style>

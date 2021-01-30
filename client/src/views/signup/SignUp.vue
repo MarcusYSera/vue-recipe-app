@@ -146,12 +146,13 @@ export default {
   margin: 1vh;
 }
 .signup-form > * {
-  margin: 1vh 2vh;
+  height: 4vh;
+  margin: 1vh 4vw;
   border-style: solid;
   border-width: 1px;
   border-color: #d9d9d9;
 }
 .signup-form button {
-  margin: 1vh 12vh;
+  margin: 1vh 10vw;
 }
 </style>
