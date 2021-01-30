@@ -1,13 +1,16 @@
 <template>
-  <article>
-    <section>
+  <article class="flex-container row login-main-article">
+    <section class="flex-container column login-form-section">
       <h3>Login</h3>
       <div v-if="errors.length">
         <ul>
           <li v-for="error in errors" :key="error">{{ error }}</li>
         </ul>
       </div>
-      <form @submit.prevent="onSubmit">
+      <form
+        @submit.prevent="onSubmit"
+        class="flex-container column login-input"
+      >
         <input
           type="text"
           placeholder="Email"
@@ -25,7 +28,7 @@
         <button type="submit" value="Submit">Login</button>
       </form>
     </section>
-    <section>
+    <section class="login-bottom-section">
       <p>Need an Account?</p>
       <router-link :to="{ name: 'signup' }" tag="button">
         Create Account
@@ -103,4 +106,49 @@ export default {
 };
 </script>
 
-<style scoped></style>
+<style scoped>
+.login-main-article {
+  height: 100%;
+  width: 100%;
+  justify-content: center;
+  background: #ffffff;
+  position: relative;
+}
+.login-main-article:after {
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  top: 0;
+  right: 0;
+  display: block;
+  content: '';
+  background-color: #00000013;
+}
+.login-form-section,
+.login-bottom-section {
+  z-index: 1;
+  background: #ffffff;
+  text-align: center;
+  height: 30%;
+  width: 30%;
+  padding: 1vh;
+}
+.login-main-article > *,
+.login-bottom-section > * {
+  align-self: center;
+}
+/* .login-input {
+} */
+.login-bottom-section {
+  border-left: 1px solid #d9d9d9;
+}
+.login-input > * {
+  border-style: solid;
+  border-width: 1px;
+  border-color: #d9d9d9;
+  margin: 1vh 2vh;
+}
+.login-input button {
+  margin: 1vh 12vh;
+}
+</style>
