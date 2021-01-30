@@ -58,7 +58,7 @@ export default {
     ...mapGetters(['user', 'loggedIn']),
   },
   methods: {
-    ...mapActions(['getUserByEmail', 'logout']),
+    ...mapActions(['getUserByEmail', 'login', 'logout']),
     async onSubmit() {
       this.errors = [];
       if (!this.password) {
@@ -71,7 +71,7 @@ export default {
       ) {
         this.errors.push('Invalid Email');
       } else {
-        await this.getUserByEmail(this.email, 'login').then(async res => {
+        await this.getUserByEmail(this.email).then(async res => {
           console.log(res.data.users.length);
           if (res.data.users.length === 0) {
             this.errors.pop();
@@ -79,6 +79,7 @@ export default {
           } else if (res.data.users.length === 1) {
             let { password } = res.data.users[0];
             if (bcrypt.compareSync(this.password, password)) {
+              this.login(res.data.users[0]);
               router.push('/schedule');
               this.email = '';
               this.password = '';
