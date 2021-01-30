@@ -1,13 +1,7 @@
 import express from 'express';
-import {
-  indexPage,
-  messagesPage,
-  addMessage,
-  usersPage,
-  addUser,
-  editUser,
-  findUserByEmail,
-} from '../controllers';
+import { usersPage, addUser, editUser, findUserByEmail } from '../controllers/users.js';
+import { indexPage } from '../controllers/home.js';
+import { messagesPage, addMessage } from '../controllers/messages.js';
 
 const indexRouter = express.Router();
 

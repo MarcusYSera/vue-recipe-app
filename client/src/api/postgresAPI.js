@@ -1,6 +1,7 @@
 import axios from 'axios';
 
 const POSTGRES_SERVER = 'http://localhost:8081/v1';
+// const POSTGRES_SERVER = 'https://localhost.project-melon-bread.com/v1';
 
 export default {
   async createUser(newUser) {

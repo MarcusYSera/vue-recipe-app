@@ -6,9 +6,10 @@ import indexRouter from './routes/index';
 
 const app = express();
 
+// swap these values
 const corsOptions = {
   origin: 'http://localhost:8080',
-  // origin: 'https://www.project-melon-bread.com',
+  // origin: 'https://project-melon-bread.com',
 };
 app.use(cors(corsOptions));
 

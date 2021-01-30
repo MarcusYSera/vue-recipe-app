@@ -65,6 +65,11 @@ export default {
       if (!this.firstName || !this.lastName) {
         this.errors.push('First & Last Name Required');
       }
+      if (!this.password) {
+        this.errors.push('Password Required');
+      } else if (this.password !== this.confirmPassword) {
+        this.errors.push('Password Does Not Match');
+      }
       if (
         !/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/.test(
           this.email
@@ -75,30 +80,25 @@ export default {
         await this.getUserByEmail(this.email).then(async res => {
           if (res.data.users.length > 0) {
             this.errors.push('User Already Exists');
+          } else {
+            if (this.errors.length < 1) {
+              await this.bcryptPassword(this.password);
+              let newUser = {
+                firstName: this.firstName,
+                lastName: this.lastName,
+                email: this.email,
+                password: this.password,
+              };
+              await this.createUser(newUser);
+              router.push('/schedule');
+              this.firstName = '';
+              this.lastName = '';
+              this.email = '';
+              this.password = '';
+              this.confirmPassword = '';
+            }
           }
         });
-      }
-      if (!this.password) {
-        this.errors.push('Password Required');
-      } else if (this.password !== this.confirmPassword) {
-        this.errors.push('Password Does Not Match');
-      }
-
-      if (this.errors.length < 1) {
-        await this.bcryptPassword(this.password);
-        let newUser = {
-          firstName: this.firstName,
-          lastName: this.lastName,
-          email: this.email,
-          password: this.password,
-        };
-        await this.createUser(newUser);
-        router.push('/schedule');
-        this.firstName = '';
-        this.lastName = '';
-        this.email = '';
-        this.password = '';
-        this.confirmPassword = '';
       }
     },
     bcryptPassword(password) {
