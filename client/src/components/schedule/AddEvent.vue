@@ -2,12 +2,33 @@
   <button class="add-button" @click="openEvent">
     <img src="@/assets/svg/addCircle.svg" />
   </button>
-  <aside v-if="openAddEvent" class="add-container">
-    <form @submit.prevent="addEventOnSubmit">
-      <input type="text" placeholder=" Add Recipe Name" v-model="recipeName" />
-      <input type="date" v-model="currentDate" :min="currentDate" />
-      <input type="time" v-model="currentTime" />
-      <input type="submit" value="create" />
+  <aside v-if="openAddEvent" class="flex-container add-container">
+    <form
+      @submit.prevent="addEventOnSubmit"
+      class="flex-container column addevent-form"
+    >
+      <button class="close-add-event" @click="clearEvent">X</button>
+      <input
+        type="text"
+        placeholder=" Add Recipe Name"
+        v-model="recipeName"
+        class="recipe-name"
+      />
+      <input
+        type="date"
+        v-model="currentDate"
+        :min="currentDate"
+        class="recipe-name"
+      />
+      <div v-if="!timeChoice" class="start-or-end-button-group">
+        <button @click="timeOption('start')" class="start-button">
+          Start Time
+        </button>
+        <p class="or-text">or</p>
+        <button @click="timeOption('end')" class="end-button">End Time</button>
+      </div>
+      <input v-else type="time" v-model="currentTime" class="recipe-name" />
+      <input type="submit" value="Create" class="create-event-button" />
     </form>
   </aside>
 </template>
@@ -18,15 +39,30 @@ export default {
   data() {
     return {
       openAddEvent: false,
+      timeChoice: false,
       recipeName: '',
-      currentTime: '',
       currentDate: '',
+      endOrStart: '',
+      currentTime: '',
     };
   },
   computed: {},
   methods: {
+    timeOption(choice) {
+      this.endOrStart = choice;
+      this.timeChoice = true;
+    },
+    clearEvent() {
+      this.openAddEvent = !this.openAddEvent;
+      this.timeChoice = false;
+      this.recipeName = '';
+      this.endOrStart = '';
+      this.currentTime = this.getCurrentTime();
+      this.currentDate = this.getCurrentDate();
+    },
     openEvent() {
       this.openAddEvent = !this.openAddEvent;
+      this.timeChoice = false;
     },
     getCurrentTime() {
       let newTime = new Date()
@@ -40,6 +76,9 @@ export default {
     },
     getCurrentDate() {
       let t = new Date().toLocaleDateString().split('/');
+      if (parseInt(t[0]) < 10) {
+        t[0] = '0' + t[0];
+      }
       let holder = t.pop();
       t.unshift(holder);
       return t.join('-');
@@ -47,13 +86,12 @@ export default {
     addEventOnSubmit() {
       let newEvent = {
         name: this.recipeName,
-        time: this.currentTime,
         date: this.currentDate,
+        startEnd: this.endOrStart,
+        time: this.currentTime,
       };
       console.log(newEvent);
-      this.recipeName = '';
-      this.currentTime = this.getCurrentTime();
-      this.currentDate = this.getCurrentDate();
+      this.clearEvent();
     },
   },
   created() {
@@ -64,13 +102,37 @@ export default {
 </script>
 
 <style scoped>
+.start-or-end-button-group button {
+  border-radius: 15%;
+  padding: 0 1.5vw;
+}
+.start-or-end-button-group > * {
+  height: 3vh;
+  display: inline;
+  position: relative;
+}
+.or-text {
+  z-index: 100;
+  margin: 0 -1vw;
+  padding: 0 0.5vw;
+  border-radius: 25px;
+  background-color: #ffffff;
+}
+.end-button {
+  color: #ffffff;
+  background-color: #7dcea0;
+}
+.start-button {
+  background-color: #e0e1e2;
+}
 .add-container {
   position: absolute;
-  height: 200px;
-  width: 250px;
+  height: 250px;
+  width: 300px;
   top: 30px;
-  left: -200px;
+  left: -250px;
   border: 1px solid black;
+  background-color: white;
 }
 .add-button {
   border: none;
@@ -80,5 +142,44 @@ export default {
 }
 .add-button:focus {
   outline: none;
+}
+/* .addevent-form > * { */
+  /* margin: 1vh 2vw; */
+/* } */
+.recipe-name,
+.start-or-end-button-group button {
+  border: none;
+}
+.addevent-form {
+  width: 100%;
+  height: 100%;
+  padding: 0 12%;
+  justify-content: space-evenly;
+  align-items: center;
+}
+.recipe-name:focus,
+.close-add-event,
+.start-or-end-button-group button:focus,
+.create-event-button:focus {
+  outline: none;
+}
+.close-add-event {
+  border: none;
+  background-color: #ffffff;
+  align-self: center;
+  margin: 0;
+  padding: 0;
+  position: absolute;
+  right: 5%;
+  top: 5%;
+}
+.create-event-button {
+  border: 1px solid #7dcea0;
+  width: 30%;
+  color: #7dcea0;
+  background-color: #ffffff;
+}
+.recipe-name {
+  width: 100%;
 }
 </style>
