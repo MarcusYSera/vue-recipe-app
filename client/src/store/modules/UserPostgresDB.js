@@ -16,7 +16,7 @@ const actions = {
         .then(res => {
           let { user_id, first_name, last_name, email } = res.data.users[0];
           commit('setUser', {
-            id: user_id,
+            userId: user_id,
             firstName: first_name,
             lastName: last_name,
             email: email,
@@ -24,7 +24,7 @@ const actions = {
           window.localStorage.setItem(
             'user',
             JSON.stringify({
-              id: user_id,
+              userId: user_id,
               firstName: first_name,
               lastName: last_name,
               email: email,
@@ -54,7 +54,7 @@ const actions = {
   },
   login: ({ commit }, user) => {
     commit('setUser', {
-      id: user.user_id,
+      userId: user.user_id,
       firstName: user.first_name,
       lastName: user.last_name,
       email: user.email,
@@ -62,7 +62,7 @@ const actions = {
     window.localStorage.setItem(
       'user',
       JSON.stringify({
-        id: user.user_id,
+        userId: user.user_id,
         firstName: user.first_name,
         lastName: user.last_name,
         email: user.email,

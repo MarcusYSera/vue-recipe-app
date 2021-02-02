@@ -1,4 +1,4 @@
-import Model from '../models/model';
+import Model from '../models/model.js';
 
 const eventModel = new Model('event');
 
@@ -17,9 +17,10 @@ export const eventPage = async (req, res) => {
 
 export const addEventByUserId = async (req, res) => {
   const { userId } = req.params;
-  const { eventName, eventTime, eventDate } = req.body;
-  const columns = 'event_name, event_time, event_date';
-  const values = `'${eventName}', '${eventTime}', '${eventDate}'`;
+  const { eventName, eventDate, eventStartEnd, eventTime } = req.body;
+  console.log(req.body);
+  const columns = 'USER_FKID, EVENT_NAME, EVENT_DATE, EVENT_START_END, EVENT_TIME';
+  const values = `'${userId}','${eventName}', '${eventDate}', '${eventStartEnd}', '${eventTime}'`;
   try {
     const data = await eventModel.insertWithReturn(columns, values);
     res.status(200).json({ events: data.rows });

@@ -91,9 +91,9 @@ export default {
     },
   },
   created() {
-    if (this.user) {
-      console.log(this.user);
-    }
+    // if (this.user) {
+    //   console.log(this.user);
+    // }
     this.createDate();
   },
   mounted() {

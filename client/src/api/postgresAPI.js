@@ -27,4 +27,16 @@ export default {
       });
     return responseBack;
   },
+  async createEvent(newEvent) {
+    console.log('passed vuex, entering api call');
+    let responseBack = await axios
+      .post(`${POSTGRES_SERVER}/event/create/${newEvent.userId}`, newEvent)
+      .then(res => {
+        return res;
+      })
+      .catch(err => {
+        return err;
+      });
+    return responseBack;
+  },
 };

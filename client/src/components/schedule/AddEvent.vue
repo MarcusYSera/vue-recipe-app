@@ -34,6 +34,8 @@
 </template>
 
 <script>
+import { mapActions, mapGetters } from 'vuex';
+
 export default {
   name: 'AddEvent',
   data() {
@@ -46,8 +48,9 @@ export default {
       currentTime: '',
     };
   },
-  computed: {},
+  computed: { ...mapGetters(['user']) },
   methods: {
+    ...mapActions(['createEventByUserId']),
     timeOption(choice) {
       this.endOrStart = choice;
       this.timeChoice = true;
@@ -83,15 +86,23 @@ export default {
       t.unshift(holder);
       return t.join('-');
     },
-    addEventOnSubmit() {
-      let newEvent = {
-        name: this.recipeName,
-        date: this.currentDate,
-        startEnd: this.endOrStart,
-        time: this.currentTime,
-      };
-      console.log(newEvent);
-      this.clearEvent();
+    async addEventOnSubmit() {
+      if (this.user) {
+        let newEvent = {
+          userId: this.user.userId,
+          eventName: this.recipeName,
+          eventDate: this.currentDate,
+          eventStartEnd: this.endOrStart,
+          eventTime: this.currentTime,
+        };
+        // console.log(this.user.userId);
+        await this.createEventByUserId(newEvent);
+        console.log('finished event creation');
+        this.clearEvent();
+        console.log('cleared event');
+      } else {
+        alert('Please Login to Create Events');
+      }
     },
   },
   created() {

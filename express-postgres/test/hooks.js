@@ -16,7 +16,7 @@ before(async () => {
   await insertForeignIntoTables();
 });
 
-after(async () => {
-  await dropForeignKeyTables();
-  await dropPrimaryKeyTables();
-});
+// after(async () => {
+//   await dropForeignKeyTables();
+//   await dropPrimaryKeyTables();
+// });

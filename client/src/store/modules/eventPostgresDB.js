@@ -22,10 +22,10 @@ const actions = {
         });
     });
   },
-  createEventByUserId({ commit }, userId) {
+  createEventByUserId({ commit }, eventData) {
     return new Promise((resolve, reject) => {
       api
-        .createEvent(userId)
+        .createEvent(eventData)
         .then(res => {
           console.log(res);
           commit;

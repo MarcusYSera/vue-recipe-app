@@ -44,7 +44,10 @@
 </template>
 
 <script>
-import { mapActions, mapGetters } from 'vuex';
+import {
+  mapActions,
+  // mapGetters
+} from 'vuex';
 import bcrypt from 'bcryptjs';
 import router from '../../router';
 
@@ -58,7 +61,7 @@ export default {
     };
   },
   computed: {
-    ...mapGetters(['user', 'loggedIn']),
+    // ...mapGetters(['user', 'loggedIn']),
   },
   methods: {
     ...mapActions(['getUserByEmail', 'login', 'logout']),
@@ -75,7 +78,7 @@ export default {
         this.errors.push('Invalid Email');
       } else {
         await this.getUserByEmail(this.email).then(async res => {
-          console.log(res.data.users.length);
+          // console.log(res.data.users.length);
           if (res.data.users.length === 0) {
             this.errors.pop();
             this.errors.push('User does not exist');
@@ -83,6 +86,7 @@ export default {
             let { password } = res.data.users[0];
             if (bcrypt.compareSync(this.password, password)) {
               this.login(res.data.users[0]);
+              // console.log(res.data.users[0]);
               router.push('/schedule');
               this.email = '';
               this.password = '';

@@ -13,7 +13,7 @@ export const usersPage = async (req, res) => {
 
 export const findUserByEmail = async (req, res) => {
   const { email } = req.params;
-  const columns = 'first_name, last_name, email, password';
+  const columns = 'user_id, first_name, last_name, email, password';
   const clause = `WHERE email = '${email}'`;
   try {
     const data = await usersModel.select(columns, clause);
@@ -27,7 +27,7 @@ export const addUser = async (req, res) => {
   const { firstName, lastName, email, password } = req.body;
   const columns = 'first_name, last_name, email, password';
   const values = `'${firstName}', '${lastName}', '${email}', '${password}'`;
-  
+
   try {
     const data = await usersModel.insertWithReturn(columns, values);
     res.status(200).json({ users: data.rows });
@@ -37,9 +37,9 @@ export const addUser = async (req, res) => {
 };
 
 export const editUser = async (req, res) => {
-  const { firstName, lastName, email, password } = req.body;
+  const { userId, firstName, lastName, email, password } = req.body;
   const { id } = req.params;
-  const columns = 'first_name, last_name, email, password';
+  const columns = 'user_id, first_name, last_name, email, password';
   const clause = `user_id = '${id}'`;
   const values = [];
   if (firstName) {

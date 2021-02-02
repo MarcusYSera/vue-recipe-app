@@ -44,7 +44,10 @@
 </template>
 
 <script>
-import { mapActions, mapGetters } from 'vuex';
+import {
+  mapActions,
+  //  mapGetters
+} from 'vuex';
 import bcrypt from 'bcryptjs';
 import router from '../../router';
 
@@ -61,7 +64,7 @@ export default {
     };
   },
   computed: {
-    ...mapGetters(['user']),
+    // ...mapGetters(['user']),
   },
   methods: {
     ...mapActions(['createUser', 'getUserByEmail']),
