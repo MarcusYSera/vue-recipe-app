@@ -7,7 +7,7 @@ const { Pool } = pkg;
 dotenv.config();
 
 // elephantsql database
-import { connectionString } from '../settings';
+import { connectionString } from '../settings.js';
 export const pool = new Pool({ connectionString });
 
 // local instance with user me
