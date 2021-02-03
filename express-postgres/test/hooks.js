@@ -1,7 +1,7 @@
 import {
-  // dropPrimaryKeyTables,
-  // dropForeignKeyTables,
-  deleteTestValues,
+  dropPrimaryKeyTables,
+  dropForeignKeyTables,
+  // deleteTestValues,
   createPrimaryKeyTables,
   createForeignKeyTables,
   addForeignKeys,
