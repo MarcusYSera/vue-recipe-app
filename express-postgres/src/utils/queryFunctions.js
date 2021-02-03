@@ -1,15 +1,26 @@
-import { pool } from '../models/pool';
+import { pool } from '../models/pool.js';
 import {
-  dropUsersTable,
-  dropMessagesTable,
-  insertUsers,
-  insertMessages,
+  createUpdateTriggerFunction,
   createUserTable,
   createMessageTable,
+  createEventTable,
   createUserMessageForeignKey,
-} from './queries';
+  createUserEventForeignKey,
+  createUpdateTriggerForUsers,
+  createUpdateTriggerForMessages,
+  createUpdateTriggerForEvents,
+  insertUsers,
+  insertMessages,
+  insertEvents,
+  updateEvents,
+  deleteTestValuesMessages,
+  deleteTextValuesEvents,
+  dropEventsTable,
+  dropMessagesTable,
+  dropUsersTable,
+} from './queries.js';
 
-export const executeQueryArray = async (arr) =>
+export const executeQueryArray = async (arr) => {
   new Promise((resolve) => {
     const stop = arr.length;
     arr.forEach(async (q, index) => {
@@ -17,11 +28,31 @@ export const executeQueryArray = async (arr) =>
       if (index + 1 === stop) resolve();
     });
   });
+};
 
-export const dropForeignKeyTables = () => executeQueryArray([dropMessagesTable]);
-export const dropPrimaryKeyTables = () => executeQueryArray([dropUsersTable]);
-export const createForeignKeyTables = () => executeQueryArray([createMessageTable]);
+export const createTriggerFunctions = () => executeQueryArray([createUpdateTriggerFunction]);
+
 export const createPrimaryKeyTables = () => executeQueryArray([createUserTable]);
+export const createForeignKeyTables = () =>
+  executeQueryArray([createMessageTable, createEventTable]);
+
+export const addForeignKeys = () =>
+  executeQueryArray([createUserMessageForeignKey, createUserEventForeignKey]);
+
+export const associateUpdateTriggerToTables = () =>
+  executeQueryArray([
+    createUpdateTriggerForUsers,
+    createUpdateTriggerForMessages,
+    createUpdateTriggerForEvents,
+  ]);
+
 export const insertPrimaryIntoTables = () => executeQueryArray([insertUsers]);
-export const insertForeignIntoTables = () => executeQueryArray([insertMessages]);
-export const addForeignKeys = () => executeQueryArray([createUserMessageForeignKey]);
+export const insertForeignIntoTables = () => executeQueryArray([insertMessages, insertEvents]);
+
+export const updateForeignKeyTable = () => executeQueryArray([updateEvents]);
+
+export const deleteTestValues = () =>
+  executeQueryArray([deleteTestValuesMessages, deleteTextValuesEvents]);
+
+export const dropForeignKeyTables = () => executeQueryArray([dropMessagesTable, dropEventsTable]);
+export const dropPrimaryKeyTables = () => executeQueryArray([dropUsersTable]);

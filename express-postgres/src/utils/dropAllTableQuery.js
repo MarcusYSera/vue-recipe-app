@@ -1,4 +1,4 @@
-import { dropForeignKeyTables, dropPrimaryKeyTables } from './queryFunctions';
+import { dropForeignKeyTables, dropPrimaryKeyTables } from './queryFunctions.js';
 
 (async () => {
   await dropForeignKeyTables();

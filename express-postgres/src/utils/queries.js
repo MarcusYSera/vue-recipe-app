@@ -1,3 +1,27 @@
+// Create Functions
+
+// Create Primary Key Table
+
+// Create Foreign Key Table
+
+// Make Foreign Key association
+
+// create the trigger
+
+// insert values, starting with primary key tables first, then foreign key tables
+
+// To delete, drop foreign key tables first, then primary key values
+
+export const createUpdateTriggerFunction = `
+  CREATE OR REPLACE FUNCTION trigger_set_timestamp()
+  RETURNS TRIGGER AS $$
+  BEGIN
+    NEW.updated_at = NOW();
+    RETURN NEW;
+  END;
+  $$ LANGUAGE plpgsql;
+`;
+
 export const createUserTable = `
   CREATE TABLE IF NOT EXISTS users (
     USER_ID INT GENERATED ALWAYS AS IDENTITY,
@@ -9,6 +33,13 @@ export const createUserTable = `
     UPDATED_AT TIMESTAMPTZ NOT NULL DEFAULT NOW(),
     PRIMARY KEY(USER_ID)
   );
+`;
+
+export const createUpdateTriggerForUsers = `
+  CREATE TRIGGER set_timestamp_updated_at_users
+  BEFORE UPDATE ON users
+  FOR EACH ROW
+  EXECUTE PROCEDURE trigger_set_timestamp();
 `;
 
 export const insertUsers = `
@@ -30,6 +61,13 @@ export const createMessageTable = `
   );
 `;
 
+export const createUpdateTriggerForMessages = `
+  CREATE TRIGGER set_timestamp_updated_at_messages
+  BEFORE UPDATE ON messages
+  FOR EACH ROW
+  EXECUTE PROCEDURE trigger_set_timestamp();
+`;
+
 export const createUserMessageForeignKey = `
   ALTER TABLE messages
   ADD FOREIGN KEY (USER_FKID)
@@ -40,7 +78,7 @@ export const insertMessages = `
   INSERT INTO messages(USER_FKID, MESSAGE)
   VALUES (1,'first message'),
   (2,'second message');
-  `;
+`;
 
 export const dropMessagesTable = 'DROP TABLE messages;';
 
@@ -51,7 +89,7 @@ export const createEventTable = `
     EVENT_NAME VARCHAR,
     EVENT_DATE DATE,
     EVENT_START_END VARCHAR,
-    EVENT_TIME TIME,
+    EVENT_TIME TIME with time zone,
     EVENT_COMPLETED_AT TIMESTAMPTZ,
     CREATED_AT TIMESTAMPTZ NOT NULL DEFAULT NOW(),
     UPDATED_AT TIMESTAMPTZ NOT NULL DEFAULT NOW(),
@@ -65,24 +103,38 @@ export const createUserEventForeignKey = `
   REFERENCES users(USER_ID);
 `;
 
-export const insertEvents = `
-  INSERT INTO events(USER_FKID, EVENT_NAME, EVENT_DATE, EVENT_START_END, EVENT_TIME)
-  VALUES (55, 'Pizza', '2021-01-30', '' )
-`;
-
-export const createUpdateTriggerFunction = `
-  CREATE OR REPLACE FUNCTION trigger_set_timestamp()
-  RETURNS TRIGGER AS $$
-  BEGIN
-    NEW.updated_at = NOW();
-    RETURN NEW;
-  END;
-  $$ LANGUAGE plpgsql;
-`;
-
-export const createUpdateTrigger = `
-  CREATE TRIGGER set_timestamp
-  BEFORE UPDATE ON users
+export const createUpdateTriggerForEvents = `
+  CREATE TRIGGER set_timestamp_updated_at_events
+  BEFORE UPDATE ON events
   FOR EACH ROW
   EXECUTE PROCEDURE trigger_set_timestamp();
 `;
+
+export const insertEvents = `
+  INSERT INTO events(USER_FKID, EVENT_NAME, EVENT_DATE, EVENT_START_END, EVENT_TIME)
+  VALUES (1, 'Pizza', '2021-01-30', 'start', '17:00-08' );
+`;
+
+export const updateEvents = `
+  UPDATE events
+  SET EVENT_COMPLETED_AT = NOW ()
+  WHERE EVENT_NAME = 'Pizza'
+  RETURNING *;
+`;
+
+// export const deleteTestValuesUsers = `
+//   DELETE FROM users
+//   WHERE email IN ('maiko@gmail.com', 'msera@gmail.com');
+// `;
+
+export const deleteTestValuesMessages = `
+  DELETE FROM messages
+  WHERE USER_FKID IN (1,2);
+`;
+
+export const deleteTextValuesEvents = `
+  DELETE FROM events
+  WHERE USER_FKID IN (1,2);
+`;
+
+export const dropEventsTable = 'DROP TABLE events;';

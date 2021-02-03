@@ -1,12 +1,13 @@
 import {
-  dropPrimaryKeyTables,
-  dropForeignKeyTables,
+  // dropPrimaryKeyTables,
+  // dropForeignKeyTables,
+  deleteTestValues,
   createPrimaryKeyTables,
   createForeignKeyTables,
   addForeignKeys,
   insertPrimaryIntoTables,
   insertForeignIntoTables,
-} from '../src/utils/queryFunctions';
+} from '../src/utils/queryFunctions.js';
 
 before(async () => {
   await createPrimaryKeyTables();
@@ -16,7 +17,8 @@ before(async () => {
   await insertForeignIntoTables();
 });
 
-// after(async () => {
-//   await dropForeignKeyTables();
-//   await dropPrimaryKeyTables();
-// });
+after(async () => {
+  await deleteTestValues();
+  //   await dropForeignKeyTables();
+  //   await dropPrimaryKeyTables();
+});
