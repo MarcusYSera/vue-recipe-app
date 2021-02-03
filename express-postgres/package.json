@@ -14,6 +14,7 @@
     "coverage": "nyc report --reporter=text-lcov | coveralls",
     "createTableQuery": "babel-node ./src/utils/createTableQuery",
     "insertQuery": "babel-node ./src/utils/insertQuery",
+    "deleteTestValues": "babel-node ./src/utils/deleteValueQuery",
     "dropAllTableQuery": "babel-node ./src/utils/dropAllTableQuery"
   },
   "dependencies": {
