@@ -3,12 +3,13 @@ import express from 'express';
 import cookieParser from 'cookie-parser';
 import cors from 'cors';
 import indexRouter from './routes/index.js';
+import { corsOrigin } from './settings.js';
 
 const app = express();
 
 // swap these values
 const corsOptions = {
-  origin: 'http://localhost:8080',
+  origin: `${corsOrigin}`,
   // origin: 'https://project-melon-bread.com',
 };
 app.use(cors(corsOptions));

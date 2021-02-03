@@ -6,15 +6,6 @@ const { Pool } = pkg;
 
 dotenv.config();
 
-// elephantsql database
-import { connectionString } from '../settings.js';
-export const pool = new Pool({ connectionString });
-
-// local instance with user me
-// export const pool = new Pool({
-//   user: 'me',
-//   host: 'localhost',
-//   database: 'vue_recipe_app',
-//   password: 'password',
-//   port: 5432,
-// });
+// elephantsql testing database for travis ci
+import {connectionString} from '../settings.js';
+export const pool = new Pool({connectionString});

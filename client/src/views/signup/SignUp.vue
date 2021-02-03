@@ -86,6 +86,7 @@ export default {
         this.errors.push('Invalid Email');
       } else {
         await this.getUserByEmail(this.email).then(async res => {
+          console.log(res.data);
           if (res.data.users.length > 0) {
             this.errors.push('User Already Exists');
           } else {
