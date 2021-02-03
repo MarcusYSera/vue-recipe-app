@@ -1,4 +1,4 @@
-import { expect, server, BASE_URL } from './setup';
+import { expect, server, BASE_URL } from './setup.js';
 
 describe('Users', () => {
   it('get users page', (done) => {
