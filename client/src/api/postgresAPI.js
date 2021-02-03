@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 // swap these
-const POSTGRES_SERVER = 'http://localhost:8081/v1';
+const POSTGRES_SERVER = process.env.VUE_APP_POSTGRES_SERVER;
 // const POSTGRES_SERVER = 'https://localhost.project-melon-bread.com/v1';
 
 export default {
