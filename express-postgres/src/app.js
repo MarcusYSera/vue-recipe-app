@@ -10,7 +10,6 @@ const app = express();
 // swap these values
 const corsOptions = {
   origin: `${corsOrigin}`,
-  // origin: 'https://project-melon-bread.com',
 };
 app.use(cors(corsOptions));
 
