@@ -86,15 +86,15 @@ export default {
         this.errors.push('Invalid Email');
       } else {
         await this.getUserByEmail(this.email).then(async res => {
-          console.log(res.data);
+          // console.log(res.data);
           if (res.data.users.length > 0) {
             this.errors.push('User Already Exists');
           } else {
             if (this.errors.length < 1) {
               await this.bcryptPassword(this.password);
               let newUser = {
-                firstName: this.firstName,
-                lastName: this.lastName,
+                first_name: this.firstName,
+                last_name: this.lastName,
                 email: this.email,
                 password: this.password,
               };

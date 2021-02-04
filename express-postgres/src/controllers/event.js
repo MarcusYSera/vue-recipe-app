@@ -2,7 +2,7 @@ import Model from '../models/model.js';
 
 const eventModel = new Model('event');
 
-export const eventPage = async (req, res) => {
+export const eventsPage = async (req, res) => {
   try {
     const data = await eventModel.select('');
     res.status(200).json({ events: data.rows });

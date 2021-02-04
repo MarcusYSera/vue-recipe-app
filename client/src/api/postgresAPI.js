@@ -8,6 +8,7 @@ export default {
     let responseBack = await axios
       .post(`${POSTGRES_SERVER}/users/create`, newUser)
       .then(res => {
+        // console.log(res);
         return res;
       })
       .catch(err => {
