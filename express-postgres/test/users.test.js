@@ -40,8 +40,8 @@ describe('Users', () => {
 
   it('posts users', (done) => {
     const data = {
-      firstName: 'hello',
-      lastName: 'world',
+      first_name: 'hello',
+      last_name: 'world',
       email: 'test@gmail.com',
       password: '1234',
     };
@@ -54,8 +54,8 @@ describe('Users', () => {
         expect(res.body.users).to.be.instanceOf(Array);
         res.body.users.forEach((u) => {
           // expect(u).to.have.property('user_id');
-          expect(u).to.have.property('first_name', data.firstName);
-          expect(u).to.have.property('last_name', data.lastName);
+          expect(u).to.have.property('first_name', data.first_name);
+          expect(u).to.have.property('last_name', data.last_name);
           expect(u).to.have.property('email', data.email);
           expect(u).to.have.property('password', data.password);
         });
@@ -66,7 +66,7 @@ describe('Users', () => {
   it('updates users', (done) => {
     const id = 1;
     const data = {
-      firstName: 'm',
+      first_name: 'm',
       email: 'maiko@gmail.com',
       password: 'hello',
     };
@@ -76,8 +76,11 @@ describe('Users', () => {
       .expect(200)
       .end((err, res) => {
         expect(res.status).to.equal(200);
-        // console.log(res.body.users);
-        // expect(res.body.users).to.be.instanceOf(Array);
+        res.body.users.forEach((u) => {
+          expect(u).to.have.property('first_name', data.first_name);
+          expect(u).to.have.property('email', data.email);
+          expect(u).to.have.property('password', data.password);
+        });
         done();
       });
   });
