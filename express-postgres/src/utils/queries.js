@@ -36,6 +36,7 @@ export const createUserTable = `
 `;
 
 export const createUpdateTriggerForUsers = `
+  DROP TRIGGER IF EXISTS set_timestamp_updated_at_users ON users;
   CREATE TRIGGER set_timestamp_updated_at_users
   BEFORE UPDATE ON users
   FOR EACH ROW
@@ -62,6 +63,7 @@ export const createMessageTable = `
 `;
 
 export const createUpdateTriggerForMessages = `
+  DROP TRIGGER IF EXISTS set_timestamp_updated_at_messages ON messages;
   CREATE TRIGGER set_timestamp_updated_at_messages
   BEFORE UPDATE ON messages
   FOR EACH ROW
@@ -104,6 +106,7 @@ export const createUserEventForeignKey = `
 `;
 
 export const createUpdateTriggerForEvents = `
+  DROP TRIGGER IF EXISTS set_timestamp_updated_at_events ON events;
   CREATE TRIGGER set_timestamp_updated_at_events
   BEFORE UPDATE ON events
   FOR EACH ROW

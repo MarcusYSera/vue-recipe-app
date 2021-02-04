@@ -62,7 +62,6 @@ export const editUser = async (req, res) => {
   const clause = `user_id = '${id}'`;
   // console.log(columns);
   // console.log(values);
-  // const values = [];
   try {
     const data = await usersModel.updateWithReturn(clause, columns, values);
     res.status(200).json({ users: data.rows });

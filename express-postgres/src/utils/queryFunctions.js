@@ -21,7 +21,7 @@ import {
 } from './queries.js';
 
 export const executeQueryArray = async (arr) => {
-  new Promise((resolve) => {
+  return new Promise((resolve, reject) => {
     const stop = arr.length;
     arr.forEach(async (q, index) => {
       await pool.query(q);
