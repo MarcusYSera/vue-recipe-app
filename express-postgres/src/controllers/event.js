@@ -18,15 +18,15 @@ export const eventsPage = async (req, res) => {
 // };
 
 export const addEventByUserId = async (req, res) => {
-  const { userId } = req.params;
-  const { eventName, eventDate, eventStartEnd, eventTime } = req.body;
-  // console.log(req.body);
+  const { id } = req.params;
+  const { event_name, event_date, event_start_end, event_time } = req.body;
   const columns = 'USER_FKID, EVENT_NAME, EVENT_DATE, EVENT_START_END, EVENT_TIME';
-  const values = `'${userId}','${eventName}', '${eventDate}', '${eventStartEnd}', '${eventTime}'`;
+  const values = `'${id}','${event_name}', '${event_date}', '${event_start_end}', '${event_time}'`;
   try {
     const data = await eventsModel.insertWithReturn(columns, values);
     res.status(200).json({ events: data.rows });
   } catch (err) {
+    console.alert(err);
     res.status(200).json({ events: err.stack });
   }
 };

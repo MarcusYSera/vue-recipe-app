@@ -38,7 +38,7 @@ describe('Users', () => {
       });
   });
 
-  it('posts users', (done) => {
+  it('create user', (done) => {
     const data = {
       first_name: 'hello',
       last_name: 'world',

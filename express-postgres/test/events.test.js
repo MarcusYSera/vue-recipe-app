@@ -3,9 +3,9 @@ import { assert, server, BASE_URL } from './setup.js';
 describe('Events', () => {
   it('get events page', (done) => {
     server.get(`${BASE_URL}/events`).end((err, res) => {
-      console.log(res.body);
+      // console.log(res.body);
       assert.strictEqual(res.status, 200, '=== response status is 200');
-      assert.isArray(res.body.events, 'response body is an object of events');
+      assert.isArray(res.body.events, 'response body is an array of events');
       // res.body.events.forEach((e) => {
       //   console.log(e);
       //   assert.property(e, 'user_fkid');
@@ -14,7 +14,7 @@ describe('Events', () => {
     });
   });
 
-  it('creates event', (done) => {
+  it('create event', (done) => {
     const data = {
       user_fkid: 1,
       event_name: 'Pasta',
@@ -28,6 +28,7 @@ describe('Events', () => {
       .send(data)
       .end((err, res) => {
         assert.strictEqual(res.status, 200, '=== response from event post request is 200');
+        assert.isArray(res.body.events, 'response body is an array of an objectevents');
         done();
       });
   });

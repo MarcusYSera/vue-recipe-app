@@ -115,7 +115,8 @@ export const createUpdateTriggerForEvents = `
 
 export const insertEvents = `
   INSERT INTO events(USER_FKID, EVENT_NAME, EVENT_DATE, EVENT_START_END, EVENT_TIME)
-  VALUES (1, 'Pizza', '2021-01-30', 'start', '17:00-08' );
+  VALUES (1, 'Pizza', '2021-01-30', 'start', '17:00-08' ), 
+  (2, 'Pie', '2021-02-08', 'start', '14:00-08');
 `;
 
 export const updateEvents = `
