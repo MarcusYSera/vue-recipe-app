@@ -27,10 +27,21 @@ export default {
       });
     return responseBack;
   },
-  async createEvent(newEvent) {
+  async createEvent(arr) {
     console.log('passed vuex, entering api call');
     let responseBack = await axios
-      .post(`${POSTGRES_SERVER}/event/create/${newEvent.userId}`, newEvent)
+      .post(`${POSTGRES_SERVER}/event/create/${arr[0]}`, arr[1])
+      .then(res => {
+        return res;
+      })
+      .catch(err => {
+        return err;
+      });
+    return responseBack;
+  },
+  async getEvents(id) {
+    let responseBack = await axios
+      .get(`${POSTGRES_SERVER}/events/findBy/${id}`)
       .then(res => {
         return res;
       })

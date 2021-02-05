@@ -50,7 +50,7 @@ export default {
   },
   computed: { ...mapGetters(['user']) },
   methods: {
-    ...mapActions(['createEventByUserId']),
+    ...mapActions(['createEventByUserId', 'getEventsByUserId']),
     timeOption(choice) {
       this.endOrStart = choice;
       this.timeChoice = true;
@@ -79,6 +79,9 @@ export default {
     },
     getCurrentDate() {
       let t = new Date().toLocaleDateString().split('/');
+      if (parseInt(t[1]) < 10) {
+        t[1] = '0' + t[1];
+      }
       if (parseInt(t[0]) < 10) {
         t[0] = '0' + t[0];
       }
@@ -88,15 +91,16 @@ export default {
     },
     async addEventOnSubmit() {
       if (this.user) {
+        let id = this.user.userId;
         let newEvent = {
-          userId: this.user.userId,
-          eventName: this.recipeName,
-          eventDate: this.currentDate,
-          eventStartEnd: this.endOrStart,
-          eventTime: this.currentTime,
+          // user_fkid: this.user.userId,
+          event_name: this.recipeName,
+          event_date: this.currentDate,
+          event_start_end: this.endOrStart,
+          event_time: this.currentTime,
         };
         // console.log(this.user.userId);
-        await this.createEventByUserId(newEvent);
+        await this.createEventByUserId([id, newEvent]);
         console.log('finished event creation');
         this.clearEvent();
         console.log('cleared event');
@@ -108,6 +112,11 @@ export default {
   created() {
     this.currentTime = this.getCurrentTime();
     this.currentDate = this.getCurrentDate();
+    this.getEventsByUserId(this.user.userId);
+  },
+  updated() {
+    console.log('going to retrieve events');
+    this.getEventsByUserId(this.user.userId);
   },
 };
 </script>

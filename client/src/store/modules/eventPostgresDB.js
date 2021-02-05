@@ -12,20 +12,19 @@ const actions = {
       api
         .getEvents(userId)
         .then(res => {
-          console.log(res);
-          commit;
+          commit('setEvents', res.data.events);
           resolve();
         })
         .catch(err => {
-          console.log(err);
           reject(err);
         });
     });
   },
-  createEventByUserId({ commit }, eventData) {
+
+  createEventByUserId({ commit }, arr) {
     return new Promise((resolve, reject) => {
       api
-        .createEvent(eventData)
+        .createEvent(arr)
         .then(res => {
           console.log(res);
           commit;

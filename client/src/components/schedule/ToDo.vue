@@ -10,16 +10,23 @@
         Possimus, repudiandae recusandae. Incidunt?
       </p>
     </section>
-    <section class="task-item two">
-      <h3>Example of a Task</h3>
+
+    <section
+      class="task-item two"
+      v-for="(item, index) in events"
+      v-bind:key="index"
+    >
+      {{ item }}
+      <!-- {{ events }} -->
+      <!-- <h3>Example of a Task</h3>
       <p>
         Lorem ipsum, dolor sit amet consectetur adipisicing elit. Beatae,
         facilis ab. Vero dolorum nihil, laborum, recusandae doloremque hic
         corporis at harum reprehenderit facilis cupiditate dolores amet.
         Possimus, repudiandae recusandae. Incidunt?
-      </p>
+      </p> -->
     </section>
-    <section class="task-item three">
+    <!-- <section class="task-item three">
       <h3>Example of a Task</h3>
       <p>
         Lorem ipsum, dolor sit amet consectetur adipisicing elit. Beatae,
@@ -54,13 +61,22 @@
         corporis at harum reprehenderit facilis cupiditate dolores amet.
         Possimus, repudiandae recusandae. Incidunt?
       </p>
-    </section>
+    </section> -->
   </article>
 </template>
 
 <script>
+import {
+  mapGetters,
+  // mapActions
+} from 'vuex';
+
 export default {
   name: 'ToDo',
+  computed: { ...mapGetters(['events']) },
+  methods: {
+    //  ...mapActions(['getEventsByUserId'])
+  },
   mounted() {
     this.$emit('time-of-task', this.$refs.taskTime.innerHTML);
   },
