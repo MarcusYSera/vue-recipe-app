@@ -46,9 +46,10 @@ export default {
       currentDate: '',
       endOrStart: '',
       currentTime: '',
+      region: '',
     };
   },
-  computed: { ...mapGetters(['user']) },
+  computed: { ...mapGetters(['user', 'isLoggedIn']) },
   methods: {
     ...mapActions(['createEventByUserId', 'getEventsByUserId']),
     timeOption(choice) {
@@ -90,33 +91,39 @@ export default {
       return t.join('-');
     },
     async addEventOnSubmit() {
-      if (this.user) {
+      if (this.isLoggedIn) {
+        this.currentDate = `${this.currentDate} ${this.currentTime}`;
+        this.currentDate = new Date(this.currentDate).toISOString();
         let id = this.user.userId;
         let newEvent = {
-          // user_fkid: this.user.userId,
           event_name: this.recipeName,
           event_date: this.currentDate,
           event_start_end: this.endOrStart,
-          event_time: this.currentTime,
         };
-        // console.log(this.user.userId);
+        console.log(newEvent);
         await this.createEventByUserId([id, newEvent]);
-        console.log('finished event creation');
         this.clearEvent();
-        console.log('cleared event');
       } else {
         alert('Please Login to Create Events');
       }
     },
   },
   created() {
+    this.region = new Date();
+    this.region = this.region
+      .toString()
+      .split(' ')[5]
+      .split('-')[0];
     this.currentTime = this.getCurrentTime();
     this.currentDate = this.getCurrentDate();
-    this.getEventsByUserId(this.user.userId);
+    if (this.isLoggedIn) {
+      this.getEventsByUserId(this.user.userId);
+    }
   },
   updated() {
-    console.log('going to retrieve events');
-    this.getEventsByUserId(this.user.userId);
+    if (this.isLoggedIn) {
+      this.getEventsByUserId(this.user.userId);
+    }
   },
 };
 </script>
