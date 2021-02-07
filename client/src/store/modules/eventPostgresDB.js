@@ -1,12 +1,17 @@
 import api from '../../api/postgresAPI';
 
-const state = { events: null };
+const state = { selectedDate: null, events: null };
 
 const getters = {
+  selectedDate: state => state.selectedDate,
   events: state => state.events,
 };
 
 const actions = {
+  setSelectedDate({ commit }, selectedDate) {
+    commit('setSelectedDate', selectedDate);
+  },
+
   getEventsByUserId({ commit }, userId) {
     return new Promise((resolve, reject) => {
       api
@@ -41,6 +46,9 @@ const actions = {
 const mutations = {
   setEvents: (state, newEvent) => {
     state.events = newEvent;
+  },
+  setSelectedDate: (state, date) => {
+    state.selectedDate = date;
   },
 };
 

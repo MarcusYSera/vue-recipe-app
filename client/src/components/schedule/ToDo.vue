@@ -14,12 +14,14 @@
     <section
       v-else
       class="task-item two"
-      v-for="(item, index) in events"
+      v-for="(item, index) in eventData"
       v-bind:key="index"
     >
       <h3>{{ item.event_name }}</h3>
-      <p>event {{ item.event_start_end }}: {{ item.event_time }}</p>
-      {{ item }}
+      <time hidden ref="taskTime">{{ item.event_time }}</time>
+      <p>
+        event {{ item.event_start_end }}: {{ item.today }} {{ item.event_time }}
+      </p>
       <!-- {{ events }} -->
       <!-- <h3>Example of a Task</h3>
       <p>
@@ -49,18 +51,39 @@ import {
 
 export default {
   name: 'ToDo',
-  computed: { ...mapGetters(['events', 'isLoggedIn']) },
+  data() {
+    return {
+      // eventData: null,
+    };
+  },
+  computed: {
+    ...mapGetters({ eventData: 'events', isLoggedIn: 'isLoggedIn' }),
+  },
   methods: {
     //  ...mapActions(['getEventsByUserId'])
   },
   mounted() {
-    if (!this.isLoggedIn || (this.events && this.isLoggedIn)) {
-      this.$emit('time-of-task', this.$refs.taskTime.innerHTML);
-    }
+    // if (!this.isLoggedIn || (this.eventData && this.isLoggedIn)) {
+    // if (this.eventData.length > 0) {
+    // }
+    // }
   },
   updated() {
-    // console.log(this.events);
-    console.log(this.events[0].event_date);
+    this.$emit('time-of-task', this.$refs.taskTime.innerHTML);
+    if (this.eventData.length > 0) {
+      let options = {
+        weekday: 'long',
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric',
+      };
+      this.eventData.forEach(e => {
+        let nom = new Date(e.event_date);
+        // console.log(nom);
+        e.event_time = nom.toLocaleTimeString();
+        e.today = nom.toLocaleDateString(undefined, options);
+      });
+    }
   },
 };
 </script>
@@ -81,11 +104,11 @@ export default {
   margin-top: 20rem;
   /* 3 rem + 1 rem for existing text */
 }
-/* .two {
+.two {
   border-left: 2px solid #eea57c;
   background-color: #eea57c15;
   margin-top: 24rem;
-} */
+}
 /* .three {
   border-left: 2px solid #50c878;
   background-color: #50c87815;

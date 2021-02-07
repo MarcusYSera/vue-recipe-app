@@ -49,6 +49,7 @@
 </template>
 
 <script>
+import { mapActions, mapGetters } from 'vuex';
 export default {
   name: 'CalendarComponent',
   data() {
@@ -64,7 +65,20 @@ export default {
       dayOfWeekNum: null,
     };
   },
+  computed: {
+    ...mapGetters(['selectedDate']),
+    startDate() {
+      let firstOfMonth = new Date(
+        this.displayedDate.getFullYear(),
+        this.displayedDate.getMonth(),
+        1
+      );
+      let x = new Date(firstOfMonth).getDay() + 1;
+      return { '--grid-column': x };
+    },
+  },
   methods: {
+    ...mapActions(['setSelectedDate']),
     calculateMonth(x) {
       const options = { month: 'long', day: 'numeric', year: 'numeric' };
       if (x) {
@@ -98,12 +112,13 @@ export default {
       this.getDaysInCurrentMonth();
     },
     clickedDate(x) {
-      let newObj = {
-        currentDate: x,
-        currentMonth: this.month,
-        currentYear: this.displayedYear,
-      };
-      this.$emit('calendar-click-date', newObj);
+      if (x < 10) {
+        x = `0${x}`;
+      } else {
+        x = x.toString();
+      }
+      let selectedUTC = new Date(`${this.displayedYear}-${this.month}-${x}`);
+      this.setSelectedDate(selectedUTC);
     },
     getDaysInCurrentMonth() {
       // var date = new Date();
@@ -118,19 +133,10 @@ export default {
       this.displayedDate = new Date();
       this.displayedYear = this.displayedDate.getFullYear().toString();
       this.getDaysInCurrentMonth();
+      this.setSelectedDate(this.displayedDate);
     },
   },
-  computed: {
-    startDate() {
-      let firstOfMonth = new Date(
-        this.displayedDate.getFullYear(),
-        this.displayedDate.getMonth(),
-        1
-      );
-      let x = new Date(firstOfMonth).getDay() + 1;
-      return { '--grid-column': x };
-    },
-  },
+
   created() {
     this.todayDay = new Date().getDate();
   },

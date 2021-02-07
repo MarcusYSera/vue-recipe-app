@@ -18,9 +18,8 @@ describe('Events', () => {
     const data = {
       user_fkid: 1,
       event_name: 'Pasta',
-      event_date: '2021-02-08',
+      event_date: '2021-02-06T06:49:00.000Z',
       event_start_end: 'end',
-      event_time: '09:00-08',
     };
     const id = 1;
     server

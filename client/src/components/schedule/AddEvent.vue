@@ -102,6 +102,7 @@ export default {
         };
         console.log(newEvent);
         await this.createEventByUserId([id, newEvent]);
+        this.getEventsByUserId(id);
         this.clearEvent();
       } else {
         alert('Please Login to Create Events');
@@ -116,14 +117,6 @@ export default {
       .split('-')[0];
     this.currentTime = this.getCurrentTime();
     this.currentDate = this.getCurrentDate();
-    if (this.isLoggedIn) {
-      this.getEventsByUserId(this.user.userId);
-    }
-  },
-  updated() {
-    if (this.isLoggedIn) {
-      this.getEventsByUserId(this.user.userId);
-    }
   },
 };
 </script>

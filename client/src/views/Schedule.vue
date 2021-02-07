@@ -2,7 +2,7 @@
   <main class="flex-container row home-main">
     <article class="flex-container column schedule-article">
       <header class="flex-container row schedule-header">
-        <section>{{ currentMonth }} {{ currentDate }}</section>
+        <section>{{ selectedDateDisplay }}</section>
         <h4 v-if="user">{{ user.firstName }}</h4>
         <nav class="flex-container row schedule-header-right">
           <SearchBar @search-query="onSearchTerm"></SearchBar>
@@ -18,10 +18,7 @@
         <ToDo @time-of-task="timeOfTask"></ToDo>
       </article>
     </article>
-    <CalendarComponent
-      v-if="openCalendar"
-      @calendar-click-date="calClickDate"
-    ></CalendarComponent>
+    <CalendarComponent v-if="openCalendar"></CalendarComponent>
   </main>
 </template>
 
@@ -34,6 +31,7 @@ import AddEvent from '@/components/schedule/AddEvent';
 
 import {
   mapGetters,
+  mapActions,
   // mapState,
 } from 'vuex';
 
@@ -53,18 +51,16 @@ export default {
     };
   },
   computed: {
-    ...mapGetters(['user']),
+    ...mapGetters(['user', 'selectedDate', 'isLoggedIn']),
+    selectedDateDisplay() {
+      this.updateSelectedDate(this.selectedDate);
+      return `${this.currentMonth} ${this.currentDate}`;
+    },
     // ...mapState(['user']),
   },
   methods: {
-    calClickDate(x) {
-      // create new variable, to account for a today button which resets calendar view
-      this.currentMonth = x.currentMonth;
-      this.currentDate = x.currentDate;
-      this.currentYear = x.currentYear;
-    },
+    ...mapActions(['setSelectedDate', 'getEventsByUserId']),
     timeRefData(x) {
-      // console.log(x);
       this.timeArr = x;
     },
     timeOfTask(y) {
@@ -76,31 +72,25 @@ export default {
     onSearchTerm(term) {
       console.log(term);
     },
+    updateSelectedDate(UTCDate) {
+      let options = { month: 'long', day: 'numeric' };
+      [this.currentMonth, this.currentDate] = new Date(UTCDate)
+        .toLocaleDateString(undefined, options)
+        .split(' ');
+    },
     createDate() {
-      let options = { month: 'long', day: 'numeric', year: 'numeric' };
-      [
-        this.currentMonth,
-        this.currentDate,
-        this.currentYear,
-      ] = new Date().toLocaleDateString('en-US', options).split(' ');
-      this.currentDate = this.currentDate.split(',')[0];
-      // .split('/');
-      // [this.hour, this.minute] = new Date()
-      //   .toLocaleTimeString('en-US')
-      //   .split(/:| /);
+      let rightNow = new Date();
+      this.setSelectedDate(rightNow);
+      this.updateSelectedDate(rightNow);
+      if (this.isLoggedIn) {
+        this.getEventsByUserId(this.user.userId);
+      }
     },
   },
   created() {
-    // if (this.user) {
-    //   console.log(this.user);
-    // }
     this.createDate();
   },
-  mounted() {
-    //   if (this.taskTime && this.timeArr) {
-    //     console.log(this.timeArr.findIndex(el => el === this.taskTime));
-    //   }
-  },
+  mounted() {},
 };
 </script>
 
