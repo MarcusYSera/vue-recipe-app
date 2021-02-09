@@ -28,7 +28,7 @@ export const findEventsById = async (req, res) => {
 export const addEventByUserId = async (req, res) => {
   const { id } = req.params;
   const { event_name, event_date, event_start_end } = req.body;
-  console.log(req.body);
+  // console.log(req.body);
   const columns = 'USER_FKID, EVENT_NAME, EVENT_DATE, EVENT_START_END';
   const values = `'${id}','${event_name}', '${event_date}', '${event_start_end}'`;
   try {

@@ -28,6 +28,10 @@ describe('Events', () => {
       .end((err, res) => {
         assert.strictEqual(res.status, 200, '=== response from event post request is 200');
         assert.isArray(res.body.events, 'response body is an array of an objectevents');
+        res.body.events.forEach((e) => {
+          console.log('log from create event');
+          console.log(e);
+        });
         done();
       });
   });
