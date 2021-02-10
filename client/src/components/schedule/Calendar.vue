@@ -66,7 +66,7 @@ export default {
     };
   },
   computed: {
-    ...mapGetters(['selectedDate']),
+    ...mapGetters(['selectedDate', 'user']),
     startDate() {
       let firstOfMonth = new Date(
         this.displayedDate.getFullYear(),
@@ -78,7 +78,11 @@ export default {
     },
   },
   methods: {
-    ...mapActions(['setSelectedDate']),
+    ...mapActions([
+      'setSelectedDate',
+      'setDateForDBQuery',
+      'getEventsByUserIdDate',
+    ]),
     calculateMonth(x) {
       const options = { month: 'long', day: 'numeric', year: 'numeric' };
       if (x) {
@@ -117,8 +121,18 @@ export default {
       } else {
         x = x.toString();
       }
-      let selectedUTC = new Date(`${this.displayedYear}-${this.month}-${x}`);
+      let formatedDate = `${this.displayedYear}-${this.month}-${x}`;
+      let selectedUTC = new Date(formatedDate);
       this.setSelectedDate(selectedUTC);
+      if (this.displayedDate.getMonth() + 1 < 10) {
+        formatedDate = `${this.displayedYear}-0${this.displayedDate.getMonth() +
+          1}-${x}`;
+      } else {
+        formatedDate = `${this.displayedYear}-${this.displayedDate.getMonth() +
+          1}-${x}`;
+      }
+      this.setDateForDBQuery(formatedDate);
+      this.getEventsByUserIdDate([this.user.userId, formatedDate]);
     },
     getDaysInCurrentMonth() {
       // var date = new Date();
@@ -134,6 +148,7 @@ export default {
       this.displayedYear = this.displayedDate.getFullYear().toString();
       this.getDaysInCurrentMonth();
       this.setSelectedDate(this.displayedDate);
+      this.clickedDate(this.displayedDate.getDate());
     },
   },
 
