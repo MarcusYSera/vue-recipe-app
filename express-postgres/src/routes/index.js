@@ -2,7 +2,7 @@ import express from 'express';
 import { usersPage, addUser, editUser, findUserByEmail } from '../controllers/users.js';
 import { indexPage } from '../controllers/home.js';
 import { messagesPage, addMessage } from '../controllers/messages.js';
-import { eventsPage, findEventsById, addEventByUserId } from '../controllers/event.js';
+import { eventsPage, findEventsByIdAndDate, addEventByUserId } from '../controllers/event.js';
 
 const indexRouter = express.Router();
 
@@ -17,7 +17,7 @@ indexRouter.post('/users/create', addUser);
 indexRouter.put('/users/edit/:id', editUser);
 
 indexRouter.get('/events', eventsPage);
-indexRouter.get('/events/findBy/:id', findEventsById);
+indexRouter.get('/events/findBy/:id/:date', findEventsByIdAndDate);
 indexRouter.post('/event/create/:id', addEventByUserId);
 
 export default indexRouter;

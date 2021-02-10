@@ -4,19 +4,19 @@ const eventsModel = new Model('events');
 
 export const eventsPage = async (req, res) => {
   try {
-    const data = await eventsModel.select(
-      'user_fkid, event_name, event_date, event_start_end'
-    );
+    const data = await eventsModel.select('user_fkid, event_name, event_date, event_start_end');
     res.status(200).json({ events: data.rows });
   } catch (err) {
     res.status(200).json({ events: err.stack });
   }
 };
 
-export const findEventsById = async (req, res) => {
-  const { id } = req.params;
+export const findEventsByIdAndDate = async (req, res) => {
+  const { id, date } = req.params;
+  console.log(id);
+  console.log(date);
   const columns = 'event_name, event_date, event_start_end';
-  const clause = `WHERE user_fkid = ${id}`;
+  const clause = `WHERE user_fkid = ${id} AND event_date::date = date '${date}'`;
   try {
     const data = await eventsModel.select(columns, clause);
     res.status(200).json({ events: data.rows });

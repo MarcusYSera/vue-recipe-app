@@ -51,7 +51,12 @@ export default {
     };
   },
   computed: {
-    ...mapGetters(['user', 'selectedDate', 'isLoggedIn']),
+    ...mapGetters([
+      'user',
+      'selectedDate',
+      'isLoggedIn',
+      'selectedDateForDBQuery',
+    ]),
     selectedDateDisplay() {
       this.updateSelectedDate(this.selectedDate);
       return `${this.currentMonth} ${this.currentDate}`;
@@ -59,7 +64,11 @@ export default {
     // ...mapState(['user']),
   },
   methods: {
-    ...mapActions(['setSelectedDate', 'getEventsByUserId']),
+    ...mapActions([
+      'setSelectedDate',
+      'getEventsByUserIdDate',
+      'setDateForDBQuery',
+    ]),
     timeRefData(x) {
       this.timeArr = x;
     },
@@ -83,7 +92,16 @@ export default {
       this.setSelectedDate(rightNow);
       this.updateSelectedDate(rightNow);
       if (this.isLoggedIn) {
-        this.getEventsByUserId(this.user.userId);
+        let date = new Intl.DateTimeFormat([], {
+          year: 'numeric',
+          month: '2-digit',
+          day: '2-digit',
+        }).format(rightNow);
+        date = date.split('/');
+        date.unshift(date[2]);
+        date.pop();
+        this.setDateForDBQuery(date.join('-'));
+        this.getEventsByUserIdDate([this.user.userId, date.join('-')]);
       }
     },
   },

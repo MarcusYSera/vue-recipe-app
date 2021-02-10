@@ -1,21 +1,28 @@
 import api from '../../api/postgresAPI';
 
-const state = { selectedDate: null, events: null };
+const state = {
+  selectedDate: null,
+  events: null,
+  selectedDateForDBQuery: null,
+};
 
 const getters = {
   selectedDate: state => state.selectedDate,
   events: state => state.events,
+  selectedDateForDBQuery: state => state.selectedDateForDBQuery,
 };
 
 const actions = {
   setSelectedDate({ commit }, selectedDate) {
     commit('setSelectedDate', selectedDate);
   },
-
-  getEventsByUserId({ commit }, userId) {
+  setDateForDBQuery({ commit }, truncatedDate) {
+    commit('setSelectedDateForDBQuery', truncatedDate);
+  },
+  getEventsByUserIdDate({ commit }, arr) {
     return new Promise((resolve, reject) => {
       api
-        .getEvents(userId)
+        .getEventsByIdAndDate(arr)
         .then(res => {
           commit('setEvents', res.data.events);
           resolve();
@@ -49,6 +56,9 @@ const mutations = {
   },
   setSelectedDate: (state, date) => {
     state.selectedDate = date;
+  },
+  setSelectedDateForDBQuery: (state, date) => {
+    state.selectedDateForDBQuery = date;
   },
 };
 

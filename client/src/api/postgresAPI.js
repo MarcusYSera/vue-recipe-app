@@ -39,9 +39,9 @@ export default {
       });
     return responseBack;
   },
-  async getEvents(id) {
+  async getEventsByIdAndDate(arr) {
     let responseBack = await axios
-      .get(`${POSTGRES_SERVER}/events/findBy/${id}`)
+      .get(`${POSTGRES_SERVER}/events/findBy/${arr[0]}/${arr[1]}`)
       .then(res => {
         return res;
       })

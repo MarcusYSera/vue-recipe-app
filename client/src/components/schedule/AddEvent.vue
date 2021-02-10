@@ -49,9 +49,9 @@ export default {
       region: '',
     };
   },
-  computed: { ...mapGetters(['user', 'isLoggedIn']) },
+  computed: { ...mapGetters(['user', 'isLoggedIn', 'selectedDateForDBQuery']) },
   methods: {
-    ...mapActions(['createEventByUserId', 'getEventsByUserId']),
+    ...mapActions(['createEventByUserId', 'getEventsByUserIdDate']),
     timeOption(choice) {
       this.endOrStart = choice;
       this.timeChoice = true;
@@ -100,9 +100,8 @@ export default {
           event_date: this.currentDate,
           event_start_end: this.endOrStart,
         };
-        console.log(newEvent);
         await this.createEventByUserId([id, newEvent]);
-        this.getEventsByUserId(id);
+        this.getEventsByUserIdDate([id, this.selectedDateForDBQuery]);
         this.clearEvent();
       } else {
         alert('Please Login to Create Events');

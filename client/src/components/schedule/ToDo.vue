@@ -69,7 +69,7 @@ export default {
     // }
   },
   updated() {
-    this.$emit('time-of-task', this.$refs.taskTime.innerHTML);
+    // this.$emit('time-of-task', this.$refs.taskTime.innerHTML);
     if (this.eventData.length > 0) {
       let options = {
         weekday: 'long',
