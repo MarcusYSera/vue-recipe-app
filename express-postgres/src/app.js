@@ -7,11 +7,19 @@ import { corsOrigin } from './settings.js';
 
 const app = express();
 
-// swap these values
-const corsOptions = {
-  origin: `${corsOrigin}`,
-};
-app.use(cors(corsOptions));
+// app.use(function (req, res, next) {
+//   res.header('Access-Control-Allow-Origin', `${corsOrigin}`); // update to match the domain you will make the request from
+//   res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
+//   next();
+// });
+
+app.use(
+  cors({
+    origin: `${corsOrigin}`,
+    methods: 'GET, POST, PUT',
+    optionsSuccessStatus: 204,
+  })
+);
 
 app.use(logger('dev'));
 app.use(express.json());
