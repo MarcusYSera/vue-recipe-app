@@ -1,5 +1,5 @@
 <template>
-  <div class="grid-container app-main">
+  <main class="grid-container app-main">
     <!-- <header> -->
     <HamburgerNav class="hamNav"></HamburgerNav>
     <!-- <router-link to="/">home</router-link> -->
@@ -8,7 +8,7 @@
     <!-- </header> -->
     <router-view class="main-content-grid-area" />
     <!-- <footer class="bottomFooter">copyright sera-consulting</footer> -->
-  </div>
+  </main>
 </template>
 
 <script>

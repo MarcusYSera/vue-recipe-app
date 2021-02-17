@@ -1,8 +1,8 @@
 <template>
-  <main class="flex-container row home-main">
-    <article class="flex-container column schedule-article">
+  <article class="flex-container row schedule-article">
+    <div class="flex-container column schedule-div">
       <header class="flex-container row schedule-header">
-        <section>{{ selectedDateDisplay }}</section>
+        <time>{{ selectedDateDisplay }}</time>
         <h4 v-if="user">{{ user.firstName }}</h4>
         <nav class="flex-container row schedule-header-right">
           <SearchBar @search-query="onSearchTerm"></SearchBar>
@@ -12,20 +12,15 @@
           </button>
         </nav>
       </header>
-      <article class="grid-container dayview">
-        <TimeBar @time-ref="timeRefData"></TimeBar>
-        <!-- have this viewable for a full 24 hours around the current day and auto open to the current time-->
-        <ToDo @time-of-task="timeOfTask"></ToDo>
-      </article>
-    </article>
+      <DayView></DayView>
+    </div>
     <CalendarComponent v-if="openCalendar"></CalendarComponent>
-  </main>
+  </article>
 </template>
 
 <script>
+import DayView from '@/views/schedule/DayView';
 import SearchBar from '@/components/schedule/SearchBar';
-import TimeBar from '@/components/schedule/TimeBar';
-import ToDo from '@/components/schedule/ToDo';
 import CalendarComponent from '@/components/schedule/Calendar';
 import AddEvent from '@/components/schedule/AddEvent';
 
@@ -37,7 +32,7 @@ import {
 
 export default {
   name: 'Schedule',
-  components: { SearchBar, TimeBar, ToDo, CalendarComponent, AddEvent },
+  components: { DayView, SearchBar, CalendarComponent, AddEvent },
   data() {
     return {
       currentMonth: null,
@@ -113,11 +108,11 @@ export default {
 </script>
 
 <style scoped>
-.home-main {
+.schedule-article {
   /* height: 99%; */
   overflow: hidden;
 }
-.schedule-article {
+.schedule-div {
   flex: auto;
   width: 100%;
   height: 100%;
