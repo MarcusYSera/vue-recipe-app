@@ -132,7 +132,9 @@ export default {
           1}-${x}`;
       }
       this.setDateForDBQuery(formatedDate);
-      this.getEventsByUserIdDate([this.user.userId, formatedDate]);
+      if (this.user) {
+        this.getEventsByUserIdDate([this.user.userId, formatedDate]);
+      }
     },
     getDaysInCurrentMonth() {
       // var date = new Date();
@@ -163,8 +165,9 @@ export default {
 
 <style scoped>
 .calendar-aside-main {
+  grid-area: calendar;
   flex: initial;
-  width: 40vw;
+  width: 25vw;
   background: #ffffff;
   position: relative;
 }
