@@ -1,20 +1,21 @@
 <template>
-  <article class="flex-container row schedule-article">
-    <div class="flex-container column schedule-div">
-      <header class="flex-container row schedule-header">
-        <time>{{ selectedDateDisplay }}</time>
-        <h4 v-if="user">{{ user.firstName }}</h4>
-        <nav class="flex-container row schedule-header-right">
-          <SearchBar @search-query="onSearchTerm"></SearchBar>
-          <AddEvent></AddEvent>
-          <button class="calButton">
-            <img src="@/assets/svg/calOpenIcon.svg" @click.prevent="openCal" />
-          </button>
-        </nav>
-      </header>
-      <DayView></DayView>
-    </div>
-    <CalendarComponent v-if="openCalendar"></CalendarComponent>
+  <!-- <article class="flex-container row schedule-article"> -->
+  <article class="grid-container schedule-article-grid">
+    <!-- <div class="flex-container column schedule-div"> -->
+    <header class="flex-container row schedule-header">
+      <time>{{ selectedDateDisplay }}</time>
+      <h4 v-if="user">{{ user.firstName }}</h4>
+      <nav class="flex-container row schedule-header-right">
+        <SearchBar @search-query="onSearchTerm"></SearchBar>
+        <AddEvent></AddEvent>
+        <button class="calButton">
+          <img src="@/assets/svg/calOpenIcon.svg" @click.prevent="openCal" />
+        </button>
+      </nav>
+    </header>
+    <DayView class="todo"></DayView>
+    <!-- </div> -->
+    <CalendarComponent v-if="openCalendar" class="calendar"></CalendarComponent>
   </article>
 </template>
 
@@ -108,30 +109,35 @@ export default {
 </script>
 
 <style scoped>
-.schedule-article {
+.schedule-article-grid {
+  grid-template-areas: 'header calendar' 'todo calendar';
+  grid-template-rows: 1fr 9fr;
+  grid-template-columns: 1fr;
+  /* grid-auto-columns: 1fr; */
+  /* grid-auto-rows: 0px; */
   /* height: 99%; */
   overflow: hidden;
 }
-.schedule-div {
+/* .schedule-div {
   flex: auto;
   width: 100%;
   height: 100%;
   padding: 4vh 0.5% 0 0;
+} */
+header {
+  grid-area: header;
 }
 .schedule-header {
   padding: 0 1vw 3vh 0;
   justify-content: space-between;
   align-items: center;
-  grid-area: header;
   border-bottom: 0.15rem solid #f3f3f3;
 }
-.dayview {
-  /* margin-top: 1rem; */
-  grid-area: dayview;
-  grid-template: 'time todo' / 5rem 1fr;
-  max-height: 100%;
-  overflow: scroll;
-  overflow-x: hidden;
+.todo {
+  grid-area: todo;
+}
+.calendar {
+  grid-area: calendar;
 }
 .schedule-header-right {
   position: relative;
