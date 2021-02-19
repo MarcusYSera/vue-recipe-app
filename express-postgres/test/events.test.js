@@ -22,7 +22,7 @@ describe('Events', () => {
       event_description: 'will make clam pasta',
       event_date: '2021-02-06T06:49:00.000Z',
       event_start_end: 'end',
-      event_duration: '01:00',
+      event_duration: '36:45',
     };
     const id = 1;
     server
