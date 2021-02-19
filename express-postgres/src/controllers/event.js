@@ -15,9 +15,10 @@ export const eventsPage = async (req, res) => {
 
 export const findEventsByIdAndDate = async (req, res) => {
   const { id, date } = req.params;
-  console.log(id);
-  console.log(date);
-  const columns = 'event_name, event_date, event_start_end';
+  // console.log(id);
+  // console.log(date);
+  const columns =
+    'event_name, event_associate_recipe, event_description, event_date, event_start_end, event_duration';
   const clause = `WHERE user_fkid = ${id} AND event_date::date = date '${date}'`;
   try {
     const data = await eventsModel.select(columns, clause);
