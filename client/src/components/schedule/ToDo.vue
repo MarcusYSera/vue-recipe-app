@@ -1,8 +1,6 @@
 <template>
-  <!-- <article class="flex-container column todo-article"> -->
   <section v-if="!isLoggedIn" class="task-item one">
     <h3>Example of a Task at 12:00 A.M.</h3>
-    <!-- <time hidden ref="taskTime">1:00 A.M.</time> -->
     <p>
       Lorem ipsum, dolor sit amet consectetur adipisicing elit. Beatae, facilis
       ab. Vero dolorum nihil, laborum, recusandae doloremque hic corporis at
@@ -16,7 +14,6 @@
     :style="{ gridRow: `5 row-start` }"
   >
     <h3>Example of a Task at 1:00 A.M.</h3>
-    <!-- <time hidden ref="taskTime">1:00 A.M.</time> -->
     <p>
       Lorem ipsum, dolor sit amet consectetur adipisicing elit. Beatae, facilis
       ab. Vero dolorum nihil, laborum, recusandae doloremque hic corporis at
@@ -30,15 +27,17 @@
     class="task-item two"
     v-for="(item, index) in eventData"
     v-bind:key="index + item.event_name"
-    :style="{ gridRow: `4 row-start` }"
+    :style="{
+      gridRow: `${item.list_position} row-start`,
+    }"
   >
     <h3>{{ item.event_name }}</h3>
+    <h4>{{ item.list_position }}</h4>
     <!-- <time hidden ref="taskTime">{{ item.event_time }}</time> -->
     <p>
       event {{ item.event_start_end }}: {{ item.today }} {{ item.event_time }}
     </p>
   </section>
-  <!-- </article> -->
 </template>
 
 <script>
@@ -46,11 +45,6 @@ import { mapGetters } from 'vuex';
 
 export default {
   name: 'ToDo',
-  data() {
-    return {
-      top: '10px',
-    };
-  },
   computed: {
     ...mapGetters({ eventData: 'events', isLoggedIn: 'isLoggedIn' }),
   },
@@ -61,6 +55,13 @@ export default {
     //   let x = `${date.getMinutes()}`;
     //   return x;
     // },
+    calculatePosition(date) {
+      let answer =
+        parseInt(date.getHours()) * 4 +
+        Math.round(parseInt(date.getMinutes()) / 15) +
+        1;
+      return answer;
+    },
   },
   updated() {
     if (this.eventData.length > 0) {
@@ -70,10 +71,11 @@ export default {
         month: 'long',
         day: 'numeric',
       };
-      this.eventData.forEach(e => {
-        let nom = new Date(e.event_date);
-        e.event_time = nom.toLocaleTimeString();
-        e.today = nom.toLocaleDateString(undefined, options);
+      this.eventData.forEach(async e => {
+        let dateObj = new Date(e.event_date);
+        e.event_time = dateObj.toLocaleTimeString();
+        e.list_position = this.calculatePosition(dateObj);
+        e.today = dateObj.toLocaleDateString(undefined, options);
       });
     }
   },
@@ -81,10 +83,10 @@ export default {
 </script>
 
 <style scoped>
-.todo-article {
+/* .todo-article {
   grid-area: todo;
   width: 100%;
-}
+} */
 .task-item {
   grid-column: column-end;
   max-height: 64px;
