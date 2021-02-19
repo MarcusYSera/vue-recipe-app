@@ -32,7 +32,6 @@
     }"
   >
     <h3>{{ item.event_name }}</h3>
-    <h4>{{ item.list_position }}</h4>
     <!-- <time hidden ref="taskTime">{{ item.event_time }}</time> -->
     <p>
       event {{ item.event_start_end }}: {{ item.today }} {{ item.event_time }}

@@ -14,6 +14,10 @@
         v-model="recipeName"
         class="recipe-name"
       />
+      <textarea
+        v-model="description"
+        placeholder="Short Description"
+      ></textarea>
       <input
         type="date"
         v-model="currentDate"
@@ -28,6 +32,8 @@
         <button @click="timeOption('end')" class="end-button">End Time</button>
       </div>
       <input v-else type="time" v-model="currentTime" class="recipe-name" />
+      <label>Duration</label>
+      <input type="time" v-model="duration" />
       <input type="submit" value="Create" class="create-event-button" />
     </form>
   </aside>
@@ -44,9 +50,11 @@ export default {
       openAddEvent: false,
       timeChoice: false,
       recipeName: '',
+      description: '',
       currentDate: '',
       endOrStart: '',
       currentTime: '',
+      duration: '',
       region: '',
     };
   },
@@ -61,9 +69,11 @@ export default {
       this.openAddEvent = !this.openAddEvent;
       this.timeChoice = false;
       this.recipeName = '';
+      this.description = '';
       this.endOrStart = '';
       this.currentTime = this.getCurrentTime();
       this.currentDate = this.getCurrentDate();
+      this.duration = '';
     },
     openEvent() {
       this.openAddEvent = !this.openAddEvent;
@@ -98,8 +108,10 @@ export default {
         let id = this.user.userId;
         let newEvent = {
           event_name: this.recipeName,
+          event_description: this.description,
           event_date: this.currentDate,
           event_start_end: this.endOrStart,
+          event_duration: this.duration,
         };
         await this.createEventByUserId([id, newEvent]);
         this.getEventsByUserIdDate([id, this.selectedDateForDBQuery]);

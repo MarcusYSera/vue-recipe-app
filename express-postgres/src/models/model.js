@@ -25,6 +25,7 @@ class Model {
       VALUES (${values})
       RETURNING ${this.pKey}_id, ${columns}
     `;
+    // console.log(this.pool.query(query));
     return this.pool.query(query);
   }
 
