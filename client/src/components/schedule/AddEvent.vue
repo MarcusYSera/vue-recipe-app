@@ -14,6 +14,15 @@
         v-model="recipeName"
         class="recipe-name"
       />
+      <!-- <span>Associate Recipe:</span>
+      <select v-model="associateRecipe">
+        <option
+          v-for="(option, index) in recipies"
+          :value="option.value"
+          :key="index"
+          >{{ option.text }}</option
+        >
+      </select> -->
       <textarea
         v-model="description"
         placeholder="Short Description"
@@ -32,7 +41,7 @@
         <button @click="timeOption('end')" class="end-button">End Time</button>
       </div>
       <input v-else type="time" v-model="currentTime" class="recipe-name" />
-      <label>Duration</label>
+      <label>Duration:</label>
       <input type="time" v-model="duration" />
       <input type="submit" value="Create" class="create-event-button" />
     </form>
@@ -50,12 +59,18 @@ export default {
       openAddEvent: false,
       timeChoice: false,
       recipeName: '',
+      associateRecipe: '',
       description: '',
       currentDate: '',
       endOrStart: '',
       currentTime: '',
+      // duration needs to be 01:00 or 18:30
       duration: '',
       region: '',
+      recipies: [
+        { text: 'Pizza', value: 'pizza' },
+        { text: 'Doughnuts', value: 'doughnuts' },
+      ],
     };
   },
   computed: { ...mapGetters(['user', 'isLoggedIn', 'selectedDateForDBQuery']) },
@@ -69,6 +84,7 @@ export default {
       this.openAddEvent = !this.openAddEvent;
       this.timeChoice = false;
       this.recipeName = '';
+      this.associateRecipe = '';
       this.description = '';
       this.endOrStart = '';
       this.currentTime = this.getCurrentTime();
@@ -108,6 +124,7 @@ export default {
         let id = this.user.userId;
         let newEvent = {
           event_name: this.recipeName,
+          event_associate_recipe: this.associateRecipe,
           event_description: this.description,
           event_date: this.currentDate,
           event_start_end: this.endOrStart,

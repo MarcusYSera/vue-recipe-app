@@ -18,6 +18,7 @@ describe('Events', () => {
     const data = {
       user_fkid: 1,
       event_name: 'Pasta',
+      event_associate_recipe: 'pasta',
       event_description: 'will make clam pasta',
       event_date: '2021-02-06T06:49:00.000Z',
       event_start_end: 'end',
