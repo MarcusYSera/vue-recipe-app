@@ -1,15 +1,16 @@
 <template>
-  <section class="flex-container column time-bar">
-    <time
-      v-for="(current, index) in hourData"
-      :key="index"
-      :value="current"
-      class="time-item"
-      :ref="current"
-    >
-      {{ current }}
-    </time>
-  </section>
+  <!-- <section class="flex-container column time-bar"> -->
+  <time
+    v-for="(current, index) in hourData"
+    :key="index"
+    :value="current"
+    class="time-item"
+    :style="{ gridRow: `row-start ${index + 1}` }"
+    :ref="current"
+  >
+    {{ current }}
+  </time>
+  <!-- </section> -->
 </template>
 
 <script>
@@ -19,6 +20,7 @@ export default {
   name: 'TimeBar',
   data() {
     return {
+      // realTwentyFour: null,
       hourData: twentyFourData,
       twentyFour: false,
     };
@@ -83,7 +85,8 @@ export default {
       }
     },
   },
-  mounted() {
+  created() {
+    // this.realTwentyFour = JSON.parse(JSON.stringify(twentyFourData));
     if (!this.twentyFour) {
       this.twelveHourFormat();
     }
@@ -93,16 +96,22 @@ export default {
       currentTime.scrollIntoView();
     });
     this.$emit('time-ref', this.hourData);
+    // this.realTwentyFour.forEach((time, index) => {
+    //   this.realTwentyFour[index] = time.split(':').join('');
+    // });
   },
 };
 </script>
 
 <style scoped>
 .time-bar {
-  grid-area: time;
+  /* grid-area: time; */
   justify-content: space-between;
 }
 .time-item {
-  margin-top: 3rem;
+  grid-row: row-start;
+  grid-column: column-start;
+  /* grid-area: time; */
+  /* margin-top: 3rem; */
 }
 </style>
