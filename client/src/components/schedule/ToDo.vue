@@ -28,13 +28,17 @@
     v-for="(item, index) in eventData"
     v-bind:key="index + item.event_name"
     :style="{
-      gridRow: `${item.list_position} row-start`,
+      gridRow: `${item.list_position_start} row-start/ ${item.list_position_end} row-start`,
     }"
   >
     <h3>{{ item.event_name }}</h3>
-    <!-- <time hidden ref="taskTime">{{ item.event_time }}</time> -->
+    <!-- <p>Recipe: {{ item.associate_recipe }}</p> -->
+    <p>Description: {{ item.event_description }}</p>
+    <p>Event {{ item.event_start_end }}: {{ item.event_time }}</p>
+    <p>Finish:</p>
     <p>
-      event {{ item.event_start_end }}: {{ item.today }} {{ item.event_time }}
+      Duration: {{ item.event_duration.hours }} hrs
+      {{ item.event_duration.minutes }} min
     </p>
   </section>
 </template>
@@ -48,18 +52,21 @@ export default {
     ...mapGetters({ eventData: 'events', isLoggedIn: 'isLoggedIn' }),
   },
   methods: {
-    // computedTop(time) {
-    //   let date = new Date(time.event_date);
-    //   console.log(date.getHours());
-    //   let x = `${date.getMinutes()}`;
-    //   return x;
-    // },
-    calculatePosition(date) {
-      let answer =
-        parseInt(date.getHours()) * 4 +
-        Math.round(parseInt(date.getMinutes()) / 15) +
-        1;
-      return answer;
+    calculateStartPosition(date) {
+      return new Promise(resolve => {
+        let answer =
+          parseInt(date.getHours()) * 4 +
+          Math.round(parseInt(date.getMinutes()) / 15) +
+          1;
+        resolve(answer);
+      });
+    },
+    calculateEndPosition(start, duration) {
+      return new Promise(resolve => {
+        let answer =
+          start + duration.hours * 4 + Math.round(duration.minutes / 15);
+        resolve(answer);
+      });
     },
   },
   updated() {
@@ -72,8 +79,15 @@ export default {
       };
       this.eventData.forEach(async e => {
         let dateObj = new Date(e.event_date);
-        e.event_time = dateObj.toLocaleTimeString();
-        e.list_position = this.calculatePosition(dateObj);
+        e.event_time = dateObj.toLocaleTimeString([], {
+          hour: 'numeric',
+          minute: '2-digit',
+        });
+        e.list_position_start = await this.calculateStartPosition(dateObj);
+        e.list_position_end = await this.calculateEndPosition(
+          e.list_position_start,
+          e.event_duration
+        );
         e.today = dateObj.toLocaleDateString(undefined, options);
       });
     }
@@ -82,29 +96,18 @@ export default {
 </script>
 
 <style scoped>
-/* .todo-article {
-  grid-area: todo;
-  width: 100%;
-} */
 .task-item {
   grid-column: column-end;
-  max-height: 64px;
+  /* max-height: 64px; */
   overflow: scroll;
   overflow-x: hidden;
 }
 .one {
-  /* grid-column: column-end; */
-  /* grid-row: 1 row-start; */
   border-left: 2px solid #3d83f9;
   background-color: #3d83f915;
-  /* margin-top: 20rem; */
-  /* 3 rem + 1 rem for existing text */
 }
 .two {
-  /* grid-column: column-end; */
-  /* grid-row: 5 row-start; */
   border-left: 2px solid #eea57c;
   background-color: #eea57c15;
-  /* margin-top: 24rem; */
 }
 </style>

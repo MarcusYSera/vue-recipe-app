@@ -34,11 +34,11 @@
         class="recipe-name"
       />
       <div v-if="!timeChoice" class="start-or-end-button-group">
-        <button @click="timeOption('start')" class="start-button">
+        <button @click="timeOption('Start')" class="start-button">
           Start Time
         </button>
         <p class="or-text">or</p>
-        <button @click="timeOption('end')" class="end-button">End Time</button>
+        <button @click="timeOption('End')" class="end-button">End Time</button>
       </div>
       <input v-else type="time" v-model="currentTime" class="recipe-name" />
       <label>Duration:</label>
