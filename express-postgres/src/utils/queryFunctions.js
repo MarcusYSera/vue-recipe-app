@@ -4,8 +4,8 @@ import {
   createUserTable,
   createMessageTable,
   createEventTable,
-  createUserMessageForeignKey,
-  createUserEventForeignKey,
+  // createUserMessageForeignKey,
+  // createUserEventForeignKey,
   createUpdateTriggerForUsers,
   createUpdateTriggerForMessages,
   createUpdateTriggerForEvents,
@@ -36,8 +36,8 @@ export const createPrimaryKeyTables = () => executeQueryArray([createUserTable])
 export const createForeignKeyTables = () =>
   executeQueryArray([createMessageTable, createEventTable]);
 
-export const addForeignKeys = () =>
-  executeQueryArray([createUserMessageForeignKey, createUserEventForeignKey]);
+// export const addForeignKeys = () =>
+//   executeQueryArray([createUserMessageForeignKey, createUserEventForeignKey]);
 
 export const associateUpdateTriggerToTables = () =>
   executeQueryArray([
