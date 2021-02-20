@@ -4,7 +4,7 @@ import {
   // deleteTestValues,
   createPrimaryKeyTables,
   createForeignKeyTables,
-  addForeignKeys,
+  // addForeignKeys,
   insertPrimaryIntoTables,
   insertForeignIntoTables,
   createTriggerFunctions,
@@ -15,7 +15,7 @@ before(async () => {
   await createTriggerFunctions();
   await createPrimaryKeyTables();
   await createForeignKeyTables();
-  await addForeignKeys();
+  // await addForeignKeys();
   await associateUpdateTriggerToTables();
   await insertPrimaryIntoTables();
   await insertForeignIntoTables();

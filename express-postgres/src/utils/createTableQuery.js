@@ -2,7 +2,7 @@ import {
   createTriggerFunctions,
   createPrimaryKeyTables,
   createForeignKeyTables,
-  addForeignKeys,
+  // addForeignKeys,
   associateUpdateTriggerToTables,
 } from './queryFunctions.js';
 
@@ -10,6 +10,6 @@ import {
   await createTriggerFunctions();
   await createPrimaryKeyTables();
   await createForeignKeyTables();
-  await addForeignKeys();
+  // await addForeignKeys();
   await associateUpdateTriggerToTables();
 })();

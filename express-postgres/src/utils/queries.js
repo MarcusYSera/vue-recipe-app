@@ -49,7 +49,7 @@ export const insertUsers = `
     ('markie', 'sera', 'msera@gmail.com', '0208');
 `;
 
-export const dropUsersTable = 'DROP TABLE users;';
+export const dropUsersTable = 'DROP TABLE IF EXISTS users;';
 
 export const createMessageTable = `
   CREATE TABLE IF NOT EXISTS messages (
@@ -58,7 +58,11 @@ export const createMessageTable = `
     MESSAGE VARCHAR NOT NULL,
     CREATED_AT TIMESTAMPTZ NOT NULL DEFAULT NOW(),
     UPDATED_AT TIMESTAMPTZ NOT NULL DEFAULT NOW(),
-    PRIMARY KEY(MESSAGE_ID)
+    PRIMARY KEY(MESSAGE_ID),
+    CONSTRAINT user_fkid
+      FOREIGN KEY(user_fkid)
+        REFERENCES users(user_id)
+        ON DELETE CASCADE
   );
 `;
 
@@ -70,19 +74,13 @@ export const createUpdateTriggerForMessages = `
   EXECUTE PROCEDURE trigger_set_timestamp();
 `;
 
-export const createUserMessageForeignKey = `
-  ALTER TABLE messages
-  ADD FOREIGN KEY (USER_FKID)
-  REFERENCES users(USER_ID);
-`;
-
 export const insertMessages = `
   INSERT INTO messages(USER_FKID, MESSAGE)
   VALUES (1,'first message'),
   (2,'second message');
 `;
 
-export const dropMessagesTable = 'DROP TABLE messages;';
+export const dropMessagesTable = 'DROP TABLE IF EXISTS messages;';
 
 export const createEventTable = `
   CREATE TABLE IF NOT EXISTS events (
@@ -91,20 +89,18 @@ export const createEventTable = `
     EVENT_NAME VARCHAR,
     EVENT_ASSOCIATE_RECIPE VARCHAR,
     EVENT_DESCRIPTION TEXT,
-    EVENT_DATE TIMESTAMPTZ,
-    EVENT_START_END VARCHAR,
+    EVENT_START TIMESTAMPTZ,
+    EVENT_END VARCHAR,
     EVENT_DURATION INTERVAL,
     EVENT_COMPLETED_AT TIMESTAMPTZ,
     CREATED_AT TIMESTAMPTZ NOT NULL DEFAULT NOW(),
     UPDATED_AT TIMESTAMPTZ NOT NULL DEFAULT NOW(),
-    PRIMARY KEY(EVENT_ID)
+    PRIMARY KEY(EVENT_ID),
+    CONSTRAINT user_fkid
+      FOREIGN KEY(user_fkid)
+        REFERENCES users(user_id)
+        ON DELETE CASCADE
   );
-`;
-
-export const createUserEventForeignKey = `
-  ALTER TABLE events
-  ADD FOREIGN KEY (USER_FKID)
-  REFERENCES users(USER_ID);
 `;
 
 export const createUpdateTriggerForEvents = `
@@ -116,7 +112,7 @@ export const createUpdateTriggerForEvents = `
 `;
 
 export const insertEvents = `
-  INSERT INTO events(USER_FKID, EVENT_NAME, EVENT_ASSOCIATE_RECIPE, EVENT_DESCRIPTION, EVENT_DATE, EVENT_START_END, EVENT_DURATION)
+  INSERT INTO events(USER_FKID, EVENT_NAME, EVENT_ASSOCIATE_RECIPE, EVENT_DESCRIPTION, EVENT_START, EVENT_END, EVENT_DURATION)
   VALUES (1, 'Pizza', 'pizza', 'making pizza today', '2021-02-06T06:49:00.000Z', 'start', '18:30'), 
   (2, 'Pie', 'pie', 'making a pie today', '2021-02-06T06:49:00.000Z', 'start', '08:00');
 `;
@@ -143,4 +139,4 @@ export const deleteTextValuesEvents = `
   WHERE USER_FKID IN (1,2);
 `;
 
-export const dropEventsTable = 'DROP TABLE events;';
+export const dropEventsTable = 'DROP TABLE IF EXISTS events;';
