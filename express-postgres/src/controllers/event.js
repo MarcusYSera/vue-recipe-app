@@ -19,7 +19,7 @@ export const findEventsByIdAndDate = async (req, res) => {
   // console.log(date);
   const columns =
     'event_name, event_associate_recipe, event_description, event_start, event_end, event_duration';
-  const clause = `WHERE user_fkid = ${id} AND event_start::date AT TIME ZONE 'America/Los_Angeles' = date '${date}'`;
+  const clause = `WHERE user_fkid = ${id} AND (event_start::timestamptz AT TIME ZONE 'America/Los_Angeles')::date = date '${date}'`;
   try {
     const data = await eventsModel.select(columns, clause);
     res.status(200).json({ events: data.rows });
