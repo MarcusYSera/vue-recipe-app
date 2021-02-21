@@ -126,9 +126,10 @@ export default {
           event_name: this.recipeName,
           event_associate_recipe: this.associateRecipe,
           event_description: this.description,
-          event_date: this.currentDate,
-          event_start_end: this.endOrStart,
-          event_duration: this.duration,
+          event_start: this.currentDate,
+          event_end: this.endOrStart,
+          // event_duration: this.duration,
+          event_duration: '01:30',
         };
         await this.createEventByUserId([id, newEvent]);
         this.getEventsByUserIdDate([id, this.selectedDateForDBQuery]);

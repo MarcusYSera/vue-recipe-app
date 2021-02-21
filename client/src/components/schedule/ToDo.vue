@@ -77,8 +77,9 @@ export default {
         month: 'long',
         day: 'numeric',
       };
+      console.log(this.eventData);
       this.eventData.forEach(async e => {
-        let dateObj = new Date(e.event_date);
+        let dateObj = new Date(e.event_start);
         e.event_time = dateObj.toLocaleTimeString([], {
           hour: 'numeric',
           minute: '2-digit',
