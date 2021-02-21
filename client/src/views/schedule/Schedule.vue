@@ -94,7 +94,12 @@ export default {
         date.unshift(date[2]);
         date.pop();
         this.setDateForDBQuery(date.join('-'));
-        this.getEventsByUserIdDate([this.user.userId, date.join('-')]);
+        let here = new Intl.DateTimeFormat('default');
+        this.getEventsByUserIdDate([
+          this.user.userId,
+          date.join('-'),
+          here.resolvedOptions().timeZone,
+        ]);
       }
     },
   },

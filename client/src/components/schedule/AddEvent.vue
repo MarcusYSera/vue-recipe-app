@@ -132,7 +132,12 @@ export default {
           event_duration: '01:30',
         };
         await this.createEventByUserId([id, newEvent]);
-        this.getEventsByUserIdDate([id, this.selectedDateForDBQuery]);
+        let here = new Intl.DateTimeFormat('default');
+        this.getEventsByUserIdDate([
+          id,
+          this.selectedDateForDBQuery,
+          here.resolvedOptions().timeZone,
+        ]);
         this.clearEvent();
       } else {
         alert('Please Login to Create Events');

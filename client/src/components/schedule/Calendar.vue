@@ -133,7 +133,12 @@ export default {
       }
       this.setDateForDBQuery(formatedDate);
       if (this.user) {
-        this.getEventsByUserIdDate([this.user.userId, formatedDate]);
+        let here = new Intl.DateTimeFormat('default');
+        this.getEventsByUserIdDate([
+          this.user.userId,
+          formatedDate,
+          here.resolvedOptions().timeZone,
+        ]);
       }
     },
     getDaysInCurrentMonth() {

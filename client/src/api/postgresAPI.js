@@ -40,8 +40,9 @@ export default {
     return responseBack;
   },
   async getEventsByIdAndDate(arr) {
+    arr[2] = arr[2].split('/').join('-');
     let responseBack = await axios
-      .get(`${POSTGRES_SERVER}/events/findBy/${arr[0]}/${arr[1]}`)
+      .get(`${POSTGRES_SERVER}/events/findBy/${arr[0]}/${arr[1]}/${arr[2]}`)
       .then(res => {
         return res;
       })

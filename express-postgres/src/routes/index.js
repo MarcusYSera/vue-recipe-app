@@ -17,7 +17,7 @@ indexRouter.post('/users/create', addUser);
 indexRouter.put('/users/edit/:id', editUser);
 
 indexRouter.get('/events', eventsPage);
-indexRouter.get('/events/findBy/:id/:date', findEventsByIdAndDate);
+indexRouter.get('/events/findBy/:id/:date/:timezone', findEventsByIdAndDate);
 indexRouter.post('/event/create/:id', addEventByUserId);
 
 export default indexRouter;
