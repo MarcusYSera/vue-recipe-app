@@ -90,7 +90,7 @@ export const createEventTable = `
     EVENT_ASSOCIATE_RECIPE VARCHAR,
     EVENT_DESCRIPTION TEXT,
     EVENT_START TIMESTAMPTZ,
-    EVENT_END VARCHAR,
+    EVENT_END TIMESTAMPTZ,
     EVENT_DURATION INTERVAL,
     EVENT_COMPLETED_AT TIMESTAMPTZ,
     CREATED_AT TIMESTAMPTZ NOT NULL DEFAULT NOW(),
@@ -113,8 +113,8 @@ export const createUpdateTriggerForEvents = `
 
 export const insertEvents = `
   INSERT INTO events(USER_FKID, EVENT_NAME, EVENT_ASSOCIATE_RECIPE, EVENT_DESCRIPTION, EVENT_START, EVENT_END, EVENT_DURATION)
-  VALUES (1, 'Pizza', 'pizza', 'making pizza today', '2021-02-06T06:49:00.000Z', 'start', '18:30'), 
-  (2, 'Pie', 'pie', 'making a pie today', '2021-02-06T06:49:00.000Z', 'start', '08:00');
+  VALUES (1, 'Pizza', 'pizza', 'making pizza today', '2021-02-06T06:49:00.000Z', '2021-02-06T18:19:00.000Z', '11:30'), 
+  (2, 'Pie', 'pie', 'making a pie today', '2021-02-06T06:49:00.000Z', '2021-02-06T14:49:00.000Z', '08:00');
 `;
 
 export const updateEvents = `
