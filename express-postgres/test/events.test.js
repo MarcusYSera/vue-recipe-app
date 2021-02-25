@@ -42,6 +42,8 @@ describe('Events', () => {
         assert.typeOf(e['user_fkid'], 'number', 'we have a number');
         assert.typeOf(e['event_name'], 'string', 'we have a string');
         assert.typeOf(e['event_associate_recipe'], 'string');
+        assert.typeOf(e['event_description'], 'string');
+        assert.typeOf(e['event_start'], '');
       });
       done();
     });

@@ -34,8 +34,8 @@
     <h3>{{ item.event_name }}</h3>
     <!-- <p>Recipe: {{ item.associate_recipe }}</p> -->
     <p>Description: {{ item.event_description }}</p>
-    <p>Event {{ item.event_start_end }}: {{ item.event_time }}</p>
-    <p>Finish:</p>
+    <p>Event Start Time: {{ item.event_time_start }}</p>
+    <p>Finish: {{ item.event_time_end }}</p>
     <p>
       Duration: {{ item.event_duration.hours }} hrs
       {{ item.event_duration.minutes }} min
@@ -52,19 +52,12 @@ export default {
     ...mapGetters({ eventData: 'events', isLoggedIn: 'isLoggedIn' }),
   },
   methods: {
-    calculateStartPosition(date) {
+    calculatePosition(date) {
       return new Promise(resolve => {
         let answer =
           parseInt(date.getHours()) * 4 +
           Math.round(parseInt(date.getMinutes()) / 15) +
           1;
-        resolve(answer);
-      });
-    },
-    calculateEndPosition(start, duration) {
-      return new Promise(resolve => {
-        let answer =
-          start + duration.hours * 4 + Math.round(duration.minutes / 15);
         resolve(answer);
       });
     },
@@ -79,17 +72,19 @@ export default {
       };
       console.log(this.eventData);
       this.eventData.forEach(async e => {
-        let dateObj = new Date(e.event_start);
-        e.event_time = dateObj.toLocaleTimeString([], {
+        let dateObjStart = new Date(e.event_start);
+        let dateObjEnd = new Date(e.event_end);
+        e.event_time_start = dateObjStart.toLocaleTimeString([], {
           hour: 'numeric',
           minute: '2-digit',
         });
-        e.list_position_start = await this.calculateStartPosition(dateObj);
-        e.list_position_end = await this.calculateEndPosition(
-          e.list_position_start,
-          e.event_duration
-        );
-        e.today = dateObj.toLocaleDateString(undefined, options);
+        e.event_time_end = dateObjEnd.toLocaleTimeString([], {
+          hour: 'numeric',
+          minute: '2-digit',
+        });
+        e.list_position_start = await this.calculatePosition(dateObjStart);
+        e.list_position_end = await this.calculatePosition(dateObjEnd);
+        e.today = dateObjStart.toLocaleDateString(undefined, options);
       });
     }
   },

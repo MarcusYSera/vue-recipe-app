@@ -64,6 +64,7 @@ export default {
       currentDate: '',
       endOrStart: '',
       currentTime: '',
+      oppositeTime: '',
       // duration needs to be 01:00 or 18:30
       duration: '',
       region: '',
@@ -117,20 +118,49 @@ export default {
       t.unshift(holder);
       return t.join('-');
     },
+    calculateStartOrEndTime() {
+      return new Promise(resolve => {
+        this.oppositeTime = new Date(this.currentDate);
+        console.log(this.oppositeTime);
+        let baseTimeHours = this.oppositeTime.getHours();
+        let baseTimeMinutes = this.oppositeTime.getMinutes();
+        let timePassed = this.duration.split(':');
+        // console.log(timePassed);
+        this.endOrStart === 'Start'
+          ? (timePassed = [
+              parseInt(timePassed[0]) + baseTimeHours,
+              parseInt(timePassed[1]) + baseTimeMinutes,
+            ])
+          : (timePassed = [
+              baseTimeHours - parseInt(timePassed[0]),
+              baseTimeMinutes - parseInt(timePassed[1]),
+            ]);
+        // console.log(timePassed);
+        this.oppositeTime.setHours(timePassed[0], timePassed[1]);
+        console.log(this.oppositeTime);
+        this.oppositeTime = new Date(this.oppositeTime).toISOString();
+        resolve();
+      });
+    },
     async addEventOnSubmit() {
       if (this.isLoggedIn) {
         this.currentDate = `${this.currentDate} ${this.currentTime}`;
         this.currentDate = new Date(this.currentDate).toISOString();
+        await this.calculateStartOrEndTime();
         let id = this.user.userId;
         let newEvent = {
           event_name: this.recipeName,
           event_associate_recipe: this.associateRecipe,
           event_description: this.description,
           event_start: this.currentDate,
-          event_end: this.endOrStart,
-          // event_duration: this.duration,
-          event_duration: '01:30',
+          event_end: this.oppositeTime,
+          event_duration: this.duration,
         };
+        if (this.endOrStart === 'End') {
+          let end = newEvent.event_start;
+          newEvent.event_start = newEvent.event_end;
+          newEvent.event_end = end;
+        }
         await this.createEventByUserId([id, newEvent]);
         let here = new Intl.DateTimeFormat('default');
         this.getEventsByUserIdDate([
