@@ -12,7 +12,7 @@
 
 Early Rendition of Schedule Page
 
-![Schedule](https://raw.githubusercontent.com/MarcusYSera/vue-recipe-app/master/client/img/ScheduleView_v1.png)
+![Schedule](https://raw.githubusercontent.com/MarcusYSera/vue-recipe-app/master/client/img/ScheduleView_v2.png)
 
 ---
 
@@ -59,3 +59,5 @@ make responsive- add media queries/ breakpoints
 current time ticker
 
 change from 15 min intervals to hours and convert grid to 24 hours with 60 rows per hour
+
+decide on how to display multiple to-do items

@@ -34,7 +34,7 @@
     <h3>{{ item.event_name }}</h3>
     <!-- <p>Recipe: {{ item.associate_recipe }}</p> -->
     <p>Description: {{ item.event_description }}</p>
-    <p>Date: {{ item.event_start }} - {{ item.event_end }}</p>
+    <p>Date: {{ item.start_date }} - {{ item.end_date }}</p>
     <p>Event Time: {{ item.event_time_start }} - {{ item.event_time_end }}</p>
     <p>
       Duration: {{ item.event_duration.hours }} hrs
@@ -75,43 +75,42 @@ export default {
         day: 'numeric',
       };
       this.eventData.forEach(async e => {
-        let dateObjStart = new Date(e.event_start);
-        let dateObjEnd = new Date(e.event_end);
-        e.event_time_start = dateObjStart.toLocaleTimeString([], {
+        e.dateObjStart = new Date(e.event_start);
+        e.dateObjEnd = new Date(e.event_end);
+        e.start_date = e.dateObjStart.toLocaleDateString();
+        e.end_date = e.dateObjEnd.toLocaleDateString();
+        e.event_time_start = e.dateObjStart.toLocaleTimeString([], {
           hour: 'numeric',
           minute: '2-digit',
         });
-        e.event_time_end = dateObjEnd.toLocaleTimeString([], {
+        e.event_time_end = e.dateObjEnd.toLocaleTimeString([], {
           hour: 'numeric',
           minute: '2-digit',
         });
-        if (
-          dateObjEnd.toLocaleDateString() === dateObjStart.toLocaleDateString()
-        ) {
-          e.list_position_start = await this.calculatePosition(dateObjStart);
-          e.list_position_end = await this.calculatePosition(dateObjEnd);
+        if (e.start_date === e.end_date) {
+          e.list_position_start = await this.calculatePosition(e.dateObjStart);
+          e.list_position_end = await this.calculatePosition(e.dateObjEnd);
         } else if (
-          dateObjStart.getDate() < this.selectedDate.getDate() &&
-          dateObjEnd.getDate() === this.selectedDate.getDate()
+          e.dateObjStart.getDate() < this.selectedDate.getDate() &&
+          e.dateObjEnd.getDate() === this.selectedDate.getDate()
         ) {
           e.list_position_start = 1;
-          e.list_position_end = await this.calculatePosition(dateObjEnd);
+          e.list_position_end = await this.calculatePosition(e.dateObjEnd);
         } else if (
-          dateObjEnd.getDate() > this.selectedDate.getDate() &&
-          dateObjStart.getDate() === this.selectedDate.getDate()
+          e.dateObjEnd.getDate() > this.selectedDate.getDate() &&
+          e.dateObjStart.getDate() === this.selectedDate.getDate()
         ) {
           e.list_position_end = 97;
-          e.list_position_start = await this.calculatePosition(dateObjStart);
+          e.list_position_start = await this.calculatePosition(e.dateObjStart);
         } else if (
-          dateObjEnd.getDate() !== this.selectedDate.getDate() &&
-          dateObjStart.getDate() !== this.selectedDate.getDate()
+          e.dateObjEnd.getDate() !== this.selectedDate.getDate() &&
+          e.dateObjStart.getDate() !== this.selectedDate.getDate()
         ) {
           // Test this out after custom duration timer is created
           e.list_position_start = 1;
           e.list_position_end = 97;
         }
-
-        e.today = dateObjStart.toLocaleDateString(undefined, options);
+        e.today = e.dateObjStart.toLocaleDateString(undefined, options);
       });
     }
   },

@@ -12,7 +12,7 @@
 
 Early Rendition of Schedule Page
 
-![Schedule](https://raw.githubusercontent.com/MarcusYSera/vue-recipe-app/master/client/img/ScheduleView_v1.png)
+![Schedule](https://raw.githubusercontent.com/MarcusYSera/vue-recipe-app/master/client/img/ScheduleView_v2.png)
 
 ---
 
