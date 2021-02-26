@@ -34,8 +34,8 @@
     <h3>{{ item.event_name }}</h3>
     <!-- <p>Recipe: {{ item.associate_recipe }}</p> -->
     <p>Description: {{ item.event_description }}</p>
-    <p>Event Start Time: {{ item.event_time_start }}</p>
-    <p>Finish: {{ item.event_time_end }}</p>
+    <p>Date: {{ item.event_start }} - {{ item.event_end }}</p>
+    <p>Event Time: {{ item.event_time_start }} - {{ item.event_time_end }}</p>
     <p>
       Duration: {{ item.event_duration.hours }} hrs
       {{ item.event_duration.minutes }} min
@@ -49,7 +49,11 @@ import { mapGetters } from 'vuex';
 export default {
   name: 'ToDo',
   computed: {
-    ...mapGetters({ eventData: 'events', isLoggedIn: 'isLoggedIn' }),
+    ...mapGetters({
+      eventData: 'events',
+      isLoggedIn: 'isLoggedIn',
+      selectedDate: 'selectedDate',
+    }),
   },
   methods: {
     calculatePosition(date) {
@@ -70,7 +74,6 @@ export default {
         month: 'long',
         day: 'numeric',
       };
-      console.log(this.eventData);
       this.eventData.forEach(async e => {
         let dateObjStart = new Date(e.event_start);
         let dateObjEnd = new Date(e.event_end);
@@ -82,8 +85,32 @@ export default {
           hour: 'numeric',
           minute: '2-digit',
         });
-        e.list_position_start = await this.calculatePosition(dateObjStart);
-        e.list_position_end = await this.calculatePosition(dateObjEnd);
+        if (
+          dateObjEnd.toLocaleDateString() === dateObjStart.toLocaleDateString()
+        ) {
+          e.list_position_start = await this.calculatePosition(dateObjStart);
+          e.list_position_end = await this.calculatePosition(dateObjEnd);
+        } else if (
+          dateObjStart.getDate() < this.selectedDate.getDate() &&
+          dateObjEnd.getDate() === this.selectedDate.getDate()
+        ) {
+          e.list_position_start = 1;
+          e.list_position_end = await this.calculatePosition(dateObjEnd);
+        } else if (
+          dateObjEnd.getDate() > this.selectedDate.getDate() &&
+          dateObjStart.getDate() === this.selectedDate.getDate()
+        ) {
+          e.list_position_end = 97;
+          e.list_position_start = await this.calculatePosition(dateObjStart);
+        } else if (
+          dateObjEnd.getDate() !== this.selectedDate.getDate() &&
+          dateObjStart.getDate() !== this.selectedDate.getDate()
+        ) {
+          // Test this out after custom duration timer is created
+          e.list_position_start = 1;
+          e.list_position_end = 97;
+        }
+
         e.today = dateObjStart.toLocaleDateString(undefined, options);
       });
     }
@@ -97,6 +124,8 @@ export default {
   /* max-height: 64px; */
   overflow: scroll;
   overflow-x: hidden;
+  position: sticky;
+  position: -webkit-sticky;
 }
 .one {
   border-left: 2px solid #3d83f9;

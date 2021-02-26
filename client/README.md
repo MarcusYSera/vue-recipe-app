@@ -18,9 +18,9 @@ Early Rendition of Schedule Page
 
 ### Notes
 
-- Vue3
+- Vue3, Vue cli 4
 
-- Utilizing Semantic HTML to increase SEO readability
+- Utilizing Semantic HTML5 to increase SEO readability
 
 - Grid
 
@@ -29,3 +29,29 @@ Early Rendition of Schedule Page
 - assets used by iframe are sourced from public path instead of src
 
 - assets used by img are sourced from relative src path
+
+---
+
+### TO-DO
+
+fix displaying of to list items that exceed 24 hours
+
+duration timer/ in days, hours, minutes
+
+allow a user to go back and reselect start time or end time
+
+add in recipe saves
+
+create different views - weekly & monthly
+
+add in calendar interactions ie: if there is an event on said day
+
+fix add event styling
+
+fix search spacing while add event is open
+
+fix design spacing
+
+refactor css (set a standard for rem units)
+
+make responsive- add media queries/ breakpoints
