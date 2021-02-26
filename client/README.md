@@ -55,3 +55,7 @@ fix design spacing
 refactor css (set a standard for rem units)
 
 make responsive- add media queries/ breakpoints
+
+current time ticker
+
+change from 15 min intervals to hours and convert grid to 24 hours with 60 rows per hour

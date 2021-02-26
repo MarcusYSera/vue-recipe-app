@@ -121,11 +121,12 @@ export default {
 <style scoped>
 .task-item {
   grid-column: column-end;
-  /* max-height: 64px; */
-  overflow: scroll;
-  overflow-x: hidden;
-  position: sticky;
-  position: -webkit-sticky;
+  /* overflow: scroll; */
+  /* overflow-x: hidden; */
+  /* position: sticky; */
+  /* top: 0; */
+  /* position: -webkit-sticky; */
+  /* align-items: flex-start; */
 }
 .one {
   border-left: 2px solid #3d83f9;
