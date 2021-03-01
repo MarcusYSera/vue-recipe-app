@@ -34,13 +34,13 @@ Early Rendition of Schedule Page
 
 ### TO-DO
 
-fix displaying of to list items that exceed 24 hours
+create duration timer/ in days, hours, minutes
 
-duration timer/ in days, hours, minutes
+fix displaying of to list items that exceed 24 hours
 
 allow a user to go back and reselect start time or end time
 
-add in recipe saves
+add in recipe page - enable association of recipe with to-do item - create baking timelines
 
 create different views - weekly & monthly
 

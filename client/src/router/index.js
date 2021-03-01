@@ -6,6 +6,8 @@ import Profile from '@/views/Profile';
 import SignUp from '@/views/signup/SignUp';
 import Login from '@/views/signup/Login';
 
+import Dev from '@/views/dev/Dev';
+
 const routes = [
   {
     path: '/schedule',
@@ -24,6 +26,7 @@ const routes = [
   { path: '/profile', name: 'profile', component: Profile },
   { path: '/signup', name: 'signup', component: SignUp },
   { path: '/login', name: 'login', component: Login },
+  { path: '/dev', name: 'dev', component: Dev },
   {
     path: '/:pathMatch(.*)*',
     name: 'home',
