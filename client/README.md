@@ -36,9 +36,15 @@ Early Rendition of Schedule Page
 
 fix duration display: days/hrs/mins vs day/hr/min
 
-fix displaying of to list items that exceed 24 hours
+add a mark on the calendar for selected/view date vs current Date
+add arrows around date to allow easier movement from one day to another
 
-allow a user to go back and reselect start time or end time
+display multiple events over lapping on the same time slots - ideas: cards/ google calendar/ ect
+decide on how to display multiple to-do items
+
+~~fix displaying of to list items that exceed 24 hours~~
+
+enable editting of to-do list items: allow a user to go back and reselect start time or end time
 
 add in recipe page - enable association of recipe with to-do item - create baking timelines
 
@@ -46,7 +52,7 @@ create different views - weekly & monthly
 
 add in calendar interactions ie: if there is an event on said day
 
-fix add event styling
+fix add event styling/ create labels for event target date and event target time
 
 fix search spacing while add event is open
 
@@ -60,4 +66,4 @@ current time ticker
 
 change from 15 min intervals to hours and convert grid to 24 hours with 60 rows per hour
 
-decide on how to display multiple to-do items
+move sign-in/ sign-out to a more obvious place

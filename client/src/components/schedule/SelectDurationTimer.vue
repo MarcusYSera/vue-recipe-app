@@ -6,7 +6,7 @@
     </div>
     <div v-if="dayOpen" class="flex-container column number-button day">
       <!-- adjust focus to the input when this button is opened, similar to the search button -->
-      <input type="text" />
+      <!-- <input type="text" /> -->
       <button
         v-for="(day, index) in days"
         :key="index"
@@ -21,7 +21,7 @@
       {{ selectedHour }}
     </div>
     <div v-if="hourOpen" class="flex-container column number-button hour">
-      <input type="text" />
+      <!-- <input type="text" /> -->
       <button
         v-for="(hour, index) in hours"
         :key="index"
@@ -35,7 +35,7 @@
       {{ selectedMinute }}
     </div>
     <div v-if="minuteOpen" class="flex-container column number-button minute">
-      <input type="text" />
+      <!-- <input type="text" /> -->
       <button
         v-for="(minute, index) in minutes"
         :key="index"
