@@ -44,6 +44,8 @@ decide on how to display multiple to-do items
 
 ~~fix displaying of to list items that exceed 24 hours~~
 
+custom input for duration timer: only num 8 link up to input
+
 enable editting of to-do list items: allow a user to go back and reselect start time or end time
 
 add in recipe page - enable association of recipe with to-do item - create baking timelines

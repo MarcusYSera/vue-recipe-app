@@ -61,6 +61,9 @@ export default {
       minutes: 60,
       selectedMinute: 'Minutes',
       minuteOpen: false,
+      daysEmit: '00',
+      hoursEmit: '00',
+      minutesEmit: '00',
     };
   },
   methods: {
