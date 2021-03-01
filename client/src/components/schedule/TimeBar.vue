@@ -44,8 +44,11 @@ export default {
       let currentHour = rightNow.getHours();
       let currentMin = rightNow.getMinutes();
       currentMin = this.roundTime(currentMin);
-      if (currentHour > 12) {
-        currentHour = (currentHour - 12).toString();
+      if (currentHour > 11) {
+        currentHour =
+          currentHour == 12
+            ? currentHour.toString()
+            : (currentHour - 12).toString();
         currentMin = `${currentMin} P.M.`;
       } else {
         if (currentHour === 0) {
@@ -53,9 +56,7 @@ export default {
         }
         currentMin = `${currentMin} A.M.`;
       }
-      // console.log(`${currentHour}:${currentMin}`);
       rightNow = `${currentHour}:${currentMin}`;
-      // console.log(rightNow);
       return rightNow;
     },
     twelveHourFormat() {
@@ -95,7 +96,7 @@ export default {
       let currentTime = this.$refs[current];
       currentTime.scrollIntoView();
     });
-    this.$emit('time-ref', this.hourData);
+    // this.$emit('time-ref', this.hourData);
     // this.realTwentyFour.forEach((time, index) => {
     //   this.realTwentyFour[index] = time.split(':').join('');
     // });

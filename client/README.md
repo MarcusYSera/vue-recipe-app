@@ -42,9 +42,7 @@ add arrows around date to allow easier movement from one day to another
 display multiple events over lapping on the same time slots - ideas: cards/ google calendar/ ect
 decide on how to display multiple to-do items
 
-~~fix displaying of to list items that exceed 24 hours~~
-
-custom input for duration timer: only num 8 link up to input
+custom text input for duration timer: only num validation
 
 enable editting of to-do list items: allow a user to go back and reselect start time or end time
 
@@ -69,3 +67,11 @@ current time ticker
 change from 15 min intervals to hours and convert grid to 24 hours with 60 rows per hour
 
 move sign-in/ sign-out to a more obvious place
+
+~~fix displaying of to list items that exceed 24 hours~~
+
+---
+
+### BUG
+
+~~when opening calendar, resets date~~

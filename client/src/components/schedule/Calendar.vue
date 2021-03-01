@@ -11,7 +11,9 @@
         </button>
       </nav>
       <p class="flex-container resetBtnDiv">
-        <button class="resetDateBtn" @click="resetDate()">Today</button>
+        <button class="resetDateBtn" @click="resetDate(true)">
+          Today
+        </button>
       </p>
     </header>
     <article class="flex-container column calendar-aside-body">
@@ -90,7 +92,7 @@ export default {
           .toLocaleDateString(undefined, options)
           .split(' ');
       } else {
-        [this.month, , this.todayYear] = new Date()
+        [this.month, , this.todayYear] = new Date(this.selectedDate)
           .toLocaleDateString(undefined, options)
           .split(' ');
         this.todayMonth = this.month;
@@ -142,19 +144,21 @@ export default {
       }
     },
     getDaysInCurrentMonth() {
-      // var date = new Date();
       this.daysInMonth = new Date(
         this.displayedDate.getFullYear(),
         this.displayedDate.getMonth() + 1,
         0
       ).getDate();
     },
-    resetDate() {
+    resetDate(hardReset) {
+      if (hardReset) {
+        let rightNow = new Date();
+        this.setSelectedDate(rightNow);
+      }
       this.calculateMonth();
-      this.displayedDate = new Date();
+      this.displayedDate = new Date(this.selectedDate);
       this.displayedYear = this.displayedDate.getFullYear().toString();
       this.getDaysInCurrentMonth();
-      this.setSelectedDate(this.displayedDate);
       this.clickedDate(this.displayedDate.getDate());
     },
   },

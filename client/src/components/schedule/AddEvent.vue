@@ -125,23 +125,20 @@ export default {
     calculateStartOrEndTime() {
       return new Promise(resolve => {
         this.oppositeTime = new Date(this.currentDate);
-        console.log(this.oppositeTime);
         let baseTimeHours = this.oppositeTime.getHours();
         let baseTimeMinutes = this.oppositeTime.getMinutes();
-        let timePassed = this.duration.split(':');
-        timePassed.shift;
-        let dayHour = timePassed.shift();
-        dayHour = dayHour.split(' ');
-        dayHour = parseInt(dayHour[0]) * 24 + parseInt(dayHour[1]);
-        timePassed.unshift(dayHour.toString());
+        let timePassed = [
+          parseInt(this.duration[0]) * 24 + parseInt(this.duration[1]),
+          parseInt(this.duration[2]),
+        ];
         this.endOrStart === 'Start'
           ? (timePassed = [
-              parseInt(timePassed[0]) + baseTimeHours,
-              parseInt(timePassed[1]) + baseTimeMinutes,
+              timePassed[0] + baseTimeHours,
+              timePassed[1] + baseTimeMinutes,
             ])
           : (timePassed = [
-              baseTimeHours - parseInt(timePassed[0]),
-              baseTimeMinutes - parseInt(timePassed[1]),
+              baseTimeHours - timePassed[0],
+              baseTimeMinutes - timePassed[1],
             ]);
         this.oppositeTime.setHours(timePassed[0], timePassed[1]);
         this.oppositeTime = new Date(this.oppositeTime).toISOString();
@@ -149,12 +146,20 @@ export default {
       });
     },
     async addEventOnSubmit() {
-      console.log('adding event');
       if (this.isLoggedIn) {
         this.currentDate = `${this.currentDate} ${this.currentTime}`;
         this.currentDate = new Date(this.currentDate).toISOString();
         await this.calculateStartOrEndTime();
         let id = this.user.userId;
+        this.duration[1] =
+          this.duration[1] < 10 && this.duration[1] !== '00'
+            ? `0${this.duration[1]}`
+            : this.duration[1];
+        this.duration[2] =
+          this.duration[2] < 10 && this.duration[2] !== '00'
+            ? `0${this.duration[2]}`
+            : this.duration[2];
+        this.duration = `${this.duration[0]} ${this.duration[1]}:${this.duration[2]}:00`;
         let newEvent = {
           event_name: this.recipeName,
           event_associate_recipe: this.associateRecipe,
@@ -181,25 +186,16 @@ export default {
       }
     },
     durationClicked(arr) {
-      if (arr[0] === 'day') {
-        let dSplit = this.duration.split(' ');
-        this.duration = `${arr[1]} ${dSplit[1]}`;
-      } else if (arr[0] === 'hour') {
-        let d = this.duration.split(' ');
-        d = d[0];
-        let dSplit = this.duration.split(':');
-        dSplit = `${dSplit[1]}:${dSplit[2]}`;
-        if (arr[1] < 10) {
-          arr[1] = `0${arr[1]}`;
-        }
-        this.duration = `${d} ${arr[1]}:${dSplit}`;
-      } else {
-        let d = this.duration.split(':');
-        if (arr[1] < 10) {
-          arr[1] = `0${arr[1]}`;
-        }
-        this.duration = `${d[0]}:${arr[1]}:00`;
+      if (typeof arr[0] === 'string') {
+        arr[0] = '0';
       }
+      if (typeof arr[1] === 'string') {
+        arr[1] = '00';
+      }
+      if (typeof arr[2] === 'string') {
+        arr[2] = '00';
+      }
+      this.duration = arr;
     },
   },
   created() {

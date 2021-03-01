@@ -61,9 +61,6 @@ export default {
       minutes: 60,
       selectedMinute: 'Minutes',
       minuteOpen: false,
-      daysEmit: '00',
-      hoursEmit: '00',
-      minutesEmit: '00',
     };
   },
   methods: {
@@ -80,16 +77,18 @@ export default {
       if (choice === 'day') {
         this.selectedDay = day;
         this.dayOpen = false;
-        this.$emit('durationSelected', ['day', day]);
       } else if (choice === 'hour') {
         this.selectedHour = day;
         this.hourOpen = false;
-        this.$emit('durationSelected', ['hour', day]);
       } else if (choice === 'minute') {
         this.selectedMinute = day;
         this.minuteOpen = false;
-        this.$emit('durationSelected', ['minute', day]);
       }
+      this.$emit('durationSelected', [
+        this.selectedDay,
+        this.selectedHour,
+        this.selectedMinute,
+      ]);
     },
   },
 };

@@ -104,7 +104,9 @@ export default {
     },
   },
   created() {
-    this.createDate();
+    if (!this.selectedDate) {
+      this.createDate();
+    }
   },
   mounted() {},
 };
