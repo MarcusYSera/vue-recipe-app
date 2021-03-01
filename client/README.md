@@ -34,7 +34,7 @@ Early Rendition of Schedule Page
 
 ### TO-DO
 
-create duration timer/ in days, hours, minutes
+fix duration display: days/hrs/mins vs day/hr/min
 
 fix displaying of to list items that exceed 24 hours
 

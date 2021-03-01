@@ -129,7 +129,11 @@ export default {
         let baseTimeHours = this.oppositeTime.getHours();
         let baseTimeMinutes = this.oppositeTime.getMinutes();
         let timePassed = this.duration.split(':');
-        // console.log(timePassed);
+        timePassed.shift;
+        let dayHour = timePassed.shift();
+        dayHour = dayHour.split(' ');
+        dayHour = parseInt(dayHour[0]) * 24 + parseInt(dayHour[1]);
+        timePassed.unshift(dayHour.toString());
         this.endOrStart === 'Start'
           ? (timePassed = [
               parseInt(timePassed[0]) + baseTimeHours,
@@ -139,9 +143,7 @@ export default {
               baseTimeHours - parseInt(timePassed[0]),
               baseTimeMinutes - parseInt(timePassed[1]),
             ]);
-        // console.log(timePassed);
         this.oppositeTime.setHours(timePassed[0], timePassed[1]);
-        console.log(this.oppositeTime);
         this.oppositeTime = new Date(this.oppositeTime).toISOString();
         resolve();
       });
@@ -179,7 +181,6 @@ export default {
       }
     },
     durationClicked(arr) {
-      console.log(arr);
       if (arr[0] === 'day') {
         let dSplit = this.duration.split(' ');
         this.duration = `${arr[1]} ${dSplit[1]}`;

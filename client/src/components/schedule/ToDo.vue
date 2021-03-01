@@ -37,8 +37,8 @@
     <p>Date: {{ item.start_date }} - {{ item.end_date }}</p>
     <p>Event Time: {{ item.event_time_start }} - {{ item.event_time_end }}</p>
     <p>
-      Duration: {{ item.event_duration.hours }} hrs
-      {{ item.event_duration.minutes }} min
+      Duration: {{ item.event_duration.days }} days
+      {{ item.event_duration.hours }} hrs {{ item.event_duration.minutes }} mins
     </p>
   </section>
 </template>
