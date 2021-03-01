@@ -2,17 +2,20 @@
   <article class="dev-area">
     Development Page
     <ButtonDurationTimer></ButtonDurationTimer>
-    <SelectDurationTimer></SelectDurationTimer>
+    <!-- <SelectDurationTimer></SelectDurationTimer> -->
   </article>
 </template>
 
 <script>
 import ButtonDurationTimer from '@/components/dev/ButtonDurationTimer';
-import SelectDurationTimer from '@/components/dev/SelectDurationTimer';
+// import SelectDurationTimer from '@/components/dev/SelectDurationTimer';
 
 export default {
   name: 'Dev',
-  components: { ButtonDurationTimer, SelectDurationTimer },
+  components: {
+    ButtonDurationTimer,
+    // SelectDurationTimer
+  },
 };
 </script>
 

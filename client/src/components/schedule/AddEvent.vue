@@ -41,8 +41,8 @@
         <button @click="timeOption('End')" class="end-button">End Time</button>
       </div>
       <input v-else type="time" v-model="currentTime" class="recipe-name" />
-      <label>Duration:</label>
-      <input type="time" v-model="duration" />
+      <SelectDurationTimer></SelectDurationTimer>
+      <!-- <input type="time" v-model="duration" /> -->
       <input type="submit" value="Create" class="create-event-button" />
     </form>
   </aside>
@@ -51,9 +51,11 @@
 <script>
 // issue with hitting enter on name input and the box closes. Adjust button down for this.openAddEvent/ openEvent()
 import { mapActions, mapGetters } from 'vuex';
+import SelectDurationTimer from '@/components/schedule/SelectDurationTimer';
 
 export default {
   name: 'AddEvent',
+  components: { SelectDurationTimer },
   data() {
     return {
       openAddEvent: false,
