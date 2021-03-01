@@ -41,7 +41,9 @@
         <button @click="timeOption('End')" class="end-button">End Time</button>
       </div>
       <input v-else type="time" v-model="currentTime" class="recipe-name" />
-      <SelectDurationTimer></SelectDurationTimer>
+      <SelectDurationTimer
+        @durationSelected="durationClicked"
+      ></SelectDurationTimer>
       <!-- <input type="time" v-model="duration" /> -->
       <input type="submit" value="Create" class="create-event-button" />
     </form>
@@ -68,7 +70,7 @@ export default {
       currentTime: '',
       oppositeTime: '',
       // duration needs to be 01:00 or 18:30
-      duration: '',
+      duration: '0 00:00:00',
       region: '',
       recipies: [
         { text: 'Pizza', value: 'pizza' },
@@ -145,6 +147,7 @@ export default {
       });
     },
     async addEventOnSubmit() {
+      console.log('adding event');
       if (this.isLoggedIn) {
         this.currentDate = `${this.currentDate} ${this.currentTime}`;
         this.currentDate = new Date(this.currentDate).toISOString();
@@ -173,6 +176,28 @@ export default {
         this.clearEvent();
       } else {
         alert('Please Login to Create Events');
+      }
+    },
+    durationClicked(arr) {
+      console.log(arr);
+      if (arr[0] === 'day') {
+        let dSplit = this.duration.split(' ');
+        this.duration = `${arr[1]} ${dSplit[1]}`;
+      } else if (arr[0] === 'hour') {
+        let d = this.duration.split(' ');
+        d = d[0];
+        let dSplit = this.duration.split(':');
+        dSplit = `${dSplit[1]}:${dSplit[2]}`;
+        if (arr[1] < 10) {
+          arr[1] = `0${arr[1]}`;
+        }
+        this.duration = `${d} ${arr[1]}:${dSplit}`;
+      } else {
+        let d = this.duration.split(':');
+        if (arr[1] < 10) {
+          arr[1] = `0${arr[1]}`;
+        }
+        this.duration = `${d[0]}:${arr[1]}:00`;
       }
     },
   },

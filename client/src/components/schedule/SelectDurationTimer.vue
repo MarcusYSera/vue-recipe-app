@@ -1,9 +1,9 @@
 <template>
   <div class="flex-container row button-container">
     <p>Duration:</p>
-    <button @click="openOptions('day')">
+    <div class="mock-button-div" @click="openOptions('day')">
       {{ selectedDay }}
-    </button>
+    </div>
     <div v-if="dayOpen" class="flex-container column number-button day">
       <!-- adjust focus to the input when this button is opened, similar to the search button -->
       <input type="text" />
@@ -17,9 +17,9 @@
     </div>
 
     <h5>:</h5>
-    <button @click="openOptions('hour')">
+    <div class="mock-button-div" @click="openOptions('hour')">
       {{ selectedHour }}
-    </button>
+    </div>
     <div v-if="hourOpen" class="flex-container column number-button hour">
       <input type="text" />
       <button
@@ -31,9 +31,9 @@
       </button>
     </div>
     <h5>:</h5>
-    <button @click="openOptions('minute')">
+    <div class="mock-button-div" @click="openOptions('minute')">
       {{ selectedMinute }}
-    </button>
+    </div>
     <div v-if="minuteOpen" class="flex-container column number-button minute">
       <input type="text" />
       <button
@@ -77,12 +77,15 @@ export default {
       if (choice === 'day') {
         this.selectedDay = day;
         this.dayOpen = false;
+        this.$emit('durationSelected', ['day', day]);
       } else if (choice === 'hour') {
         this.selectedHour = day;
         this.hourOpen = false;
+        this.$emit('durationSelected', ['hour', day]);
       } else if (choice === 'minute') {
         this.selectedMinute = day;
         this.minuteOpen = false;
+        this.$emit('durationSelected', ['minute', day]);
       }
     },
   },
@@ -102,11 +105,10 @@ export default {
   align-items: flex-start;
   width: 100%;
 }
-.button-container > button {
-  background: white;
-  /* flex: 1 0 auto; */
+.button-container > .mock-button-div {
+  padding: 0 0.25rem;
+  text-align: center;
   width: 100%;
-  border: none;
 }
 .number-button {
   position: absolute;
