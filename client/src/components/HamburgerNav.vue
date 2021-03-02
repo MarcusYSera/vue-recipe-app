@@ -6,7 +6,7 @@
     <nav v-if="open" class="flex-container column secondary itemTwo">
       <h3
         v-for="(category, index) in navCategories"
-        :key="index"
+        :key="`nav-${index}`"
         @click="itemOpen(category)"
         :class="{ selectedButton: openItem === category }"
       >

@@ -26,7 +26,7 @@
     v-else
     class="task-item two"
     v-for="(item, index) in eventData"
-    v-bind:key="index + item.event_name"
+    :key="`todo-${index}`"
     :style="{
       gridRow: `${item.list_position_start} row-start/ ${item.list_position_end} row-start`,
     }"
@@ -36,10 +36,7 @@
     <p>Description: {{ item.event_description }}</p>
     <p>Date: {{ item.start_date }} - {{ item.end_date }}</p>
     <p>Event Time: {{ item.event_time_start }} - {{ item.event_time_end }}</p>
-    <p>
-      Duration: {{ item.event_duration.days }} days
-      {{ item.event_duration.hours }} hrs {{ item.event_duration.minutes }} mins
-    </p>
+    <p>Duration {{ item.event_duration_str }}</p>
   </section>
 </template>
 
@@ -106,11 +103,14 @@ export default {
           e.dateObjEnd.getDate() !== this.selectedDate.getDate() &&
           e.dateObjStart.getDate() !== this.selectedDate.getDate()
         ) {
-          // Test this out after custom duration timer is created
           e.list_position_start = 1;
           e.list_position_end = 97;
         }
         e.today = e.dateObjStart.toLocaleDateString(undefined, options);
+        let str = Object.entries(e.event_duration);
+        str.forEach((entry, index) => (str[index] = entry.join(': ')));
+        e.event_duration_str = str.join(', ');
+        // console.log(e.event_duration_str);
       });
     }
   },

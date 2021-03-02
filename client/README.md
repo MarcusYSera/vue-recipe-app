@@ -34,10 +34,10 @@ Early Rendition of Schedule Page
 
 ### TO-DO
 
-fix duration display: days/hrs/mins vs day/hr/min
-
 add a mark on the calendar for selected/view date vs current Date
 add arrows around date to allow easier movement from one day to another
+
+search functionality
 
 display multiple events over lapping on the same time slots - ideas: cards/ google calendar/ ect
 decide on how to display multiple to-do items
@@ -62,16 +62,18 @@ refactor css (set a standard for rem units)
 
 make responsive- add media queries/ breakpoints
 
-current time ticker
-
 change from 15 min intervals to hours and convert grid to 24 hours with 60 rows per hour
 
 move sign-in/ sign-out to a more obvious place
+
+~~current time ticker- don't remember what this is~~
 
 ~~fix displaying of to list items that exceed 24 hours~~
 
 ---
 
 ### BUG
+
+~~fix duration display: days/hrs/mins vs day/hr/min~~
 
 ~~when opening calendar, resets date~~

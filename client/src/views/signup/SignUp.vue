@@ -4,7 +4,9 @@
       <h3>Sign Up</h3>
       <div v-if="errors.length">
         <ul>
-          <li v-for="error in errors" :key="error">{{ error }}</li>
+          <li v-for="(error, index) in errors" :key="`signup-${index}`">
+            {{ error }}
+          </li>
         </ul>
       </div>
       <form

@@ -16,7 +16,7 @@
         </button>
       </p>
     </header>
-    <article class="flex-container column calendar-aside-body">
+    <!-- <article class="flex-container column calendar-aside-body">
       <section class="grid-container dayAbbreviations">
         <h6 ref="0">Sun</h6>
         <h6 ref="1">Mon</h6>
@@ -33,6 +33,12 @@
           @click="clickedDate(index)"
           class="dayNum-item"
           :style="startDate"
+          :class="{
+            selectedDateStyle:
+              index === todayDay &&
+              month === todayMonth &&
+              displayedYear === todayYear,
+          }"
         >
           <p
             :class="{
@@ -46,6 +52,34 @@
           </p>
         </div>
       </section>
+    </article> -->
+    <article class="grid-container calendar-article-body">
+      <!-- <section class="dayAbbreviations"> -->
+      <h6 ref="0">Sun</h6>
+      <h6 ref="1">Mon</h6>
+      <h6 ref="2">Tue</h6>
+      <h6 ref="3">Wed</h6>
+      <h6 ref="4">Thu</h6>
+      <h6 ref="5">Fri</h6>
+      <h6 ref="6">Sat</h6>
+      <!-- </section> -->
+      <!-- <section class="dayNum"> -->
+      <div
+        v-for="index in daysInMonth"
+        :key="`day-${index}`"
+        @click="clickedDate(index)"
+        class="dayNum-item"
+        :style="[
+          index == 1 ? computeGridStart : '',
+          index == todayDay ? calculateCircleToday() : '',
+        ]"
+      >
+        <p :style="index == selectedDate.getDate() ? chosenDay : ''">
+          {{ index }}
+        </p>
+      </div>
+      <div class="circleToday" :style="calculateCircleToday()"></div>
+      <!-- </section> -->
     </article>
   </aside>
 </template>
@@ -69,14 +103,17 @@ export default {
   },
   computed: {
     ...mapGetters(['selectedDate', 'user']),
-    startDate() {
-      let firstOfMonth = new Date(
+    computeGridStart() {
+      let x = new Date(
         this.displayedDate.getFullYear(),
         this.displayedDate.getMonth(),
         1
       );
-      let x = new Date(firstOfMonth).getDay() + 1;
-      return { '--grid-column': x };
+      let column = x.getDay() + 1;
+      return `grid-column: ${column}`;
+    },
+    chosenDay() {
+      return `border-bottom: double thick black;`;
     },
   },
   methods: {
@@ -85,6 +122,29 @@ export default {
       'setDateForDBQuery',
       'getEventsByUserIdDate',
     ]),
+    calculateCircleToday() {
+      let today = new Date();
+      let start = new Date(
+        this.displayedDate.getFullYear(),
+        this.displayedDate.getMonth(),
+        1
+      );
+      if (
+        today.getFullYear() == this.displayedDate.getFullYear() &&
+        today.getMonth() == this.displayedDate.getMonth()
+      ) {
+        let row = 2;
+        let circle = (today.getDate() + start.getDate()) % 7;
+        if (circle == 0) {
+          row += (today.getDate() + start.getDate()) / 7;
+        } else {
+          row += Math.floor((today.getDate() + start.getDate()) / 7);
+        }
+        return `grid-area: ${row}/${circle}/${row}/${circle}`;
+      } else {
+        return 'display: none';
+      }
+    },
     calculateMonth(x) {
       const options = { month: 'long', day: 'numeric', year: 'numeric' };
       if (x) {
@@ -164,7 +224,9 @@ export default {
   },
 
   created() {
+    this.resetDate();
     this.todayDay = new Date().getDate();
+    // this.startDate();
   },
   mounted() {
     this.resetDate();
@@ -244,7 +306,20 @@ export default {
 .calendar-aside-body {
   height: 40%;
 }
-.dayNum,
+.calendar-article-body {
+  /* grid-template-areas: '. . . . . . .' '. . . . . . .' '. . . . . . .' '. . . . . . .' '. . . . . . .' '. . . . . . .' '. . . . . . .'; */
+  grid-template-columns: repeat(7, 1fr);
+  grid-template-rows: repeat(7, 1fr);
+  align-items: center;
+  justify-items: center;
+  /* text-align: center; */
+  width: 25vw;
+  height: 25vw;
+}
+.dayNum-item {
+  z-index: 1;
+}
+/* .dayNum,
 .dayAbbreviations {
   grid-template-columns: repeat(7, 1fr);
   text-align: center;
@@ -259,23 +334,29 @@ export default {
   height: 100%;
   width: 100%;
   position: relative;
-}
-.circleToday {
-  background-color: #7dcea0;
-  border-radius: 50%;
-}
-.dayNum-item:first-child {
+} */
+/* .dayNum-item:first-child {
   grid-column: var(--grid-column);
-}
-.dayNum-item p {
+} */
+/* .dayNum-item p {
   position: absolute;
   top: 30%;
   left: 45%;
-}
-.dayNum-item img {
+} */
+/* .dayNum-item img {
   position: relative;
   top: 20%;
   left: 30%;
   z-index: 0;
+} */
+
+.circleToday {
+  height: 100%;
+  width: 100%;
+  background-color: #7dcea0;
+  border-radius: 50%;
 }
+/* .selectedDateStyle {
+  border-bottom: double thick #7dcea0;
+} */
 </style>

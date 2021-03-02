@@ -12,7 +12,7 @@
         type="text"
         placeholder=" Add Recipe Name"
         v-model="recipeName"
-        class="recipe-name"
+        class="recipe-name input-full-width"
       />
       <!-- <span>Associate Recipe:</span>
       <select v-model="associateRecipe">
@@ -31,7 +31,7 @@
         type="date"
         v-model="currentDate"
         :min="currentDate"
-        class="recipe-name"
+        class="recipe-name date"
       />
       <div v-if="!timeChoice" class="start-or-end-button-group">
         <button @click="timeOption('Start')" class="start-button">
@@ -290,7 +290,13 @@ export default {
   border-radius: 5px;
   background-color: #ffffff;
 }
-.recipe-name {
+.input-full-width {
   width: 100%;
+}
+@media only screen and (min-width: 320px) and (max-width: 415px) {
+  .add-container {
+    width: 230px;
+    left: -185px;
+  }
 }
 </style>

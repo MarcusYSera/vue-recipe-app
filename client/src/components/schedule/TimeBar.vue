@@ -2,7 +2,7 @@
   <!-- <section class="flex-container column time-bar"> -->
   <time
     v-for="(current, index) in hourData"
-    :key="index"
+    :key="`timebar-${index}`"
     :value="current"
     class="time-item"
     :style="{ gridRow: `row-start ${index + 1}` }"

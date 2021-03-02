@@ -9,7 +9,7 @@
       <!-- <input type="text" /> -->
       <button
         v-for="(day, index) in days"
-        :key="index"
+        :key="`selectiontimerday-${index}`"
         @click="selectedDuration('day', day - 1)"
       >
         {{ day - 1 }}
@@ -24,7 +24,7 @@
       <!-- <input type="text" /> -->
       <button
         v-for="(hour, index) in hours"
-        :key="index"
+        :key="`selectiontimerhour-${index}`"
         @click="selectedDuration('hour', hour - 1)"
       >
         {{ hour - 1 }}
@@ -38,7 +38,7 @@
       <!-- <input type="text" /> -->
       <button
         v-for="(minute, index) in minutes"
-        :key="index"
+        :key="`selectiontimerminute-${index}`"
         @click="selectedDuration('minute', minute - 1)"
       >
         {{ minute - 1 }}

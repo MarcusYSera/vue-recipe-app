@@ -5,7 +5,11 @@
         Days
       </h3>
       <div class="grid-container days-grid">
-        <button class="day" v-for="(day, index) in days" v-bind:key="index.day">
+        <button
+          class="day"
+          v-for="(day, index) in days"
+          :key="`timerday-${index}`"
+        >
           {{ day - 1 }}
         </button>
         <input class="custom-input day-custom-input" type="text" />
@@ -16,7 +20,7 @@
         Hours
       </h3>
       <div class="grid-container hours-grid">
-        <button v-for="(hour, index) in hours" v-bind:key="index.hour">
+        <button v-for="(hour, index) in hours" :key="`timerhour-${index}`">
           {{ hour - 1 }}
         </button>
         <input class="custom-input" type="text" />
@@ -27,7 +31,10 @@
         Minutes
       </h3>
       <div class="grid-container minutes-grid">
-        <button v-for="(minute, index) in minutes" v-bind:key="index.minute">
+        <button
+          v-for="(minute, index) in minutes"
+          :key="`timerminute-${index}`"
+        >
           {{ minute }}
         </button>
         <input class="custom-input" type="text" />
