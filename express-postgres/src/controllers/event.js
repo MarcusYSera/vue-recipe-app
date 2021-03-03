@@ -1,5 +1,6 @@
+import jwt from 'jsonwebtoken';
 import Model from '../models/model.js';
-
+import { jwtAccessTokenSecret } from './../settings.js';
 const eventsModel = new Model('events');
 
 export const eventsPage = async (req, res) => {
