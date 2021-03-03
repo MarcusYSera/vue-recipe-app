@@ -3,7 +3,7 @@ import { usersPage, addUser, editUser, findUserByEmail, loginUser } from '../con
 import { indexPage } from '../controllers/home.js';
 import { messagesPage, addMessage } from '../controllers/messages.js';
 import { eventsPage, findEventsByIdAndDate, addEventByUserId } from '../controllers/event.js';
-import { authenticateToken } from '../middleware.index.js';
+import { authenticateToken } from '../middleware/index.js';
 
 const indexRouter = express.Router();
 
