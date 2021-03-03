@@ -241,6 +241,7 @@ export default {
   width: 300px;
   top: 30px;
   left: -250px;
+  z-index: 2;
   border: 1px solid black;
   background-color: white;
 }

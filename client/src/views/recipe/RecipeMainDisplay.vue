@@ -4,7 +4,7 @@
 
 <script>
 export default {
-  name: 'Recipe',
+  name: 'RecipeMainDisplay',
 };
 </script>
 

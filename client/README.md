@@ -12,7 +12,7 @@
 
 Early Rendition of Schedule Page
 
-![Schedule](https://raw.githubusercontent.com/MarcusYSera/vue-recipe-app/master/client/img/ScheduleView_v2.png)
+![Schedule](https://raw.githubusercontent.com/MarcusYSera/vue-recipe-app/master/client/img/ScheduleView_v3.png)
 
 ---
 
@@ -34,6 +34,12 @@ Early Rendition of Schedule Page
 
 ### TO-DO
 
+add edit for to-do tasks
+
+enable editting of to-do list items: allow a user to go back and reselect start time or end time
+
+add in recipe page - enable association of recipe with to-do item - create baking timelines
+
 currently working on displaying current selected date
 
 refactor v-for loops, recursive calls are slowing down rendering speed, move methods without arguments to computed, so it caches
@@ -42,14 +48,7 @@ add arrows around date to allow easier movement from one day to another
 
 search functionality
 
-display multiple events over lapping on the same time slots - ideas: cards/ google calendar/ ect
-decide on how to display multiple to-do items
-
 custom text input for duration timer: only num validation
-
-enable editting of to-do list items: allow a user to go back and reselect start time or end time
-
-add in recipe page - enable association of recipe with to-do item - create baking timelines
 
 create different views - weekly & monthly
 
@@ -70,6 +69,10 @@ change from 15 min intervals to hours and convert grid to 24 hours with 60 rows 
 move sign-in/ sign-out to a more obvious place
 
 add [cypress](https://docs.cypress.io/guides/getting-started/installing-cypress.html#System-requirements) and [code coverage](https://vuejsdevelopers.com/2020/07/20/code-coverage-vue-cypress/)
+
+~~display multiple events over lapping on the same time slots - ideas: cards/ google calendar/ ect~~
+
+~~decide on how to display multiple to-do items~~
 
 ~~current time ticker- don't remember what this is~~
 

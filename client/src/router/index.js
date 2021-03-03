@@ -1,7 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router';
 // import Home from '../views/Home.vue';
 import Schedule from '@/views/schedule/Schedule';
-import Profile from '@/views/Profile';
+import Profile from '@/views/profile/Profile';
 
 import SignUp from '@/views/signup/SignUp';
 import Login from '@/views/signup/Login';
@@ -21,7 +21,9 @@ const routes = [
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
     component: () =>
-      import(/* webpackChunkName: "about" */ '../views/Recipe.vue'),
+      import(
+        /* webpackChunkName: "about" */ '@/views/recipe/RecipeMainDisplay.vue'
+      ),
   },
   { path: '/profile', name: 'profile', component: Profile },
   { path: '/signup', name: 'signup', component: SignUp },
