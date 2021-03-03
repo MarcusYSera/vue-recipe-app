@@ -39,3 +39,9 @@ Early Rendition of Schedule Page
 - JWT
 
 - Vue Code Coverage
+
+#### Idea
+
+- Recipe conversions(grams to oz) & adjusting for yield ie, half batch
+- Suggest recipe based off of time
+- Baking timelines
