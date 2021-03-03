@@ -20,7 +20,6 @@ app.use(
     optionsSuccessStatus: 204,
   })
 );
-
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
