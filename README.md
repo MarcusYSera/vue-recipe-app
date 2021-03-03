@@ -10,7 +10,7 @@
 
 ---
 
-#####Tech: Vue 3, Vuex, HTML5, CSS3, Postgres, Express, AWS EC2, Google Domains, Nginx, PM2
+##### Tech: Vue 3, Vuex, HTML5, CSS3, Postgres, Express, AWS EC2, Google Domains, Nginx, PM2
 
 ---
 
