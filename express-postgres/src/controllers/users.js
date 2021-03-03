@@ -26,14 +26,6 @@ export const findUserByEmail = async (req, res) => {
   }
 };
 
-export const loginUser = async (req, res) => {
-  const email = req.body.email;
-  const user = { email: email };
-
-  const jwtAccessToken = jwt.sign(user, jwtAccessTokenSecret);
-  res.json({ jwtAccessToken: jwtAccessToken });
-};
-
 export const addUser = async (req, res) => {
   // console.log(req.body);
   let values = '';

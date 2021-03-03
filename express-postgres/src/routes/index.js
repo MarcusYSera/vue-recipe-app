@@ -5,7 +5,7 @@ import {
   addMessage,
   usersPage,
   findUserByEmail,
-  loginUser,
+  // loginUser,
   addUser,
   editUser,
   eventsPage,
@@ -23,7 +23,7 @@ indexRouter.post('/messages', addMessage);
 
 indexRouter.get('/users', authenticateToken, usersPage);
 indexRouter.get('/users/findBy/:email', findUserByEmail);
-indexRouter.post('/users/login', loginUser);
+// indexRouter.post('/users/login', loginUser);
 // usage of jwt makes more sense as a POST rather than a GET as you are creating a token
 indexRouter.post('/users/create', addUser);
 indexRouter.put('/users/edit/:id', editUser);
