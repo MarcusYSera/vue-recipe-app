@@ -12,9 +12,6 @@ import {
   findEventsByIdAndDate,
   addEventByUserId,
 } from '../controllers/index.js';
-// import { indexPage } from '../controllers/home.js';
-// import { messagesPage, addMessage } from '../controllers/messages.js';
-// import { eventsPage, findEventsByIdAndDate, addEventByUserId } from '../controllers/event.js';
 import { authenticateToken } from '../middleware/index.js';
 
 const indexRouter = express.Router();
