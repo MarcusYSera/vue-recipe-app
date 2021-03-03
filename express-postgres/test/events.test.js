@@ -30,22 +30,22 @@ describe('Events', () => {
       });
   });
 
-  it('get events page', (done) => {
-    server.get(`${BASE_URL}/events`).end((err, res) => {
-      // console.log(res.body);
-      assert.strictEqual(res.status, 200, '=== response status is 200');
-      assert.isArray(res.body.events, 'response body is an array of events');
-      // console.log(res.body.events);
-      // assert.deepStrictEqual(res.body.events[0], [event_name]);
-      res.body.events.forEach((e) => {
-        // console.log(e['user_fkid']);
-        assert.typeOf(e['user_fkid'], 'number', 'we have a number');
-        assert.typeOf(e['event_name'], 'string', 'we have a string');
-        assert.typeOf(e['event_associate_recipe'], 'string');
-        assert.typeOf(e['event_description'], 'string');
-        assert.typeOf(e['event_start'], 'string');
-      });
-      done();
-    });
-  });
+  // it('get events page', (done) => {
+  //   server.get(`${BASE_URL}/events`).end((err, res) => {
+  //     // console.log(res.body);
+  //     assert.strictEqual(res.status, 200, '=== response status is 200');
+  //     assert.isArray(res.body.events, 'response body is an array of events');
+  //     // console.log(res.body.events);
+  //     // assert.deepStrictEqual(res.body.events[0], [event_name]);
+  //     res.body.events.forEach((e) => {
+  //       // console.log(e['user_fkid']);
+  //       assert.typeOf(e['user_fkid'], 'number', 'we have a number');
+  //       assert.typeOf(e['event_name'], 'string', 'we have a string');
+  //       assert.typeOf(e['event_associate_recipe'], 'string');
+  //       assert.typeOf(e['event_description'], 'string');
+  //       assert.typeOf(e['event_start'], 'string');
+  //     });
+  //     done();
+  //   });
+  // });
 });
