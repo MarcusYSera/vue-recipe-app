@@ -43,7 +43,7 @@ describe('Events', () => {
         assert.typeOf(e['event_name'], 'string', 'we have a string');
         assert.typeOf(e['event_associate_recipe'], 'string');
         assert.typeOf(e['event_description'], 'string');
-        assert.typeOf(e['event_start'], '');
+        assert.typeOf(e['event_start'], 'string');
       });
       done();
     });
