@@ -16,45 +16,7 @@
         </button>
       </p>
     </header>
-    <!-- <article class="flex-container column calendar-aside-body">
-      <section class="grid-container dayAbbreviations">
-        <h6 ref="0">Sun</h6>
-        <h6 ref="1">Mon</h6>
-        <h6 ref="2">Tue</h6>
-        <h6 ref="3">Wed</h6>
-        <h6 ref="4">Thu</h6>
-        <h6 ref="5">Fri</h6>
-        <h6 ref="6">Sat</h6>
-      </section>
-      <section class="grid-container dayNum">
-        <div
-          v-for="index in daysInMonth"
-          :key="index"
-          @click="clickedDate(index)"
-          class="dayNum-item"
-          :style="startDate"
-          :class="{
-            selectedDateStyle:
-              index === todayDay &&
-              month === todayMonth &&
-              displayedYear === todayYear,
-          }"
-        >
-          <p
-            :class="{
-              circleToday:
-                index === todayDay &&
-                month === todayMonth &&
-                displayedYear === todayYear,
-            }"
-          >
-            {{ index }}
-          </p>
-        </div>
-      </section>
-    </article> -->
     <article class="grid-container calendar-article-body">
-      <!-- <section class="dayAbbreviations"> -->
       <h6 ref="0">Sun</h6>
       <h6 ref="1">Mon</h6>
       <h6 ref="2">Tue</h6>
@@ -62,8 +24,6 @@
       <h6 ref="4">Thu</h6>
       <h6 ref="5">Fri</h6>
       <h6 ref="6">Sat</h6>
-      <!-- </section> -->
-      <!-- <section class="dayNum"> -->
       <div
         v-for="index in daysInMonth"
         :key="`day-${index}`"
@@ -74,12 +34,19 @@
           index == todayDay ? calculateCircleToday() : '',
         ]"
       >
-        <p :style="index == selectedDate.getDate() ? chosenDay : ''">
+        <p
+          :style="
+            index == selectedDate.getDate() &&
+            selectedDate.getMonth() == displayedMonth &&
+            selectedDate.getFullYear() == displayedYear
+              ? chosenDay
+              : ''
+          "
+        >
           {{ index }}
         </p>
       </div>
-      <div class="circleToday" :style="calculateCircleToday()"></div>
-      <!-- </section> -->
+      <div class="circleToday" :style="calculateCircleToday('circ')"></div>
     </article>
   </aside>
 </template>
@@ -122,7 +89,7 @@ export default {
       'setDateForDBQuery',
       'getEventsByUserIdDate',
     ]),
-    calculateCircleToday() {
+    calculateCircleToday(x) {
       let today = new Date();
       let start = new Date(
         this.displayedDate.getFullYear(),
@@ -142,7 +109,10 @@ export default {
         }
         return `grid-area: ${row}/${circle}/${row}/${circle}`;
       } else {
-        return 'display: none';
+        if (x == 'circ') {
+          return 'display: none';
+        }
+        return '';
       }
     },
     calculateMonth(x) {
@@ -217,6 +187,7 @@ export default {
       }
       this.calculateMonth();
       this.displayedDate = new Date(this.selectedDate);
+      this.displayedMonth = this.displayedDate.getMonth();
       this.displayedYear = this.displayedDate.getFullYear().toString();
       this.getDaysInCurrentMonth();
       this.clickedDate(this.displayedDate.getDate());
@@ -226,7 +197,6 @@ export default {
   created() {
     this.resetDate();
     this.todayDay = new Date().getDate();
-    // this.startDate();
   },
   mounted() {
     this.resetDate();
@@ -259,7 +229,7 @@ export default {
 }
 .calendar-header {
   border-bottom: 2px solid rgba(0, 0, 0, 0.178);
-  padding: 4vh 0 1vh;
+  padding: 1vh 0 1vh;
   margin: 0 1vw;
 }
 .calendar-header > * {
@@ -271,7 +241,7 @@ export default {
   background: none;
 }
 .resetBtnDiv {
-  padding: 1vh 0 0 0;
+  padding: 0.75vh 0 0 0;
 }
 .cal-button,
 .dayNum-item p,
@@ -317,7 +287,7 @@ export default {
   height: 25vw;
 }
 .dayNum-item {
-  z-index: 1;
+  z-index: 2;
 }
 /* .dayNum,
 .dayAbbreviations {
@@ -355,6 +325,7 @@ export default {
   width: 100%;
   background-color: #7dcea0;
   border-radius: 50%;
+  z-index: 1;
 }
 /* .selectedDateStyle {
   border-bottom: double thick #7dcea0;

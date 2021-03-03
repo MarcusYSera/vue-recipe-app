@@ -21,10 +21,12 @@ export default {
 .dayview {
   /* margin-top: 1rem; */
   grid-area: dayview;
-  grid-template-rows: repeat(96, [row-start] 10vh);
-  grid-template-columns: [column-start] 5rem [column-end] 1fr;
+  grid-template-rows: repeat(96, 10vh);
+  grid-template-columns: 5rem;
+  grid-auto-columns: minmax(23vw, 1fr);
+  /* grid-auto-columns: 10px; */
   max-height: 100%;
   overflow: scroll;
-  overflow-x: hidden;
+  overflow-x: scroll;
 }
 </style>

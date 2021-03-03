@@ -21,12 +21,27 @@ export default {
 </script>
 
 <style>
+@media only screen and (max-width: 415px) {
+  html {
+    font-size: 16px;
+  }
+}
+@media only screen and (min-width: 416px) and (max-width: 1024px) {
+  html {
+    font-size: 18px;
+  }
+}
+@media only screen and (min-width: 1025px) {
+  html {
+    font-size: 21px;
+  }
+}
 button {
   border-radius: 5px;
 }
-html {
+/* html {
   font-size: 16px;
-}
+} */
 body {
   margin: 0;
   height: 100vh;

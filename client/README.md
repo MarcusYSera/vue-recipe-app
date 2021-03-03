@@ -34,7 +34,10 @@ Early Rendition of Schedule Page
 
 ### TO-DO
 
-add a mark on the calendar for selected/view date vs current Date
+currently working on displaying current selected date
+
+refactor v-for loops, recursive calls are slowing down rendering speed, move methods without arguments to computed, so it caches
+
 add arrows around date to allow easier movement from one day to another
 
 search functionality
@@ -60,19 +63,25 @@ fix design spacing
 
 refactor css (set a standard for rem units)
 
-make responsive- add media queries/ breakpoints
+make responsive- add media queries/ breakpoints - pay attention to font size for different areas, especially text heavy areas
 
 change from 15 min intervals to hours and convert grid to 24 hours with 60 rows per hour
 
 move sign-in/ sign-out to a more obvious place
 
+add [cypress](https://docs.cypress.io/guides/getting-started/installing-cypress.html#System-requirements) and [code coverage](https://vuejsdevelopers.com/2020/07/20/code-coverage-vue-cypress/)
+
 ~~current time ticker- don't remember what this is~~
 
 ~~fix displaying of to list items that exceed 24 hours~~
 
+~~add a mark on the calendar for selected/view date vs current Date~~
+
 ---
 
 ### BUG
+
+~~Fix Calendar!!! 2 is missing due to sharing the same constraints as today~~
 
 ~~fix duration display: days/hrs/mins vs day/hr/min~~
 

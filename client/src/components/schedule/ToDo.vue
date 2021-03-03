@@ -13,13 +13,15 @@
     class="task-item two"
     :style="{ gridRow: `5 row-start` }"
   >
-    <h3>Example of a Task at 1:00 A.M.</h3>
-    <p>
-      Lorem ipsum, dolor sit amet consectetur adipisicing elit. Beatae, facilis
-      ab. Vero dolorum nihil, laborum, recusandae doloremque hic corporis at
-      harum reprehenderit facilis cupiditate dolores amet. Possimus, repudiandae
-      recusandae. Incidunt?
-    </p>
+    <div class="flex-container column todo-content">
+      <h3>Example of a Task at 1:00 A.M.</h3>
+      <p>
+        Lorem ipsum, dolor sit amet consectetur adipisicing elit. Beatae,
+        facilis ab. Vero dolorum nihil, laborum, recusandae doloremque hic
+        corporis at harum reprehenderit facilis cupiditate dolores amet.
+        Possimus, repudiandae recusandae. Incidunt?
+      </p>
+    </div>
   </section>
 
   <section
@@ -28,15 +30,19 @@
     v-for="(item, index) in eventData"
     :key="`todo-${index}`"
     :style="{
-      gridRow: `${item.list_position_start} row-start/ ${item.list_position_end} row-start`,
+      gridArea: `${item.list_position_start} / ${index + 2} / ${
+        item.list_position_end
+      } / ${index + 2}`,
     }"
   >
-    <h3>{{ item.event_name }}</h3>
-    <!-- <p>Recipe: {{ item.associate_recipe }}</p> -->
-    <p>Description: {{ item.event_description }}</p>
-    <p>Date: {{ item.start_date }} - {{ item.end_date }}</p>
-    <p>Event Time: {{ item.event_time_start }} - {{ item.event_time_end }}</p>
-    <p>Duration {{ item.event_duration_str }}</p>
+    <div class="flex-container column todo-content">
+      <h3>{{ item.event_name }}</h3>
+      <!-- <p>Recipe: {{ item.associate_recipe }}</p> -->
+      <p>Description: {{ item.event_description }}</p>
+      <p>Date: {{ item.start_date }} - {{ item.end_date }}</p>
+      <p>Event Time: {{ item.event_time_start }} - {{ item.event_time_end }}</p>
+      <p>Duration {{ item.event_duration_str }}</p>
+    </div>
   </section>
 </template>
 
@@ -126,6 +132,11 @@ export default {
   /* top: 0; */
   /* position: -webkit-sticky; */
   /* align-items: flex-start; */
+}
+.todo-content {
+  position: sticky;
+  top: 0;
+  gap: 0.5vh;
 }
 .one {
   border-left: 2px solid #3d83f9;

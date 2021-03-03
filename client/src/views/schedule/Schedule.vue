@@ -123,7 +123,7 @@ header {
   grid-area: header;
 }
 .schedule-header {
-  padding: 0 1vw 3vh 0;
+  padding: 0 1vw;
   justify-content: space-between;
   align-items: center;
   border-bottom: 0.15rem solid #f3f3f3;

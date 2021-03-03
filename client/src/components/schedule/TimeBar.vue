@@ -5,7 +5,7 @@
     :key="`timebar-${index}`"
     :value="current"
     class="time-item"
-    :style="{ gridRow: `row-start ${index + 1}` }"
+    :style="{ gridRow: ` ${index + 1}` }"
     :ref="current"
   >
     {{ current }}
@@ -110,8 +110,8 @@ export default {
   justify-content: space-between;
 }
 .time-item {
-  grid-row: row-start;
-  grid-column: column-start;
+  /* grid-row: row-start; */
+  /* grid-column: column-start; */
   /* grid-area: time; */
   /* margin-top: 3rem; */
 }
