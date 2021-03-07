@@ -6,7 +6,7 @@ const eventsModel = new Model('events');
 export const eventsPage = async (req, res) => {
   try {
     const data = await eventsModel.select(
-      'user_fkid, event_name, event_associate_recipe, event_description, event_start, event_end, event_duration'
+      'user_id, event_name, event_associate_recipe, event_description, event_start, event_end, event_duration'
     );
     res.status(200).json({ events: data.rows });
   } catch (err) {
@@ -22,8 +22,8 @@ export const findEventsByIdAndDate = async (req, res) => {
   // console.log(timezone);
   const columns =
     'event_name, event_associate_recipe, event_description, event_start, event_end, event_duration';
-  // const clause = `WHERE user_fkid = ${id} AND (event_start::timestamptz AT TIME ZONE '${zone}')::date = date '${date}'`;
-  const clause = `WHERE user_fkid = ${id} AND (event_start::timestamptz AT TIME ZONE '${zone}')::date <= '${date}'::date AND (event_end::timestamptz AT TIME ZONE '${zone}')::date >= '${date}'::date`;
+  // const clause = `WHERE user_id = ${id} AND (event_start::timestamptz AT TIME ZONE '${zone}')::date = date '${date}'`;
+  const clause = `WHERE user_id = ${id} AND (event_start::timestamptz AT TIME ZONE '${zone}')::date <= '${date}'::date AND (event_end::timestamptz AT TIME ZONE '${zone}')::date >= '${date}'::date`;
   try {
     const data = await eventsModel.select(columns, clause);
     res.status(200).json({ events: data.rows });
@@ -44,7 +44,7 @@ export const addEventByUserId = async (req, res) => {
   } = req.body;
   // console.log(req.body);
   const columns =
-    'USER_FKID, EVENT_NAME, EVENT_ASSOCIATE_RECIPE, EVENT_DESCRIPTION, EVENT_START, EVENT_END, EVENT_DURATION';
+    'USER_ID, EVENT_NAME, EVENT_ASSOCIATE_RECIPE, EVENT_DESCRIPTION, EVENT_START, EVENT_END, EVENT_DURATION';
   const values = `'${id}','${event_name}', '${event_associate_recipe}','${event_description}', '${event_start}', '${event_end}', '${event_duration}'`;
   try {
     const data = await eventsModel.insertWithReturn(columns, values);

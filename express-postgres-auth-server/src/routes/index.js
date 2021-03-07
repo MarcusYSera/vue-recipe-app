@@ -1,12 +1,17 @@
 import express from 'express';
-import { loginUser, usersPage, getJWTRefreshToken, logoutUser } from './../controllers/index.js';
+import {
+  createAuthorizationToken,
+  usersPage,
+  getJWTRefreshToken,
+  logoutUser,
+} from './../controllers/index.js';
 import { authenticateToken } from './../middleware/index.js';
 
-const indexRouter = express.Router();
+const authorizationRouter = express.Router();
 
-indexRouter.post('/users/login', loginUser);
-indexRouter.post('/users/login/refreshtoken', getJWTRefreshToken);
-indexRouter.get('/users', authenticateToken, usersPage);
-indexRouter.delete('/users/logout', logoutUser);
+authorizationRouter.post('/users/authorization', createAuthorizationToken);
+authorizationRouter.post('/users/login/refreshtoken', getJWTRefreshToken);
+authorizationRouter.get('/users', authenticateToken, usersPage);
+authorizationRouter.delete('/users/logout', logoutUser);
 
-export default indexRouter;
+export default authorizationRouter;

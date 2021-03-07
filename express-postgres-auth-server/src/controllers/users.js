@@ -8,18 +8,22 @@ import { jwtAccessTokenSecret, jwtRefreshTokenSecret } from './../settings.js';
 
 let refreshTokens = [];
 
-export const loginUser = async (req, res) => {
+const generateJWTAccessToken = (user) => {
+  return jwt.sign(user, jwtAccessTokenSecret, { expiresIn: '5m' });
+};
+
+const generateJWTRefreshToken = (user) => {
+  return jwt.sign(user, jwtRefreshTokenSecret, { expiresIn: '7d' });
+};
+
+export const createAuthorizationToken = async (req, res) => {
   const email = req.body.email;
   const user = { email: email };
 
-  const jwtAccessToken = generateAccessToken(user);
-  const jwtRefreshToken = jwt.sign(user, jwtRefreshTokenSecret);
+  const jwtAccessToken = generateJWTAccessToken(user);
+  const jwtRefreshToken = generateJWTRefreshToken(user);
   refreshTokens.push(jwtRefreshToken);
   res.json({ jwtAccessToken: jwtAccessToken, jwtRefreshToken: jwtRefreshToken });
-};
-
-const generateAccessToken = (user) => {
-  return jwt.sign(user, jwtAccessTokenSecret, { expiresIn: '15s' });
 };
 
 export const usersPage = async (req, res) => {
@@ -32,13 +36,13 @@ export const usersPage = async (req, res) => {
 };
 
 export const getJWTRefreshToken = async (req, res) => {
-  const refreshToken = req.body.jwtRefreshToken;
-  if (refreshToken == null) return res.sendStatus(401);
-  if (!refreshTokens.includes(refreshToken)) return res.sendStatus(403);
-  jwt.verify(refreshToken, jwtRefreshTokenSecret, (err, user) => {
+  const jwtRefreshToken = req.body.jwtRefreshToken;
+  if (jwtRefreshToken == null) return res.sendStatus(401);
+  if (!refreshTokens.includes(jwtRefreshToken)) return res.sendStatus(403);
+  jwt.verify(jwtRefreshToken, jwtRefreshTokenSecret, (err, user) => {
     if (err) return res.sendStatus(403);
-    const accessToken = generateAccessToken({ email: user.email });
-    res.json({ accessToken: accessToken });
+    const jwtAccessToken = generateJWTAccessToken({ email: user.email });
+    res.json({ jwtAccessToken: jwtAccessToken });
   });
 };
 

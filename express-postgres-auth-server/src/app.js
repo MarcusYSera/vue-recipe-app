@@ -2,7 +2,7 @@ import logger from 'morgan';
 import express from 'express';
 import cookieParser from 'cookie-parser';
 import cors from 'cors';
-import indexRouter from './routes/index.js';
+import authorizationRouter from './routes/index.js';
 import { corsOrigin } from './settings.js';
 
 const app = express();
@@ -19,6 +19,6 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 
-app.use('/v1', indexRouter);
+app.use('/v1', authorizationRouter);
 
 export default app;

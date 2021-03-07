@@ -84,6 +84,8 @@ add [cypress](https://docs.cypress.io/guides/getting-started/installing-cypress.
 
 ### BUG
 
+issue with signing out and signing back in, user_id persists to next database call, meaning it queries the previous user_id
+
 ~~Fix Calendar!!! 2 is missing due to sharing the same constraints as today~~
 
 ~~fix duration display: days/hrs/mins vs day/hr/min~~

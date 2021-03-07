@@ -54,13 +54,13 @@ export const dropUsersTable = 'DROP TABLE IF EXISTS users;';
 export const createMessageTable = `
   CREATE TABLE IF NOT EXISTS messages (
     MESSAGE_ID INT GENERATED ALWAYS AS IDENTITY,
-    USER_FKID INT,
+    USER_ID INT,
     MESSAGE VARCHAR NOT NULL,
     CREATED_AT TIMESTAMPTZ NOT NULL DEFAULT NOW(),
     UPDATED_AT TIMESTAMPTZ NOT NULL DEFAULT NOW(),
     PRIMARY KEY(MESSAGE_ID),
-    CONSTRAINT user_fkid
-      FOREIGN KEY(user_fkid)
+    CONSTRAINT user_id
+      FOREIGN KEY(user_id)
         REFERENCES users(user_id)
         ON DELETE CASCADE
   );
@@ -75,7 +75,7 @@ export const createUpdateTriggerForMessages = `
 `;
 
 export const insertMessages = `
-  INSERT INTO messages(USER_FKID, MESSAGE)
+  INSERT INTO messages(USER_ID, MESSAGE)
   VALUES (1,'first message'),
   (2,'second message');
 `;
@@ -85,7 +85,7 @@ export const dropMessagesTable = 'DROP TABLE IF EXISTS messages;';
 export const createEventTable = `
   CREATE TABLE IF NOT EXISTS events (
     EVENT_ID INT GENERATED ALWAYS AS IDENTITY,
-    USER_FKID INT,
+    USER_ID INT,
     EVENT_NAME VARCHAR,
     EVENT_ASSOCIATE_RECIPE VARCHAR,
     EVENT_DESCRIPTION TEXT,
@@ -96,8 +96,8 @@ export const createEventTable = `
     CREATED_AT TIMESTAMPTZ NOT NULL DEFAULT NOW(),
     UPDATED_AT TIMESTAMPTZ NOT NULL DEFAULT NOW(),
     PRIMARY KEY(EVENT_ID),
-    CONSTRAINT user_fkid
-      FOREIGN KEY(user_fkid)
+    CONSTRAINT user_id
+      FOREIGN KEY(user_id)
         REFERENCES users(user_id)
         ON DELETE CASCADE
   );
@@ -112,7 +112,7 @@ export const createUpdateTriggerForEvents = `
 `;
 
 export const insertEvents = `
-  INSERT INTO events(USER_FKID, EVENT_NAME, EVENT_ASSOCIATE_RECIPE, EVENT_DESCRIPTION, EVENT_START, EVENT_END, EVENT_DURATION)
+  INSERT INTO events(USER_ID, EVENT_NAME, EVENT_ASSOCIATE_RECIPE, EVENT_DESCRIPTION, EVENT_START, EVENT_END, EVENT_DURATION)
   VALUES (1, 'Pizza', 'pizza', 'making pizza today', '2021-02-06T06:49:00.000Z', '2021-02-06T18:19:00.000Z', '11:30'), 
   (2, 'Pie', 'pie', 'making a pie today', '2021-02-06T06:49:00.000Z', '2021-02-06T14:49:00.000Z', '08:00');
 `;
@@ -131,12 +131,12 @@ export const updateEvents = `
 
 export const deleteTestValuesMessages = `
   DELETE FROM messages
-  WHERE USER_FKID IN (1,2);
+  WHERE USER_ID IN (1,2);
 `;
 
 export const deleteTextValuesEvents = `
   DELETE FROM events
-  WHERE USER_FKID IN (1,2);
+  WHERE USER_ID IN (1,2);
 `;
 
 export const dropEventsTable = 'DROP TABLE IF EXISTS events;';

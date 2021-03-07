@@ -3,7 +3,7 @@ import { assert, server, BASE_URL } from './setup.js';
 describe('Events', () => {
   it('create event', (done) => {
     const data = {
-      user_fkid: 1,
+      user_id: 1,
       event_name: 'Pasta',
       event_associate_recipe: 'pasta',
       event_description: 'will make clam pasta',
@@ -38,8 +38,8 @@ describe('Events', () => {
   //     // console.log(res.body.events);
   //     // assert.deepStrictEqual(res.body.events[0], [event_name]);
   //     res.body.events.forEach((e) => {
-  //       // console.log(e['user_fkid']);
-  //       assert.typeOf(e['user_fkid'], 'number', 'we have a number');
+  //       // console.log(e['user_id']);
+  //       assert.typeOf(e['user_id'], 'number', 'we have a number');
   //       assert.typeOf(e['event_name'], 'string', 'we have a string');
   //       assert.typeOf(e['event_associate_recipe'], 'string');
   //       assert.typeOf(e['event_description'], 'string');
