@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="60px" height="60px" viewBox="0 0 60 60" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>Group 9</title>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Group-9">
+            <rect id="Rectangle" fill="#FFF1B8" x="0.79702077" y="47.4282154" width="59.0163934" height="12" rx="6"></rect>
+            <rect id="Rectangle" fill="#A9DFBF" x="0.860990882" y="33.8098205" width="59.02" height="8" rx="4"></rect>
+            <text id="ノ" font-family="HiraMinProN-W3, Hiragino Mincho ProN" font-size="30" font-weight="300" fill="#A9DFBF">
+                <tspan x="32.5" y="26">ノ</tspan>
+            </text>
+            <text id="ノ" transform="translate(47.306783, 14.249597) scale(1, -1) rotate(14.000000) translate(-47.306783, -14.249597) " font-family="HiraMinProN-W3, Hiragino Mincho ProN" font-size="18" font-weight="300" fill="#FFF1B8">
+                <tspan x="39.3067831" y="20.7495975">ノ</tspan>
+            </text>
+            <text id="ノ" font-family="HiraMinProN-W3, Hiragino Mincho ProN" font-size="30" font-weight="300" fill="#A9DFBF">
+                <tspan x="0.5" y="26">ノ</tspan>
+            </text>
+            <text id="ノ" transform="translate(15.306783, 14.249597) scale(1, -1) rotate(14.000000) translate(-15.306783, -14.249597) " font-family="HiraMinProN-W3, Hiragino Mincho ProN" font-size="18" font-weight="300" fill="#FFF1B8">
+                <tspan x="7.30678311" y="20.7495975">ノ</tspan>
+            </text>
+        </g>
+    </g>
+</svg>

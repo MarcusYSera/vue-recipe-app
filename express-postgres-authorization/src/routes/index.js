@@ -9,9 +9,10 @@ import { authenticateToken } from './../middleware/index.js';
 
 const authorizationRouter = express.Router();
 
+authorizationRouter.get('/users', authenticateToken, usersPage);
+
 authorizationRouter.post('/users/authorization', createAuthorizationToken);
 authorizationRouter.post('/users/login/refreshtoken', getJWTRefreshToken);
-authorizationRouter.get('/users', authenticateToken, usersPage);
 authorizationRouter.delete('/users/logout', logoutUser);
 
 export default authorizationRouter;

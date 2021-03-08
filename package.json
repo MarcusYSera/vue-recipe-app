@@ -1,0 +1,17 @@
+{
+  "name": "vue-recipe-app",
+  "version": "1.0.0",
+  "scripts": {
+    "start": "cd ./client && npm run serve",
+    "build": "cd ./client && npm run build",
+    "server1": "cd ./express-postgres && npm start",
+    "server2": "cd ./express-postgres-authorization && npm start",
+    "test-server1": "cd ./express-postgres && npm test",
+    "test-server2": "cd ./express-postgres-authorization && npm test",
+    "createTableQuery": " cd ./express-postgres && npm run createTableQuery",
+    "dropAllTableQuery": " cd ./express-postgres && npm run dropAllTableQuery"
+  },
+  "eslintConfig": {
+    "root": true
+  }
+}

@@ -17,8 +17,8 @@ const generateJWTRefreshToken = (user) => {
 };
 
 export const createAuthorizationToken = async (req, res) => {
-  const email = req.body.email;
-  const user = { email: email };
+  const { id, email } = req.body;
+  const user = { id: id, email: email };
 
   const jwtAccessToken = generateJWTAccessToken(user);
   const jwtRefreshToken = generateJWTRefreshToken(user);
@@ -41,7 +41,7 @@ export const getJWTRefreshToken = async (req, res) => {
   if (!refreshTokens.includes(jwtRefreshToken)) return res.sendStatus(403);
   jwt.verify(jwtRefreshToken, jwtRefreshTokenSecret, (err, user) => {
     if (err) return res.sendStatus(403);
-    const jwtAccessToken = generateJWTAccessToken({ email: user.email });
+    const jwtAccessToken = generateJWTAccessToken({ id: user.id, email: user.email });
     res.json({ jwtAccessToken: jwtAccessToken });
   });
 };
