@@ -2,7 +2,7 @@ import express from 'express';
 import {
   // createUser,
   loginReturnAuthorizationToken,
-  createAuthorizationToken,
+  // createAuthorizationToken,
   // usersPage,
   getJWTRefreshToken,
   logoutUser,
@@ -16,7 +16,7 @@ const authorizationRouter = express.Router();
 // authorizationRouter.post('users/signup', createUser);
 authorizationRouter.post('/users/login', loginReturnAuthorizationToken);
 
-authorizationRouter.post('/users/authorization', createAuthorizationToken); //  login, create access token and refresh token
+// authorizationRouter.post('/users/authorization', createAuthorizationToken); //  login, create access token and refresh token
 authorizationRouter.post('/users/login/refreshtoken', getJWTRefreshToken); //  silent refresh, create new access token, if expired, using refresh token
 authorizationRouter.delete('/users/logout', logoutUser); //  invalidate access token
 
