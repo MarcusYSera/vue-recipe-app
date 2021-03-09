@@ -20,9 +20,19 @@ const generateJWTRefreshToken = (user) => {
 };
 
 const getUserByEmail = (email) => {
-  let columns = 'user_id, first_name, last_name, email, password';
+  let columns =
+    'user_id, first_name, last_name, email, password, jwt_refresh_token, jwt_expires_at';
   let clause = `WHERE email = '${email}'`;
   return usersModel.select(columns, clause);
+};
+
+const storeRefreshToken = (email, jwtRefreshToken) => {
+  let jwtExpiresAt = jwt.verify(jwtRefreshToken, jwtRefreshTokenSecret, { ignoreExpiration: true });
+  return usersModel.updateWithReturn(
+    `email = '${email}'`,
+    'FIRST_NAME, EMAIL, JWT_REFRESH_TOKEN, JWT_EXPIRES_AT',
+    `JWT_REFRESH_TOKEN='${jwtRefreshToken}', JWT_EXPIRES_AT='${jwtExpiresAt.exp}'`
+  );
 };
 
 export const loginReturnAuthorizationToken = async (req, res) => {
@@ -38,12 +48,7 @@ export const loginReturnAuthorizationToken = async (req, res) => {
   delete user.rows[0].password;
   const jwtAccessToken = generateJWTAccessToken(user.rows[0]);
   const jwtRefreshToken = generateJWTRefreshToken(user.rows[0]);
-  let jwtExpiresAt = jwt.verify(jwtRefreshToken, jwtRefreshTokenSecret, { ignoreExpiration: true });
-  let answer = await usersModel.updateWithReturn(
-    `email = '${email}'`,
-    'FIRST_NAME, EMAIL, JWT_REFRESH_TOKEN, JWT_EXPIRES_AT',
-    `JWT_REFRESH_TOKEN='${jwtRefreshToken}', JWT_EXPIRES_AT='${jwtExpiresAt.exp}'`
-  );
+  await storeRefreshToken(email, jwtRefreshToken);
   // remove this line when I am able to store refresh tokens
   refreshTokens.push(jwtRefreshToken);
   // make sure to remove refreshtoken and store in database associated with user with an expired at
@@ -70,8 +75,12 @@ export const loginReturnAuthorizationToken = async (req, res) => {
 // get new access token using refresh token, silent refresh
 
 export const getJWTRefreshToken = async (req, res) => {
-  const jwtRefreshToken = req.body.jwtRefreshToken;
-  if (jwtRefreshToken == null) return res.sendStatus(401);
+  const user = await getUserByEmail(req.body.email);
+  console.log(user.rows.length);
+  if (!user.rows.length) return res.sendStatus(401);
+  const jwtRefreshToken = user.rows[0].jwt_refresh_token;
+  console.log(jwtRefreshToken);
+  if (!jwtRefreshToken) return res.sendStatus(401);
   if (!refreshTokens.includes(jwtRefreshToken)) return res.sendStatus(403);
   jwt.verify(jwtRefreshToken, jwtRefreshTokenSecret, (err, user) => {
     if (err) return res.sendStatus(403);
