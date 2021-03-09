@@ -7,7 +7,10 @@ class Model {
     const newArr = this.table.split('');
     newArr.pop();
     this.pKey = newArr.join('');
-    this.pool.on('error', (err, client) => `Error, ${err}, on idle client${client}`);
+    this.pool.on(
+      'error',
+      (err, client) => `Error, ${err}, on idle client${client}`
+    );
   }
 
   async select(columns, clause) {

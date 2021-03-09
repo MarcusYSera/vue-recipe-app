@@ -102,12 +102,12 @@ export default {
         });
       }
     },
-    bcryptPassword(password) {
-      return new Promise(resolve => {
-        this.password = bcrypt.hashSync(password, 10);
-        resolve();
-      });
-    },
+    // bcryptPassword(password) {
+    //   return new Promise(resolve => {
+    //     this.password = bcrypt.hashSync(password, 10);
+    //     resolve();
+    //   });
+    // },
   },
 };
 </script>

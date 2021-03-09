@@ -7,8 +7,14 @@ import { jwtAccessTokenSecret, jwtRefreshTokenSecret } from './../settings.js';
 
 export const usersPage = async (req, res) => {
   try {
-    const data = await usersModel.select('user_id, first_name, last_name, email, password');
-    res.status(200).json({ users: data.rows.filter((user) => user.email === req.user.email) });
+    const data = await usersModel.select(
+      'user_id, first_name, last_name, email, password'
+    );
+    res
+      .status(200)
+      .json({
+        users: data.rows.filter((user) => user.email === req.user.email),
+      });
   } catch (err) {
     res.status(200).json({ users: err.stack });
   }
