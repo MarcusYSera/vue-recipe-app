@@ -7,7 +7,7 @@ import bcrypt from 'bcrypt';
 
 import { jwtAccessTokenSecret, jwtRefreshTokenSecret } from './../settings.js';
 
-let refreshTokens = [];
+// let refreshTokens = [];
 
 //functions
 
@@ -17,11 +17,10 @@ const generateJWTAccessToken = (user) => {
 
 const generateJWTRefreshToken = (user) => {
   return jwt.sign(user, jwtRefreshTokenSecret, { expiresIn: '7d' });
+  // return jwt.sign(user, jwtRefreshTokenSecret, { expiresIn: '10sec' });
 };
 
-const getUserByEmail = (email) => {
-  let columns =
-    'user_id, first_name, last_name, email, password, jwt_refresh_token, jwt_expires_at';
+const getUserByEmail = (email, columns) => {
   let clause = `WHERE email = '${email}'`;
   return usersModel.select(columns, clause);
 };
@@ -31,33 +30,31 @@ const storeRefreshToken = (email, jwtRefreshToken) => {
   return usersModel.updateWithReturn(
     `email = '${email}'`,
     'FIRST_NAME, EMAIL, JWT_REFRESH_TOKEN, JWT_EXPIRES_AT',
-    `JWT_REFRESH_TOKEN='${jwtRefreshToken}', JWT_EXPIRES_AT='${jwtExpiresAt.exp}'`
+    `JWT_REFRESH_TOKEN='${jwtRefreshToken}', JWT_EXPIRES_AT=${jwtExpiresAt.exp}`
   );
 };
 
 export const loginReturnAuthorizationToken = async (req, res) => {
   const { email, password } = req.body;
-  let user = await getUserByEmail(email);
+  let columns = 'user_id, first_name, last_name, email, password';
+  let user = await getUserByEmail(email, columns);
   if (user.rows.length == 0)
     return res.status(401).json({ error: true, message: 'account does not exist' });
-  // if (err.stack) return res.status(400).json({ error: err.stack, message: 'there was an error' });
-  const match = await bcrypt.compare(password, user.rows[0].password);
-  if (!match) return res.status(401).json({ error: true, message: 'password does not match' });
+  const passwordMatch = await bcrypt.compare(password, user.rows[0].password);
+  if (!passwordMatch)
+    return res.status(401).json({ error: true, message: 'password does not match' });
   // swapping delete for setting the value to undefined is more efficient
   // ie: user.rows[0].password = undefined;
   delete user.rows[0].password;
   const jwtAccessToken = generateJWTAccessToken(user.rows[0]);
   const jwtRefreshToken = generateJWTRefreshToken(user.rows[0]);
   await storeRefreshToken(email, jwtRefreshToken);
-  // remove this line when I am able to store refresh tokens
-  refreshTokens.push(jwtRefreshToken);
-  // make sure to remove refreshtoken and store in database associated with user with an expired at
   res
     .status(200)
     .json({ user: user.rows[0], jwtAccessToken: jwtAccessToken, jwtRefreshToken: jwtRefreshToken });
 };
 
-// create jwt token here after login
+// create jwt token here after login swapped with login route
 
 // export const createAuthorizationToken = async (req, res) => {
 //   const { id, email } = req.body;
@@ -74,18 +71,19 @@ export const loginReturnAuthorizationToken = async (req, res) => {
 
 // get new access token using refresh token, silent refresh
 
-export const getJWTRefreshToken = async (req, res) => {
-  const user = await getUserByEmail(req.body.email);
-  console.log(user.rows.length);
+export const getJWTRefreshAuthToken = async (req, res) => {
+  let columns = 'user_id, first_name, last_name, email, jwt_refresh_token, jwt_expires_at';
+  const user = await getUserByEmail(req.body.email, columns);
   if (!user.rows.length) return res.sendStatus(401);
   const jwtRefreshToken = user.rows[0].jwt_refresh_token;
-  console.log(jwtRefreshToken);
-  if (!jwtRefreshToken) return res.sendStatus(401);
-  if (!refreshTokens.includes(jwtRefreshToken)) return res.sendStatus(403);
+  if (!jwtRefreshToken) return res.sendStatus(403);
+  // console.log(user.rows[0]);
   jwt.verify(jwtRefreshToken, jwtRefreshTokenSecret, (err, user) => {
     if (err) return res.sendStatus(403);
     const jwtAccessToken = generateJWTAccessToken({
-      id: user.id,
+      user_id: user.user_id,
+      first_name: user.first_name,
+      last_name: user.last_name,
       email: user.email,
     });
     res.json({ jwtAccessToken: jwtAccessToken });
