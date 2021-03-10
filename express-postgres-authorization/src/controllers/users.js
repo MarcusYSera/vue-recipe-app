@@ -49,6 +49,7 @@ export const loginReturnAuthorizationToken = async (req, res) => {
   const jwtAccessToken = generateJWTAccessToken(user.rows[0]);
   const jwtRefreshToken = generateJWTRefreshToken(user.rows[0]);
   await storeRefreshToken(email, jwtRefreshToken);
+  res.cookie('accessToken', jwtAccessToken, { httpOnly: true, secure: true });
   res
     .status(200)
     .json({ user: user.rows[0], jwtAccessToken: jwtAccessToken, jwtRefreshToken: jwtRefreshToken });
@@ -77,7 +78,6 @@ export const getJWTRefreshAuthToken = async (req, res) => {
   if (!user.rows.length) return res.sendStatus(401);
   const jwtRefreshToken = user.rows[0].jwt_refresh_token;
   if (!jwtRefreshToken) return res.sendStatus(403);
-  // console.log(user.rows[0]);
   jwt.verify(jwtRefreshToken, jwtRefreshTokenSecret, (err, user) => {
     if (err) return res.sendStatus(403);
     const jwtAccessToken = generateJWTAccessToken({
@@ -86,6 +86,7 @@ export const getJWTRefreshAuthToken = async (req, res) => {
       last_name: user.last_name,
       email: user.email,
     });
+    res.cookie('accessToken', jwtAccessToken, { httpOnly: true, secure: true });
     res.json({ jwtAccessToken: jwtAccessToken });
   });
 };
