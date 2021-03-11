@@ -12,6 +12,8 @@ app.use(
     origin: `${corsOrigin}`,
     methods: 'GET, POST, PUT',
     optionsSuccessStatus: 204,
+    credentials: true,
+    exposedHeaders: ['set-cookie'],
   })
 );
 app.use(logger('dev'));
