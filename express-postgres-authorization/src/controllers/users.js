@@ -49,9 +49,8 @@ export const loginReturnAuthorizationToken = async (req, res) => {
   const jwtAccessToken = generateJWTAccessToken(user.rows[0]);
   const jwtRefreshToken = generateJWTRefreshToken(user.rows[0]);
   await storeRefreshToken(email, jwtRefreshToken);
-  // res.cookie('accessToken', jwtAccessToken);
-  res.cookie('accessToken', jwtAccessToken, { httpOnly: true, secure: true });
-  // res.status(200).json({ jwtAccessToken: jwtAccessToken });
+  // res.cookie('accessToken', jwtAccessToken, { httpOnly: true, secure: true });
+  res.cookie('accessToken', jwtAccessToken, { httpOnly: true });
   res
     .status(200)
     .json({ user: user.rows[0], jwtAccessToken: jwtAccessToken, jwtRefreshToken: jwtRefreshToken });

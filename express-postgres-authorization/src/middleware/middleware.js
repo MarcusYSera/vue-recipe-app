@@ -3,8 +3,10 @@ import jwt from 'jsonwebtoken';
 import { jwtAccessTokenSecret } from './../settings.js';
 
 export const authenticateToken = (req, res, next) => {
-  const authHeader = req.headers['authorization'];
-  const token = authHeader && authHeader.split(' ')[1];
+  const token = req.cookies.accessToken;
+  // const authHeader = req.headers['authorization'];
+  // const token = authHeader && authHeader.split(' ')[1];
+  // console.log(token);
   if (token == null) return res.sendStatus(401);
 
   jwt.verify(token, jwtAccessTokenSecret, (err, user) => {
@@ -15,7 +17,7 @@ export const authenticateToken = (req, res, next) => {
 };
 
 export const checkForCookie = (req, res, next) => {
-  const cookie = JSON.stringify(req.cookies);
+  const cookie = JSON.stringify(req.cookies.accessToken);
   console.log(`Cookies: ${cookie}`);
   next();
 };
