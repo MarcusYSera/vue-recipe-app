@@ -3,15 +3,15 @@ import {
   // createUser,
   loginReturnAuthorizationToken,
   // createAuthorizationToken,
-  // usersPage,
+  usersPage,
   getJWTRefreshAuthToken,
   logoutUser,
 } from './../controllers/index.js';
-import { authenticateToken, verifyPassword } from './../middleware/index.js';
+import { authenticateToken, checkForCookie } from './../middleware/index.js';
 
 const authorizationRouter = express.Router();
 
-// authorizationRouter.get('/users', authenticateToken, usersPage);
+authorizationRouter.get('/users', checkForCookie, authenticateToken, usersPage);
 
 // authorizationRouter.post('users/signup', createUser);
 authorizationRouter.post('/users/login', loginReturnAuthorizationToken);
