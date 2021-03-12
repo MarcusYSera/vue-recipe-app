@@ -32,7 +32,7 @@ class Model {
     return this.pool.query(query);
   }
 
-  async updateWithReturn(clause, columns, values) {
+  async updateWithReturn(values, clause, columns ) {
     const query = `
       UPDATE ${this.table}
       SET ${values}
