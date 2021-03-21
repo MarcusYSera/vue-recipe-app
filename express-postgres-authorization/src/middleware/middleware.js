@@ -5,18 +5,20 @@ import Model from './../models/model.js';
 import { jwtAccessTokenSecret } from './../settings.js';
 const usersModel = new Model('users');
 
-const getUserByEmail = (email, columns) => {
-  let clause = `WHERE email = '${email}'`;
+const getUserByEmail = (columns, clause) => {
   return usersModel.select(columns, clause);
 };
 
-export const authenticateToken = (req, res, next) => {
+export const authenticateToken = async (req, res, next) => {
   const token = req.cookies.accessToken;
   if (token == null) return res.sendStatus(401);
 
-  jwt.verify(token, jwtAccessTokenSecret, (err, user) => {
+  jwt.verify(token, jwtAccessTokenSecret, async (err, user) => {
     if (err) return res.sendStatus(403);
-    req.user = user;
+    let columns = `*`;
+    let clause = `WHERE user_id = ${user.user_id}`;
+    req.user = await getUserByEmail(columns, clause);
+    console.log(req.user.rows);
     next();
   });
 };
@@ -24,7 +26,8 @@ export const authenticateToken = (req, res, next) => {
 export const authenticateUser = async (req, res, next) => {
   const { email, password } = req.body;
   let columns = 'user_id, email, password';
-  const user = await getUserByEmail(email, columns);
+  let clause = `WHERE email = '${email}'`;
+  const user = await getUserByEmail(columns, clause);
   if (user.rows.length == 0)
     return res.status(401).json({ error: true, message: 'account does not exist' });
   const passwordMatch = await bcrypt.compare(password, user.rows[0].password);

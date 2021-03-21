@@ -10,33 +10,49 @@ import { jwtAccessTokenSecret, jwtRefreshTokenSecret } from './../settings.js';
 
 const generateJWTAccessToken = (user) => {
   return jwt.sign(user, jwtAccessTokenSecret, { expiresIn: '5m' });
+  // return jwt.sign(user, jwtAccessTokenSecret, { expiresIn: '5sec' });
 };
 
 const generateJWTRefreshToken = (user) => {
   return jwt.sign(user, jwtRefreshTokenSecret, { expiresIn: '7d' });
 };
 
-const storeRefreshToken = (email, jwtRefreshToken) => {
-  let jwtExpiresAt = jwt.verify(jwtRefreshToken, jwtRefreshTokenSecret, { ignoreExpiration: true });
-  return usersModel.updateWithReturn(
+const expiresAt = (token, access) => {
+  if (access) {
+    return jwt.verify(token, jwtAccessTokenSecret);
+  } else {
+    return jwt.verify(token, jwtRefreshTokenSecret);
+  }
+};
+
+const storeRefreshToken = async (user_id, jwtRefreshToken) => {
+  let jwtExpiresAt = expiresAt(jwtRefreshToken, false);
+  return await usersModel.updateWithReturn(
     `JWT_REFRESH_TOKEN='${jwtRefreshToken}', JWT_EXPIRES_AT=${jwtExpiresAt.exp}`,
-    `email = '${email}'`,
-    'FIRST_NAME, EMAIL, JWT_REFRESH_TOKEN, JWT_EXPIRES_AT'
+    `user_id = ${user_id.user_id}`,
+    'JWT_EXPIRES_AT'
   );
+  // return jwtExpiresAt.exp;
 };
 
 export const loginReturnAuthorizationToken = async (req, res) => {
   const user_id = { user_id: req.body.user_id };
   const jwtAccessToken = generateJWTAccessToken(user_id);
+  let accessExpiresAt = expiresAt(jwtAccessToken, true);
   const jwtRefreshToken = generateJWTRefreshToken(user_id);
-  await storeRefreshToken(user_id, jwtRefreshToken);
+  const refreshExpiresAt = await storeRefreshToken(user_id, jwtRefreshToken);
+  // console.log(expiresAt.rows[0].jwt_expires_at);
   // res.cookie('accessToken', jwtAccessToken, { httpOnly: true, secure: true });
   res.cookie('accessToken', jwtAccessToken, { httpOnly: true });
-  res.status(200).json({
-    user: req.body.user_id,
-    jwtAccessToken: jwtAccessToken,
-    jwtRefreshToken: jwtRefreshToken,
-  });
+  res.cookie('refreshToken', jwtRefreshToken, { httpOnly: true });
+  res.cookie('expiresAtRefreshToken', refreshExpiresAt.rows[0].jwt_expires_at, { httpOnly: true });
+  return res.sendStatus(200);
+  // res.status(200).json({
+  // user: req.body.user_id,
+  // jwtAccessToken: jwtAccessToken,
+  // expiresAt: expiresAt.rows[0].jwt_expires_at,
+  // jwtRefreshToken: jwtRefreshToken,
+  // });
 };
 
 // create jwt token here after login swapped with login route
@@ -56,7 +72,9 @@ export const loginReturnAuthorizationToken = async (req, res) => {
 
 // get new access token using refresh token, silent refresh
 
-export const getJWTRefreshAuthToken = async (req, res) => {
+export const refreshJWTAuthToken = async (req, res) => {
+  const user = req.user;
+  // console.log(user);
   if (!user.rows.length) return res.sendStatus(401);
   const jwtRefreshToken = user.rows[0].jwt_refresh_token;
   if (!jwtRefreshToken) return res.sendStatus(403);

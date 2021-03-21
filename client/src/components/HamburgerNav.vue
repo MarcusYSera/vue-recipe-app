@@ -60,6 +60,7 @@ export default {
 
 <style scoped>
 a {
+  text-transform: capitalize;
   text-decoration: none;
   color: black;
 }

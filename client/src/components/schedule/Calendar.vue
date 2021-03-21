@@ -90,6 +90,7 @@ export default {
       'getEventsByUserIdDate',
     ]),
     calculateCircleToday(x) {
+      console.log('hello');
       let today = new Date();
       let start = new Date(
         this.displayedDate.getFullYear(),
@@ -110,8 +111,10 @@ export default {
         return `grid-area: ${row}/${circle}/${row}/${circle}`;
       } else {
         if (x == 'circ') {
+          console.log('circ');
           return 'display: none';
         }
+        console.log('else statement');
         return '';
       }
     },

@@ -7,10 +7,7 @@ class Model {
     const newArr = this.table.split('');
     newArr.pop();
     this.pKey = newArr.join('');
-    this.pool.on(
-      'error',
-      (err, client) => `Error, ${err}, on idle client${client}`
-    );
+    this.pool.on('error', (err, client) => `Error, ${err}, on idle client${client}`);
   }
 
   async select(columns, clause) {
@@ -23,16 +20,15 @@ class Model {
   }
 
   async insertWithReturn(columns, values) {
-     const query = `
+    const query = `
       INSERT INTO ${this.table}(${columns})
       VALUES (${values})
       RETURNING ${this.pKey}_id, ${columns}
     `;
-    // console.log(this.pool.query(query));
     return this.pool.query(query);
   }
 
-  async updateWithReturn(values, clause, columns ) {
+  async updateWithReturn(values, clause, columns) {
     const query = `
       UPDATE ${this.table}
       SET ${values}
