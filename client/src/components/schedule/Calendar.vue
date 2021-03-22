@@ -28,25 +28,14 @@
         v-for="index in daysInMonth"
         :key="`day-${index}`"
         @click="clickedDate(index)"
-        class="dayNum-item"
-        :style="[
-          index == 1 ? computeGridStart : '',
-          index == todayDay ? calculateCircleOverlay() : '',
-        ]"
+        class="dayNum-item flex-container"
+        :class="today.getDate() === index ? computeCircleToday : ''"
+        :style="[index == 1 ? computeGridStart : '']"
       >
-        <p
-          :style="
-            index == selectedDate.getDate() &&
-            selectedDate.getMonth() == displayedMonth &&
-            selectedDate.getFullYear() == displayedYear
-              ? chosenDay
-              : ''
-          "
-        >
+        <p :class="index == selectedDate.getDate() ? chosenDay : ''">
           {{ index }}
         </p>
       </div>
-      <div class="circleToday" :style="calculateCircleToday"></div>
     </article>
   </aside>
 </template>
@@ -57,11 +46,11 @@ export default {
   name: 'CalendarComponent',
   data() {
     return {
+      today: new Date(),
       month: null,
-      todayDay: null,
       todayMonth: null,
       todayYear: null,
-      displayedDate: null,
+      displayedDate: new Date(this.selectedDate),
       displayedMonth: null,
       displayedYear: null,
       daysInMonth: null,
@@ -81,33 +70,22 @@ export default {
       return `grid-column: ${column}`;
     },
     chosenDay() {
-      return `border-bottom: double thick black;`;
-    },
-    calculateCircleToday() {
-      let today = new Date();
-      let start = new Date(
-        this.displayedDate.getFullYear(),
-        this.displayedDate.getMonth(),
-        1
-      );
       if (
-        today.getFullYear() == this.displayedDate.getFullYear() &&
-        today.getMonth() == this.displayedDate.getMonth()
+        this.selectedDate.getMonth() == this.displayedMonth &&
+        this.selectedDate.getFullYear() == this.displayedYear
       ) {
-        let row = 2;
-        let column = (today.getDate() + start.getDay()) % 7;
-        console.log('hello');
-        if (column == 0) {
-          column = 7;
-          row += (today.getDate() + start.getDay()) / 7 - 1;
-          console.log('column is 0');
-        } else {
-          console.log('else');
-          row += Math.floor((today.getDate() + start.getDay()) / 7);
-        }
-        return `grid-area: ${row}/${column}/${row}/${column}`;
+        return 'selected-date';
       }
-      return 'display: none';
+      return '';
+    },
+    computeCircleToday() {
+      if (
+        this.displayedDate.getMonth() === this.today.getMonth() &&
+        this.displayedDate.getFullYear() === this.today.getFullYear()
+      ) {
+        return 'circle-today';
+      }
+      return '';
     },
   },
   methods: {
@@ -116,7 +94,6 @@ export default {
       'setDateForDBQuery',
       'getEventsByUserIdDate',
     ]),
-    calculateCircleOverlay() {},
     calculateMonth(x) {
       const options = { month: 'long', day: 'numeric', year: 'numeric' };
       if (x) {
@@ -199,10 +176,6 @@ export default {
 
   created() {
     this.resetDate();
-    this.todayDay = new Date().getDate();
-  },
-  mounted() {
-    this.resetDate();
   },
 };
 </script>
@@ -279,57 +252,29 @@ export default {
   height: 40%;
 }
 .calendar-article-body {
-  /* grid-template-areas: '. . . . . . .' '. . . . . . .' '. . . . . . .' '. . . . . . .' '. . . . . . .' '. . . . . . .' '. . . . . . .'; */
   grid-template-columns: repeat(7, 1fr);
   grid-template-rows: repeat(7, 1fr);
-  align-items: center;
-  justify-items: center;
-  /* text-align: center; */
   width: 25vw;
   height: 25vw;
 }
+.calendar-article-body h6 {
+  align-self: center;
+  justify-self: center;
+}
 .dayNum-item {
   z-index: 2;
+  align-items: center;
+  justify-content: center;
 }
-/* .dayNum,
-.dayAbbreviations {
-  grid-template-columns: repeat(7, 1fr);
-  text-align: center;
-}
-.dayAbbreviations {
-  flex: 0;
-}
-.dayNum {
-  flex: 1;
-}
-.dayNum-item {
-  height: 100%;
-  width: 100%;
-  position: relative;
-} */
-/* .dayNum-item:first-child {
-  grid-column: var(--grid-column);
-} */
-/* .dayNum-item p {
-  position: absolute;
-  top: 30%;
-  left: 45%;
-} */
-/* .dayNum-item img {
-  position: relative;
-  top: 20%;
-  left: 30%;
-  z-index: 0;
-} */
 
-.circleToday {
+.circle-today {
   height: 100%;
   width: 100%;
   background-color: #7dcea0;
   border-radius: 50%;
   z-index: 1;
 }
-/* .selectedDateStyle {
-  border-bottom: double thick #7dcea0;
-} */
+.selected-date {
+  border-bottom: double thick black;
+}
 </style>
