@@ -53,7 +53,7 @@
 <script>
 // issue with hitting enter on name input and the box closes. Adjust button down for this.openAddEvent/ openEvent()
 import { mapActions, mapGetters } from 'vuex';
-import SelectDurationTimer from '@/components/schedule/SelectDurationTimer';
+import SelectDurationTimer from '@/components/schedule/event-component/SelectDurationTimer';
 
 export default {
   name: 'AddEvent',

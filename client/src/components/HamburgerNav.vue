@@ -14,7 +14,7 @@
       </h3>
       <h3 v-if="isLoggedIn" @click="logout">Sign Out</h3>
       <h3 v-else><router-link :to="{ name: 'login' }">Login</router-link></h3>
-      <p v-if="user">{{ user.firstName }}</p>
+      <!-- <p v-if="user">{{ user.firstName }}</p> -->
     </nav>
   </header>
 </template>
@@ -29,7 +29,11 @@ export default {
       open: false,
       openItem: 'schedule',
       // signedIn: false,
-      navCategories: ['schedule', 'recipe', 'profile'],
+      navCategories: [
+        'schedule',
+        // 'recipe',
+        // 'profile'
+      ],
     };
   },
   computed: {

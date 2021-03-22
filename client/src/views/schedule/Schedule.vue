@@ -20,7 +20,7 @@
 import DayView from '@/views/schedule/DayView';
 import SearchBar from '@/components/schedule/SearchBar';
 import CalendarComponent from '@/components/schedule/Calendar';
-import AddEvent from '@/components/schedule/AddEvent';
+import AddEvent from '@/components/schedule/event-component/AddEvent';
 
 import {
   mapGetters,
