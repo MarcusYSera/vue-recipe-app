@@ -31,7 +31,7 @@ export default {
       // signedIn: false,
       navCategories: [
         'schedule',
-        // 'recipe',
+        'recipe',
         // 'profile'
       ],
     };
