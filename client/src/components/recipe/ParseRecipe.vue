@@ -2,26 +2,39 @@
   <div class="dropper">
     <input
       type="file"
-      multiple
       @change="readTextFromFile"
-      accept=".doc,.docx,.xml,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document,.pdf"
+      accept=".csv,.doc,.docx,.xml,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document,.pdf"
     />
     <span>Drag files here!</span>
   </div>
 </template>
 
 <script>
+import {
+  // convertToHtml,
+  extractRawText,
+} from 'mammoth';
+
 export default {
   name: 'ParseRecipe',
   methods: {
-    readTextFromFile(ev) {
-      const file = ev.target.files[0];
+    readTextFromFile(inputFiles) {
+      const files = inputFiles.target.files || [];
+      if (!files.length) return;
+      const file = files[0];
       const reader = new FileReader();
-      reader.onload = e => {
-        this.$emit('load', e.target.result);
-        console.log(e.target);
+      reader.onloadend = () => {
+        const arrayBuffer = reader.result;
+        // convertToHtml({ arrayBuffer: arrayBuffer }).then(resultObj => {
+        //   this.$emit('load', resultObj.value);
+        //   console.log(resultObj.value);
+        // });
+        extractRawText({ arrayBuffer: arrayBuffer }).then(resultObj => {
+          this.$emit('load', resultObj.value);
+          console.log(resultObj.value);
+        });
       };
-      reader.readAsText(file, 'UTF-8');
+      reader.readAsArrayBuffer(file);
     },
   },
 };
