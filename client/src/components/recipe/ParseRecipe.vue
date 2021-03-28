@@ -30,24 +30,46 @@ export default {
     },
     convertPdfToText(file) {
       const reader = new FileReader();
-      reader.onloadend = () => {
+      reader.onloadend = async () => {
         const arrayBuffer = new Uint8Array(reader.result);
-        import('pdfjs-dist/webpack').then(pdfjs => {
+
+        let textFromPdf = await import('pdfjs-dist/webpack').then(pdfjs => {
           const pdf = pdfjs.getDocument(arrayBuffer);
-          // console.log(pdf);
-          pdf.promise.then(doc => {
-            doc.getPage(1).then(page => {
-              page.getTextContent().then(text => {
-                const answer = text.items
-                  .map(function(s) {
-                    return s.str;
-                  })
-                  .join('');
-                console.log(answer);
-              });
+          return pdf.promise.then(doc => {
+            let promiseArr = [];
+            const pageNum = doc._pdfInfo.numPages;
+            for (let i = 1; i <= pageNum; i++) {
+              const page = doc.getPage(i);
+              promiseArr.push(
+                page.then(p => {
+                  const txt = p.getTextContent();
+                  return txt.then(t => {
+                    return t.items
+                      .map(s => {
+                        return s.str;
+                      })
+                      .join('');
+                  });
+                })
+              );
+            }
+            return Promise.all(promiseArr).then(allTxt => {
+              return allTxt.join('');
             });
+            // doc.getPage(1).then(page => {
+            //   page.getTextContent().then(text => {
+            //     const answer = text.items
+            //       .map(function(s) {
+            //         return s.str;
+            //       })
+            //       .join('');
+            //     // console.log(answer);
+            //     return answer;
+            //   });
+            // });
           });
         });
+        this.$emit('load', textFromPdf);
       };
       reader.readAsArrayBuffer(file);
     },
