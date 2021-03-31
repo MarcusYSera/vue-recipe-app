@@ -36,3 +36,8 @@ export const authenticateUser = async (req, res, next) => {
   req.body.user_id = user.rows[0].user_id;
   next();
 };
+
+// export const errorHandler = async (err, req, res, next) => {
+//   console.error(err.stack);
+//   res.status(500).send('Something broke!');
+// };

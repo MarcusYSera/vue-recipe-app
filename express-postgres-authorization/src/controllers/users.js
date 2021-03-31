@@ -42,10 +42,13 @@ export const loginReturnAuthorizationToken = async (req, res) => {
   const jwtRefreshToken = generateJWTRefreshToken(user_id);
   const refreshExpiresAt = await storeRefreshToken(user_id, jwtRefreshToken);
   // console.log(expiresAt.rows[0].jwt_expires_at);
-  // res.cookie('accessToken', jwtAccessToken, { httpOnly: true, secure: true });
-  res.cookie('accessToken', jwtAccessToken, { httpOnly: true });
-  res.cookie('refreshToken', jwtRefreshToken, { httpOnly: true });
-  res.cookie('expiresAtRefreshToken', refreshExpiresAt.rows[0].jwt_expires_at, { httpOnly: true });
+  // res.cookie('accessToken', jwtAccessToken, { httpOnly: true, secure: true, sameSite: 'strict' });
+  res.cookie('accessToken', jwtAccessToken, { httpOnly: true, sameSite: 'strict' });
+  res.cookie('refreshToken', jwtRefreshToken, { httpOnly: true, sameSite: 'strict' });
+  res.cookie('expiresAtRefreshToken', refreshExpiresAt.rows[0].jwt_expires_at, {
+    httpOnly: true,
+    sameSite: true,
+  });
   return res.sendStatus(200);
   // res.status(200).json({
   // user: req.body.user_id,
