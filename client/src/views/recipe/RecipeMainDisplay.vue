@@ -2,14 +2,17 @@
   <article>
     Recipe Main Page
     <RecipeForm v-if="showhere"></RecipeForm>
-    <ParseRecipe @load="text = $event" v-if="show"></ParseRecipe>
-    {{ text }}
+    <ParseRecipe @load="recipeUpload" v-if="show"></ParseRecipe>
+    <!-- <ParseRecipe @load="text = $event" v-if="show"></ParseRecipe> -->
+    <RecipePreview :text="text" v-if="!show"></RecipePreview>
+    <!-- {{ text }} -->
   </article>
 </template>
 
 <script>
 import ParseRecipe from '@/components/recipe/ParseRecipe.vue';
 import RecipeForm from '@/components/recipe/RecipeForm.vue';
+import RecipePreview from '@/components/recipe/RecipePreview.vue';
 
 export default {
   name: 'RecipeMainDisplay',
@@ -20,8 +23,17 @@ export default {
       showhere: false,
     };
   },
-  components: { ParseRecipe, RecipeForm },
-  methods: {},
+  components: { ParseRecipe, RecipeForm, RecipePreview },
+  computed: {},
+  methods: {
+    recipeUpload(fileText) {
+      this.text = fileText;
+      this.show = false;
+    },
+  },
+  mounted() {
+    this.text !== '' ? (this.show = false) : (this.show = true);
+  },
 };
 </script>
 

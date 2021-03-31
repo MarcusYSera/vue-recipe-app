@@ -5,7 +5,10 @@
       @change="readTextFromFile"
       accept=".doc,.docx,.xml,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document,.pdf"
     />
-    <span>Drag files here!</span>
+    <div class="flex-container column">
+      <span>Click or Drag files here!</span>
+      <!-- <span>Word Documents or PDFs only</span> -->
+    </div>
   </div>
 </template>
 
@@ -17,6 +20,11 @@ import {
 
 export default {
   name: 'ParseRecipe',
+  // data() {
+  //   return {
+  //     show: true,
+  //   };
+  // },
   methods: {
     readTextFromFile(inputFiles) {
       const files = inputFiles.target.files || [];
@@ -31,45 +39,24 @@ export default {
     convertPdfToText(file) {
       const reader = new FileReader();
       reader.onloadend = async () => {
+        let promiseArr = [];
         const arrayBuffer = new Uint8Array(reader.result);
-
-        let textFromPdf = await import('pdfjs-dist/webpack').then(pdfjs => {
-          const pdf = pdfjs.getDocument(arrayBuffer);
-          return pdf.promise.then(doc => {
-            let promiseArr = [];
-            const pageNum = doc._pdfInfo.numPages;
-            for (let i = 1; i <= pageNum; i++) {
-              const page = doc.getPage(i);
-              promiseArr.push(
-                page.then(p => {
-                  const txt = p.getTextContent();
-                  return txt.then(t => {
-                    return t.items
-                      .map(s => {
-                        return s.str;
-                      })
-                      .join('');
-                  });
-                })
-              );
-            }
-            return Promise.all(promiseArr).then(allTxt => {
-              return allTxt.join('');
-            });
-            // doc.getPage(1).then(page => {
-            //   page.getTextContent().then(text => {
-            //     const answer = text.items
-            //       .map(function(s) {
-            //         return s.str;
-            //       })
-            //       .join('');
-            //     // console.log(answer);
-            //     return answer;
-            //   });
-            // });
-          });
-        });
-        this.$emit('load', textFromPdf);
+        const pdfjs = await import('pdfjs-dist/webpack');
+        const pdf = await pdfjs.getDocument(arrayBuffer);
+        const doc = await pdf.promise;
+        const pageNum = doc._pdfInfo.numPages;
+        for (let i = 1; i <= pageNum; i++) {
+          const currentPage = await doc.getPage(i);
+          const txt = await currentPage.getTextContent();
+          const allText = txt.items
+            .map(s => {
+              return s.str;
+            })
+            .join('');
+          promiseArr.push(allText);
+        }
+        const answer = await Promise.all(promiseArr);
+        this.$emit('load', answer.join(''));
       };
       reader.readAsArrayBuffer(file);
     },
