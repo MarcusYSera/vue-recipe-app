@@ -3,11 +3,18 @@ import bcrypt from 'bcrypt';
 
 import Model from './../models/model.js';
 import { jwtAccessTokenSecret } from './../settings.js';
+import { sendErrorResponse } from './../helpers/response.js';
+import { isEmpty } from './../helpers/validation.js';
+
 const usersModel = new Model('users');
 
 const getUserByEmail = (columns, clause) => {
   return usersModel.select(columns, clause);
 };
+
+// String.prototype.isEmpty = function () {
+//   return this.length === 0 || !this.trim();
+// };
 
 export const authenticateToken = async (req, res, next) => {
   const token = req.cookies.accessToken;
@@ -25,6 +32,12 @@ export const authenticateToken = async (req, res, next) => {
 
 export const authenticateUser = async (req, res, next) => {
   const { email, password } = req.body;
+  if (isEmpty(email) || isEmpty(password))
+    return sendErrorResponse({
+      res,
+      message: 'Email or Password Field is missing',
+      statusCode: 400,
+    });
   let columns = 'user_id, email, password';
   let clause = `WHERE email = '${email}'`;
   const user = await getUserByEmail(columns, clause);

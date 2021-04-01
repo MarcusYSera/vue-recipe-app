@@ -24,9 +24,9 @@ app.use(cookieParser());
 
 app.use('/v1', authorizationRouter);
 
-app.use((err, req, res, next) => {
-  console.error(err.stack);
-  res.status(500).send('Something broke!');
-});
+// app.use((err, req, res, next) => {
+//   console.error(err.stack);
+//   res.status(500).send('Something broke!');
+// });
 
 export default app;
