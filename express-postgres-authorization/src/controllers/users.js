@@ -38,46 +38,31 @@ const storeRefreshToken = async (user_id, jwtRefreshToken) => {
 export const loginReturnAuthorizationToken = async (req, res) => {
   const user_id = { user_id: req.body.user_id };
   const jwtAccessToken = generateJWTAccessToken(user_id);
-  let accessExpiresAt = expiresAt(jwtAccessToken, true);
+  // let accessExpiresAt = expiresAt(jwtAccessToken, true);
   const jwtRefreshToken = generateJWTRefreshToken(user_id);
-  const refreshExpiresAt = await storeRefreshToken(user_id, jwtRefreshToken);
-  // console.log(expiresAt.rows[0].jwt_expires_at);
+  // only storing long term refresh token in db
+  await storeRefreshToken(user_id, jwtRefreshToken);
+  // const refreshExpiresAt = await storeRefreshToken(user_id, jwtRefreshToken);
+  // const jwtExpiresAt = refreshExpiresAt.rows[0].jwt_expires_at;
   // res.cookie('accessToken', jwtAccessToken, { httpOnly: true, secure: true, sameSite: 'strict' });
+  // res.cookie('refreshToken', jwtRefreshToken, { httpOnly: true, secure: true, sameSite: 'strict' });
+  // res.cookie('expiresAtRefreshToken', jwtExpiresAt, { httpOnly: true, secure: true, sameSite: 'strict' });
   res.cookie('accessToken', jwtAccessToken, { httpOnly: true, sameSite: 'strict' });
   res.cookie('refreshToken', jwtRefreshToken, { httpOnly: true, sameSite: 'strict' });
-  res.cookie('expiresAtRefreshToken', refreshExpiresAt.rows[0].jwt_expires_at, {
-    httpOnly: true,
-    sameSite: true,
-  });
+  // res.cookie('expiresAtRefreshToken', jwtExpiresAt, { httpOnly: true, sameSite: 'strict' });
   return res.sendStatus(200);
   // res.status(200).json({
-  // user: req.body.user_id,
-  // jwtAccessToken: jwtAccessToken,
-  // expiresAt: expiresAt.rows[0].jwt_expires_at,
-  // jwtRefreshToken: jwtRefreshToken,
+  //   user: req.body.user_id,
+  //   jwtAccessToken: jwtAccessToken,
+  //   jwtRefreshToken: jwtRefreshToken,
+  //   expiresAt: jwtExpiresAt,
   // });
 };
-
-// create jwt token here after login swapped with login route
-
-// export const createAuthorizationToken = async (req, res) => {
-//   const { id, email } = req.body;
-//   const user = { id: id, email: email };
-
-//   const jwtAccessToken = generateJWTAccessToken(user);
-//   const jwtRefreshToken = generateJWTRefreshToken(user);
-//   refreshTokens.push(jwtRefreshToken);
-//   res.json({
-//     jwtAccessToken: jwtAccessToken,
-//     jwtRefreshToken: jwtRefreshToken,
-//   });
-// };
 
 // get new access token using refresh token, silent refresh
 
 export const refreshJWTAuthToken = async (req, res) => {
   const user = req.user;
-  // console.log(user);
   if (!user.rows.length) return res.sendStatus(401);
   const jwtRefreshToken = user.rows[0].jwt_refresh_token;
   if (!jwtRefreshToken) return res.sendStatus(403);
@@ -85,11 +70,12 @@ export const refreshJWTAuthToken = async (req, res) => {
     if (err) return res.sendStatus(403);
     const jwtAccessToken = generateJWTAccessToken({
       user_id: user.user_id,
-      first_name: user.first_name,
-      last_name: user.last_name,
-      email: user.email,
+      // first_name: user.first_name,
+      // last_name: user.last_name,
+      // email: user.email,
     });
-    res.cookie('accessToken', jwtAccessToken, { httpOnly: true, secure: true });
+    // res.cookie('accessToken', jwtAccessToken, { httpOnly: true, secure: true, sameSite: 'strict' });
+    res.cookie('accessToken', jwtAccessToken, { httpOnly: true, sameSite: 'strict' });
     res.json({ jwtAccessToken: jwtAccessToken });
   });
 };

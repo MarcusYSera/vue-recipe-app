@@ -2,11 +2,12 @@ import bcrypt from 'bcrypt';
 
 export const isValidEmail = (email) => {
   const regEx = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
-  return regEx.text(email);
+  return regEx.test(email);
 };
 
 export const validatePassword = (password) => {
-  if (password.length <= 6 || password === '') {
+  // if (password.length <= 5 || password === '') {
+  if (password === '') {
     return false;
   }
   return true;
@@ -22,6 +23,5 @@ export const isEmpty = (str) => {
   return true;
 };
 
-export const comparePassword = (hashedPassword, password) => {
+export const comparePassword = (hashedPassword, password) =>
   bcrypt.compareSync(password, hashedPassword);
-};
