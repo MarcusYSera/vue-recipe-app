@@ -51,12 +51,6 @@ export const loginReturnAuthorizationToken = async (req, res) => {
   res.cookie('refreshToken', jwtRefreshToken, { httpOnly: true, sameSite: 'strict' });
   // res.cookie('expiresAtRefreshToken', jwtExpiresAt, { httpOnly: true, sameSite: 'strict' });
   return res.sendStatus(200);
-  // res.status(200).json({
-  //   user: req.body.user_id,
-  //   jwtAccessToken: jwtAccessToken,
-  //   jwtRefreshToken: jwtRefreshToken,
-  //   expiresAt: jwtExpiresAt,
-  // });
 };
 
 // get new access token using refresh token, silent refresh
@@ -70,13 +64,10 @@ export const refreshJWTAuthToken = async (req, res) => {
     if (err) return res.sendStatus(403);
     const jwtAccessToken = generateJWTAccessToken({
       user_id: user.user_id,
-      // first_name: user.first_name,
-      // last_name: user.last_name,
-      // email: user.email,
     });
     // res.cookie('accessToken', jwtAccessToken, { httpOnly: true, secure: true, sameSite: 'strict' });
     res.cookie('accessToken', jwtAccessToken, { httpOnly: true, sameSite: 'strict' });
-    res.json({ jwtAccessToken: jwtAccessToken });
+    return res.status(200).json({ message: 'successfully reissued token' });
   });
 };
 
@@ -86,10 +77,10 @@ export const usersPage = async (req, res) => {
   try {
     const data = await usersModel.select('user_id, first_name, last_name, email, password');
     res.status(200).json({
-      users: data.rows.filter((user) => user.user_id === req.user.user_id),
+      users: data.rows.filter((user) => user.user_id === req.user.rows[0].user_id),
     });
   } catch (err) {
-    res.status(200).json({ users: err.stack });
+    res.status(400).json({ users: err.stack });
   }
 };
 
