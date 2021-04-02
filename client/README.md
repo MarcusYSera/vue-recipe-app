@@ -88,7 +88,7 @@ issue with signing out and signing back in, user_id persists to next database ca
 
 issue with clicking on date and it showing up for subsequent months
 
-today not marking correctly
+today not marking correctly(March 20th, circle ends up at the end of calendar), column probably equals 0
 
 ~~Fix Calendar!!! 2 is missing due to sharing the same constraints as today~~
 

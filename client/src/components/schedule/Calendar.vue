@@ -31,7 +31,7 @@
         class="dayNum-item"
         :style="[
           index == 1 ? computeGridStart : '',
-          index == todayDay ? calculateCircleToday() : '',
+          index == todayDay ? calculateCircleOverlay() : '',
         ]"
       >
         <p
@@ -46,7 +46,7 @@
           {{ index }}
         </p>
       </div>
-      <div class="circleToday" :style="calculateCircleToday('circ')"></div>
+      <div class="circleToday" :style="calculateCircleToday"></div>
     </article>
   </aside>
 </template>
@@ -66,6 +66,7 @@ export default {
       displayedYear: null,
       daysInMonth: null,
       dayOfWeekNum: null,
+      circleVisible: true,
     };
   },
   computed: {
@@ -82,15 +83,7 @@ export default {
     chosenDay() {
       return `border-bottom: double thick black;`;
     },
-  },
-  methods: {
-    ...mapActions([
-      'setSelectedDate',
-      'setDateForDBQuery',
-      'getEventsByUserIdDate',
-    ]),
-    calculateCircleToday(x) {
-      console.log('hello');
+    calculateCircleToday() {
       let today = new Date();
       let start = new Date(
         this.displayedDate.getFullYear(),
@@ -102,22 +95,28 @@ export default {
         today.getMonth() == this.displayedDate.getMonth()
       ) {
         let row = 2;
-        let circle = (today.getDate() + start.getDate()) % 7;
-        if (circle == 0) {
-          row += (today.getDate() + start.getDate()) / 7;
+        let column = (today.getDate() + start.getDay()) % 7;
+        console.log('hello');
+        if (column == 0) {
+          column = 7;
+          row += (today.getDate() + start.getDay()) / 7 - 1;
+          console.log('column is 0');
         } else {
-          row += Math.floor((today.getDate() + start.getDate()) / 7);
+          console.log('else');
+          row += Math.floor((today.getDate() + start.getDay()) / 7);
         }
-        return `grid-area: ${row}/${circle}/${row}/${circle}`;
-      } else {
-        if (x == 'circ') {
-          console.log('circ');
-          return 'display: none';
-        }
-        console.log('else statement');
-        return '';
+        return `grid-area: ${row}/${column}/${row}/${column}`;
       }
+      return 'display: none';
     },
+  },
+  methods: {
+    ...mapActions([
+      'setSelectedDate',
+      'setDateForDBQuery',
+      'getEventsByUserIdDate',
+    ]),
+    calculateCircleOverlay() {},
     calculateMonth(x) {
       const options = { month: 'long', day: 'numeric', year: 'numeric' };
       if (x) {
@@ -194,6 +193,7 @@ export default {
       this.displayedYear = this.displayedDate.getFullYear().toString();
       this.getDaysInCurrentMonth();
       this.clickedDate(this.displayedDate.getDate());
+      this.circleVisible = true;
     },
   },
 
@@ -242,6 +242,8 @@ export default {
   padding: 0;
   border: 0;
   background: none;
+  font-size: 1.5em;
+  cursor: pointer;
 }
 .resetBtnDiv {
   padding: 0.75vh 0 0 0;
@@ -253,9 +255,6 @@ export default {
 .dayAbbreviations {
   z-index: 1;
   color: #e4e4e4;
-}
-.calendar-header .cal-button {
-  font-size: 1.5em;
 }
 .resetDateBtn {
   background: none;
