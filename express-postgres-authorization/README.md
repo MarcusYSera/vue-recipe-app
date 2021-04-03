@@ -15,4 +15,4 @@ figure out how to run in production as opposed to development
 consider adding claims: iss(issuer), sub(subject), aud(audience) to jwt.sign for further verification
 registered claims- sub, iss, exp, nbf
 public claims - email, address, phone, unique values
-private claims - own context, can collide
+private claims - private info such as an employee id or department name

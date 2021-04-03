@@ -14,8 +14,10 @@ export default {
       recipeName: '',
       recipeCuisine: '',
       recipeCourse: '',
+      recipeYield: '',
       recipeDuration: '',
       recipeDescription: '',
+      recipeMisEnPlace: '',
       recipeSteps: '',
     };
   },
