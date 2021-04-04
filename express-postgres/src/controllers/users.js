@@ -33,7 +33,6 @@ export const findUserByEmail = async (req, res) => {
 };
 
 export const addUser = async (req, res) => {
-  // console.log(req.body);
   let values = '';
   let columns = [];
   for (const [key, value] of Object.entries(req.body)) {
@@ -45,8 +44,6 @@ export const addUser = async (req, res) => {
     }
   }
   columns = columns.join(', ');
-  // console.log(columns);
-  // console.log(values);
   try {
     const data = await usersModel.insertWithReturn(columns, values);
     res.status(200).json({ users: data.rows });
@@ -69,8 +66,6 @@ export const editUser = async (req, res) => {
   columns = columns.join(', ');
   const { id } = req.params;
   const clause = `user_id = '${id}'`;
-  // console.log(columns);
-  // console.log(values);
   try {
     const data = await usersModel.updateWithReturn(clause, columns, values);
     res.status(200).json({ users: data.rows });

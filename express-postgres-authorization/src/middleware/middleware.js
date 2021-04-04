@@ -54,3 +54,18 @@ export const authenticateUser = async (req, res, next) => {
   req.body.user_id = user.rows[0].user_id;
   next();
 };
+
+export const authenticateCreateUser = async (req, res, next) => {
+  const { email, password } = req.body;
+  if (isEmpty(email) || isEmpty(password))
+    return sendErrorResponse({ res, message: 'Email or Password is missing', statusCode: 401 });
+  if (!isValidEmail(email) || !validatePassword(password))
+    return sendErrorResponse({ res, message: 'Invalid Email or Password', statusCode: 401 });
+  let columns = 'user_id, email, password';
+  let clause = `WHERE email = '${email}'`;
+  const user = await getUserByEmail(columns, clause);
+  if (user.rows.length > 0)
+    return res.status(401).json({ error: true, message: 'User already exists' });
+  return res.status(205).json({ message: 'successfully passed create user authentication' });
+  next();
+};

@@ -52,7 +52,26 @@ const getStoredRefreshToken = async (user_id, jwtRefreshToken) => {
   return await usersModel.select(columns, clause);
 };
 
-export const createUser = async (req, res) => {};
+export const createUser = async (req, res) => {
+  console.log(req.body);
+  let values = '';
+  let columns = [];
+  for (const [key, value] of Object.entries(req.body)) {
+    columns.push(key);
+    if (values.length === 0) {
+      values = `'${value}'`;
+    } else {
+      values += `, '${value}'`;
+    }
+  }
+  columns = columns.join(', ');
+  try {
+    const data = await usersModel.insertWithReturn(columns, values);
+    res.status(200).json({ users: data.rows });
+  } catch (err) {
+    res.status(200).json({ users: err.stack });
+  }
+};
 
 export const login = async (req, res) => {
   const user_id = { user_id: req.body.user_id };
