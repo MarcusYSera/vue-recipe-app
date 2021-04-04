@@ -19,6 +19,7 @@ const getUserByEmail = (columns, clause) => {
 
 export const authenticateToken = async (req, res, next) => {
   let token = req.headers.authorization;
+  if (!token) return res.status(401).json({ error: true, message: 'Not Signed In' });
   token = token.split(' ')[1];
   // const token = req.cookies.accessToken;
   if (token == null) return res.sendStatus(401);

@@ -27,9 +27,19 @@ const expiresAt = (token, access) => {
 };
 
 const storeRefreshToken = async (user_id, jwtRefreshToken) => {
-  let jwtExpiresAt = expiresAt(jwtRefreshToken, false);
+  let jwtExpiresAt;
+  let update;
+  if (jwtRefreshToken.length !== 0) {
+    jwtExpiresAt = expiresAt(jwtRefreshToken, false);
+    update = `JWT_REFRESH_TOKEN='${jwtRefreshToken}', JWT_EXPIRES_AT=${jwtExpiresAt.exp}`;
+  }
+  if (jwtRefreshToken === '') {
+    let rightNow = new Date();
+    rightNow = parseInt(rightNow.getTime().toString().slice(0, 10));
+    update = `JWT_REFRESH_TOKEN='', JWT_EXPIRES_AT=${rightNow}`;
+  }
   return await usersModel.updateWithReturn(
-    `JWT_REFRESH_TOKEN='${jwtRefreshToken}', JWT_EXPIRES_AT=${jwtExpiresAt.exp}`,
+    update,
     `user_id = ${user_id.user_id}`,
     'JWT_EXPIRES_AT'
   );
@@ -41,6 +51,8 @@ const getStoredRefreshToken = async (user_id, jwtRefreshToken) => {
   let clause = `WHERE user_id = '${user_id.user_id}'`;
   return await usersModel.select(columns, clause);
 };
+
+export const createUser = async (req, res) => {};
 
 export const login = async (req, res) => {
   const user_id = { user_id: req.body.user_id };
@@ -68,6 +80,7 @@ export const refreshJWTAuthToken = async (req, res) => {
   });
   if (!decodedUser) return;
   let storedRefreshToken = await getStoredRefreshToken(decodedUser, refreshToken);
+  // check for value
   storedRefreshToken = storedRefreshToken.rows[0].jwt_refresh_token;
   if (refreshToken !== storedRefreshToken)
     return res.status(403).json({ error: true, message: 'Unauthorized Refresh Token, logout' });
@@ -95,6 +108,8 @@ export const usersPage = async (req, res) => {
 // invalidate refreshToken token
 
 export const logoutUser = async (req, res) => {
+  const user = req.user.rows[0];
+  await storeRefreshToken(user, '');
   res.clearCookie('refreshToken');
   res.sendStatus(204);
 };
