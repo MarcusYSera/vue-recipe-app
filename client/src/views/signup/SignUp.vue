@@ -50,7 +50,6 @@ import {
   mapActions,
   //  mapGetters
 } from 'vuex';
-import bcrypt from 'bcryptjs';
 import router from '../../router';
 
 export default {
@@ -88,35 +87,25 @@ export default {
         this.errors.push('Invalid Email');
       } else {
         await this.getUserByEmail(this.email).then(async res => {
-          // console.log(res.data);
-          if (res.data.users.length > 0) {
+          if (res.data.users.length > 0)
             this.errors.push('User Already Exists');
-          } else {
-            if (this.errors.length < 1) {
-              await this.bcryptPassword(this.password);
-              let newUser = {
-                first_name: this.firstName,
-                last_name: this.lastName,
-                email: this.email,
-                password: this.password,
-              };
-              await this.createUser(newUser);
-              router.push('/schedule');
-              this.firstName = '';
-              this.lastName = '';
-              this.email = '';
-              this.password = '';
-              this.confirmPassword = '';
-            }
+          if (this.errors.length === 0) {
+            let newUser = {
+              first_name: this.firstName,
+              last_name: this.lastName,
+              email: this.email,
+              password: this.password,
+            };
+            await this.createUser(newUser);
+            router.push('/schedule');
+            this.firstName = '';
+            this.lastName = '';
+            this.email = '';
+            this.password = '';
+            this.confirmPassword = '';
           }
         });
       }
-    },
-    bcryptPassword(password) {
-      return new Promise(resolve => {
-        this.password = bcrypt.hashSync(password, 10);
-        resolve();
-      });
     },
   },
 };

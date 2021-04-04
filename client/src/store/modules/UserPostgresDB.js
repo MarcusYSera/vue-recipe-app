@@ -1,5 +1,5 @@
-import api from '../../api/postgresAPI';
-// import router from '../../router';
+import api from '../../api/postgresUserAPI';
+import router from '../../router';
 
 const state = { user: JSON.parse(window.localStorage.getItem('user')) };
 
@@ -72,6 +72,7 @@ const actions = {
   logout: ({ commit }) => {
     commit('setUser', null);
     window.localStorage.clear();
+    router.push('/login');
   },
 };
 

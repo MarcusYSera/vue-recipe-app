@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 // swap these
-const POSTGRES_SERVER = process.env.VUE_APP_POSTGRES_SERVER;
+const POSTGRES_SERVER = process.env.VUE_APP_POSTGRES_SERVER_ONE;
 
 export default {
   async createUser(newUser) {

@@ -24,4 +24,9 @@ export const isEmpty = (str) => {
 };
 
 export const comparePassword = (hashedPassword, password) =>
-  bcrypt.compareSync(password, hashedPassword);
+  bcrypt.compare(password, hashedPassword);
+
+// export const minimumLength = (str) => {
+//   if (str.length < 2) return false;
+//   return true;
+// };

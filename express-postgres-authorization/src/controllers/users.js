@@ -52,6 +52,18 @@ const getStoredRefreshToken = async (user_id, jwtRefreshToken) => {
   return await usersModel.select(columns, clause);
 };
 
+export const findUserByEmail = async (req, res) => {
+  const { email } = req.params;
+  const columns = 'user_id, first_name, last_name, email, password';
+  const clause = `WHERE email = '${email}'`;
+  try {
+    const data = await usersModel.select(columns, clause);
+    res.status(200).json({ users: data.rows });
+  } catch (err) {
+    res.status(200).json({ users: err.stack });
+  }
+};
+
 export const createUser = async (req, res) => {
   console.log(req.body);
   let values = '';
@@ -69,7 +81,7 @@ export const createUser = async (req, res) => {
     const data = await usersModel.insertWithReturn(columns, values);
     res.status(200).json({ users: data.rows });
   } catch (err) {
-    res.status(200).json({ users: err.stack });
+    res.status(406).json({ users: err.stack, message: 'DataBase Error' });
   }
 };
 

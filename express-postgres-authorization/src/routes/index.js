@@ -5,6 +5,7 @@ import {
   usersPage,
   logoutUser,
   refreshJWTAuthToken,
+  findUserByEmail,
 } from './../controllers/index.js';
 import {
   authenticateToken,
@@ -14,6 +15,8 @@ import {
 
 const authorizationRouter = express.Router();
 // Sign Up Flow One
+authorizationRouter.get('/users/findBy/:email', findUserByEmail);
+
 authorizationRouter.post('/users/signup', authenticateCreateUser, createUser);
 authorizationRouter.post('/users/auth/login', authenticateUser, login);
 
