@@ -18,7 +18,9 @@ const getUserByEmail = (columns, clause) => {
 };
 
 export const authenticateToken = async (req, res, next) => {
-  const token = req.cookies.accessToken;
+  let token = req.headers.authorization;
+  token = token.split(' ')[1];
+  // const token = req.cookies.accessToken;
   if (token == null) return res.sendStatus(401);
   jwt.verify(token, jwtAccessTokenSecret, async (err, user) => {
     if (err) {

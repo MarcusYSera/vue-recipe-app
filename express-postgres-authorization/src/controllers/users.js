@@ -35,40 +35,36 @@ const storeRefreshToken = async (user_id, jwtRefreshToken) => {
   // return jwtExpiresAt.exp;
 };
 
-export const loginReturnAuthorizationToken = async (req, res) => {
+export const login = async (req, res) => {
   const user_id = { user_id: req.body.user_id };
   const jwtAccessToken = generateJWTAccessToken(user_id);
   // let accessExpiresAt = expiresAt(jwtAccessToken, true);
   const jwtRefreshToken = generateJWTRefreshToken(user_id);
   // only storing long term refresh token in db
   await storeRefreshToken(user_id, jwtRefreshToken);
-  // const refreshExpiresAt = await storeRefreshToken(user_id, jwtRefreshToken);
-  // const jwtExpiresAt = refreshExpiresAt.rows[0].jwt_expires_at;
-  // res.cookie('accessToken', jwtAccessToken, { httpOnly: true, secure: true, sameSite: 'strict' });
   // res.cookie('refreshToken', jwtRefreshToken, { httpOnly: true, secure: true, sameSite: 'strict' });
-  // res.cookie('expiresAtRefreshToken', jwtExpiresAt, { httpOnly: true, secure: true, sameSite: 'strict' });
-  res.cookie('accessToken', jwtAccessToken, { httpOnly: true, sameSite: 'strict' });
   res.cookie('refreshToken', jwtRefreshToken, { httpOnly: true, sameSite: 'strict' });
-  // res.cookie('expiresAtRefreshToken', jwtExpiresAt, { httpOnly: true, sameSite: 'strict' });
-  return res.sendStatus(200);
+  return res.status(200).json({ accessToken: jwtAccessToken });
 };
 
 // get new access token using refresh token, silent refresh
 
 export const refreshJWTAuthToken = async (req, res) => {
-  const user = req.user;
-  if (!user.rows.length) return res.sendStatus(401);
-  const jwtRefreshToken = user.rows[0].jwt_refresh_token;
-  if (!jwtRefreshToken) return res.sendStatus(403);
-  jwt.verify(jwtRefreshToken, jwtRefreshTokenSecret, (err, user) => {
+  const refreshToken = req.cookies.refreshToken;
+  if (!refreshToken) return res.sendStatus(403);
+  jwt.verify(refreshToken, jwtRefreshTokenSecret, (err, user) => {
     if (err) return res.sendStatus(403);
-    const jwtAccessToken = generateJWTAccessToken({
-      user_id: user.user_id,
-    });
-    // res.cookie('accessToken', jwtAccessToken, { httpOnly: true, secure: true, sameSite: 'strict' });
-    res.cookie('accessToken', jwtAccessToken, { httpOnly: true, sameSite: 'strict' });
-    return res.status(200).json({ message: 'successfully reissued token' });
+    console.log(`user decoded from jwt: ${JSON.stringify(user)}`);
   });
+  console.log('refresh log');
+  // const jwtAccessToken = generateJWTAccessToken({
+  //   user_id: user.user_id,
+  // });
+  // const jwtRefreshToken = generateJWTRefreshToken({ user_id: user.user_id });
+  // await storeRefreshToken(user_id, jwtRefreshToken);
+  // // res.cookie('refreshToken', jwtRefreshToken, { httpOnly: true, secure: true, sameSite: 'strict' });
+  // res.cookie('refreshToken', jwtRefreshToken, { httpOnly: true, sameSite: 'strict' });
+  // return res.status(200).json({ accessToken: jwtAccessToken, refreshToken: jwtRefreshToken });
 };
 
 // test authorization route
@@ -87,6 +83,6 @@ export const usersPage = async (req, res) => {
 // invalidate access token
 
 export const logoutUser = async (req, res) => {
-  res.clearCookie('accessToken');
+  res.clearCookie('refreshToken');
   res.sendStatus(204);
 };
