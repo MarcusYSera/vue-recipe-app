@@ -9,7 +9,7 @@ import { jwtAccessTokenSecret, jwtRefreshTokenSecret } from './../settings.js';
 //functions
 
 const generateJWTAccessToken = (user) => {
-  return jwt.sign(user, jwtAccessTokenSecret, { expiresIn: '5m' });
+  return jwt.sign(user, jwtAccessTokenSecret, { expiresIn: '15m' });
   // return jwt.sign(user, jwtAccessTokenSecret, { expiresIn: '5sec' });
 };
 
@@ -36,6 +36,12 @@ const storeRefreshToken = async (user_id, jwtRefreshToken) => {
   // return jwtExpiresAt.exp;
 };
 
+const getStoredRefreshToken = async (user_id, jwtRefreshToken) => {
+  let columns = `JWT_REFRESH_TOKEN`;
+  let clause = `WHERE user_id = '${user_id.user_id}'`;
+  return await usersModel.select(columns, clause);
+};
+
 export const login = async (req, res) => {
   const user_id = { user_id: req.body.user_id };
   const jwtAccessToken = generateJWTAccessToken(user_id);
@@ -48,7 +54,6 @@ export const login = async (req, res) => {
 };
 
 // get new access token using refresh token, silent refresh
-// need to check for refresh token stored in db, if they don't match log out
 
 export const refreshJWTAuthToken = async (req, res) => {
   if (!req.cookies.refreshToken)
@@ -62,6 +67,10 @@ export const refreshJWTAuthToken = async (req, res) => {
     decodedUser = user;
   });
   if (!decodedUser) return;
+  let storedRefreshToken = await getStoredRefreshToken(decodedUser, refreshToken);
+  storedRefreshToken = storedRefreshToken.rows[0].jwt_refresh_token;
+  if (refreshToken !== storedRefreshToken)
+    return res.status(403).json({ error: true, message: 'Unauthorized Refresh Token, logout' });
   const jwtAccessToken = generateJWTAccessToken({ user_id: decodedUser.user_id });
   const jwtRefreshToken = generateJWTRefreshToken({ user_id: decodedUser.user_id });
   await storeRefreshToken(decodedUser, jwtRefreshToken);
