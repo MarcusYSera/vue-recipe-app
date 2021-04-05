@@ -10,7 +10,6 @@
   },
   "dependencies": {
     "axios": "^0.21.1",
-    "bcryptjs": "^2.4.3",
     "core-js": "^3.6.5",
     "dotenv": "^8.2.0",
     "mammoth": "^1.4.16",

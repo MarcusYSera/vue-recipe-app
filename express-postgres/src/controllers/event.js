@@ -1,6 +1,4 @@
-import jwt from 'jsonwebtoken';
 import Model from '../models/model.js';
-import { jwtAccessTokenSecret } from './../settings.js';
 const eventsModel = new Model('events');
 
 export const eventsPage = async (req, res) => {
@@ -8,13 +6,16 @@ export const eventsPage = async (req, res) => {
     const data = await eventsModel.select(
       'user_id, event_name, event_associate_recipe, event_description, event_start, event_end, event_duration'
     );
-    res.status(200).json({ events: data.rows });
+    res
+      .status(200)
+      .json({ events: data.rows.filter((event) => event.user_id === req.user.user_id) });
   } catch (err) {
     res.status(200).json({ events: err.stack });
   }
 };
 
 export const findEventsByIdAndDate = async (req, res) => {
+  console.log(req.body);
   const { id, date, timezone } = req.params;
   // console.log(id);
   // console.log(date);

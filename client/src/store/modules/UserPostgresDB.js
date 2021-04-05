@@ -53,21 +53,28 @@ const actions = {
     });
   },
   login: ({ commit }, user) => {
-    commit('setUser', {
-      userId: user.user_id,
-      firstName: user.first_name,
-      lastName: user.last_name,
-      email: user.email,
+    return new Promise((resolve, reject) => {
+      api
+        .login(user)
+        .then(res => {
+          console.log(res.data);
+          commit('setUser', {
+            accessToken: res.data.accessToken,
+            firstName: res.data.first_name,
+          });
+          window.localStorage.setItem(
+            'user',
+            JSON.stringify({
+              accessToken: res.data.accessToken,
+              firstName: res.data.first_name,
+            })
+          );
+          resolve(res);
+        })
+        .catch(err => {
+          reject(err.response.data);
+        });
     });
-    window.localStorage.setItem(
-      'user',
-      JSON.stringify({
-        userId: user.user_id,
-        firstName: user.first_name,
-        lastName: user.last_name,
-        email: user.email,
-      })
-    );
   },
   logout: ({ commit }) => {
     commit('setUser', null);

@@ -26,4 +26,11 @@ export default {
       });
     return responseBack;
   },
+  async login(user) {
+    let responseBack = await axios.post(
+      `${POSTGRES_SERVER}/users/auth/login`,
+      user
+    );
+    return responseBack;
+  },
 };

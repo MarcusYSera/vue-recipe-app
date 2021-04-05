@@ -28,10 +28,7 @@ export const authenticateToken = async (req, res, next) => {
         return res.status(403).json({ error: true, message: 'Token Expired' });
       return res.status(403).json({ error: true, message: 'Invalid Token Authorization' });
     }
-    let columns = `*`;
-    let clause = `WHERE user_id = ${user.user_id}`;
-    req.user = await getUserByEmail(columns, clause);
-    // console.log(req.user.rows);
+    req.user = user;
     next();
   });
 };
@@ -42,7 +39,7 @@ export const authenticateUser = async (req, res, next) => {
     return sendErrorResponse({ res, message: 'Email or Password is missing', statusCode: 401 });
   if (!isValidEmail(email) || !validatePassword(password))
     return sendErrorResponse({ res, message: 'Invalid Email or Password', statusCode: 401 });
-  let columns = 'user_id, email, password';
+  let columns = 'user_id, first_name, email, password';
   let clause = `WHERE email = '${email}'`;
   const user = await getUserByEmail(columns, clause);
   if (user.rows.length == 0)
@@ -50,6 +47,7 @@ export const authenticateUser = async (req, res, next) => {
   let match = await comparePassword(user.rows[0].password, password);
   if (!match) return sendErrorResponse({ res, message: 'Incorrect Password', statusCode: 401 });
   req.body.user_id = user.rows[0].user_id;
+  req.body.first_name = user.rows[0].first_name;
   next();
 };
 

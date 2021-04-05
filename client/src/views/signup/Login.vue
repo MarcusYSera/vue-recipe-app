@@ -16,14 +16,14 @@
         <input
           type="text"
           placeholder="Email"
-          v-model="email"
+          v-model="user.email"
           autocomplete="username"
         />
         <input
           type="password"
           placeholder="Password"
           autocomplete="current-password"
-          v-model="password"
+          v-model="user.password"
         />
         <!-- need to wait for json token for this -->
         <!-- <input type="checkbox" value="keepSignedIn" /> -->
@@ -50,7 +50,6 @@ import {
   mapActions,
   // mapGetters
 } from 'vuex';
-import bcrypt from 'bcryptjs';
 import router from '../../router';
 
 export default {
@@ -58,8 +57,7 @@ export default {
   data() {
     return {
       errors: [],
-      email: '',
-      password: '',
+      user: { email: '', password: '' },
     };
   },
   computed: {
@@ -69,45 +67,33 @@ export default {
     ...mapActions(['getUserByEmail', 'login', 'logout']),
     async onSubmit() {
       this.errors = [];
-      if (!this.password) {
+      if (!this.user.password) {
         this.errors.push('Password Required');
+        return;
       }
       if (
         !/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/.test(
-          this.email
+          this.user.email
         )
       ) {
         this.errors.push('Invalid Email');
-      } else {
-        await this.getUserByEmail(this.email).then(async res => {
-          // console.log(res.data.users.length);
-          if (res.data.users.length === 0) {
-            this.errors.pop();
-            this.errors.push('User does not exist');
-          } else if (res.data.users.length === 1) {
-            let { password } = res.data.users[0];
-            if (bcrypt.compareSync(this.password, password)) {
-              this.login(res.data.users[0]);
-              // console.log(res.data.users[0]);
-              router.push('/schedule');
-              this.email = '';
-              this.password = '';
-            } else {
-              if (this.password) {
-                this.errors.push('Incorrect Password');
-              }
-              this.logout;
-            }
-          }
-        });
+        return;
+      }
+      let response = await this.getUserByEmail(this.user.email);
+      let user = response.data.users;
+      if (user.length === 0) {
+        this.errors.pop();
+        this.errors.push('User does not exist');
+        return;
+      }
+      try {
+        await this.login(this.user); // response should be a jwt
+        router.push('/schedule');
+      } catch (error) {
+        this.errors.push('Incorrect Password'); // verifying password on the backend
+        return;
       }
     },
-    // bcryptPassword(password) {
-    //   return new Promise(resolve => {
-    //     this.password = bcrypt.hashSync(password, 10);
-    //     resolve();
-    //   });
-    // },
   },
 };
 </script>

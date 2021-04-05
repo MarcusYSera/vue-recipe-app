@@ -1,4 +1,4 @@
-import api from '../../api/postgresAPI';
+import api from '../../api/postgresEventAPI';
 
 const state = {
   selectedDate: null,
