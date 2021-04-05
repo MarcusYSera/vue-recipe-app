@@ -45,7 +45,7 @@ export default {
   },
   methods: {
     async onSubmit() {
-      console.log();
+      console.log('submit recipe form');
     },
     recipeStep(sign) {
       sign == 'add'

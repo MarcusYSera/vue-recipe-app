@@ -78,7 +78,9 @@ export default {
       ],
     };
   },
-  computed: { ...mapGetters(['user', 'isLoggedIn', 'selectedDateForDBQuery']) },
+  computed: {
+    ...mapGetters(['user', 'isLoggedIn', 'selectedDateForDBQuery']),
+  },
   methods: {
     ...mapActions(['createEventByUserId', 'getEventsByUserIdDate']),
     timeOption(choice) {
@@ -150,7 +152,6 @@ export default {
         this.currentDate = `${this.currentDate} ${this.currentTime}`;
         this.currentDate = new Date(this.currentDate).toISOString();
         await this.calculateStartOrEndTime();
-        let id = this.user.userId;
         this.duration[1] =
           this.duration[1] < 10 && this.duration[1] !== '00'
             ? `0${this.duration[1]}`
@@ -173,12 +174,12 @@ export default {
           newEvent.event_start = newEvent.event_end;
           newEvent.event_end = end;
         }
-        await this.createEventByUserId([id, newEvent]);
+        await this.createEventByUserId([newEvent, this.user.accessToken]);
         let here = new Intl.DateTimeFormat('default');
         this.getEventsByUserIdDate([
-          id,
           this.selectedDateForDBQuery,
           here.resolvedOptions().timeZone,
+          this.user.accessToken,
         ]);
         this.clearEvent();
       } else {

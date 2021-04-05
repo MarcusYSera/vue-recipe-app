@@ -29,7 +29,7 @@ indexRouter.post('/messages', authenticateToken, addMessage);
 // indexRouter.put('/users/edit/:id', editUser);
 
 indexRouter.get('/events', authenticateToken, eventsPage);
-indexRouter.get('/events/findBy/:id/:date/:timezone', authenticateToken, findEventsByIdAndDate);
-indexRouter.post('/event/create/:id', authenticateToken, addEventByUserId);
+indexRouter.get('/events/findBy/:date/:timezone', authenticateToken, findEventsByIdAndDate);
+indexRouter.post('/event/create', authenticateToken, addEventByUserId);
 
 export default indexRouter;

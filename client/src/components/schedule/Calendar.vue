@@ -146,9 +146,9 @@ export default {
       if (this.user) {
         let here = new Intl.DateTimeFormat('default');
         this.getEventsByUserIdDate([
-          this.user.userId,
           formatedDate,
           here.resolvedOptions().timeZone,
+          this.user.accessToken,
         ]);
       }
     },

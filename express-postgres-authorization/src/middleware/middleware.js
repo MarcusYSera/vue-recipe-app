@@ -28,7 +28,7 @@ export const authenticateToken = async (req, res, next) => {
         return res.status(403).json({ error: true, message: 'Token Expired' });
       return res.status(403).json({ error: true, message: 'Invalid Token Authorization' });
     }
-    req.user = user;
+    req.body.user = user;
     next();
   });
 };

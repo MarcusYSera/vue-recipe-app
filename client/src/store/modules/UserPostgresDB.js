@@ -1,12 +1,14 @@
 import api from '../../api/postgresUserAPI';
 import router from '../../router';
 
-const state = { user: JSON.parse(window.localStorage.getItem('user')) };
+const state = {
+  user: JSON.parse(window.localStorage.getItem('user')),
+};
 
 const getters = {
   user: state => state.user,
   isLoggedIn: state => !!state.user,
-};
+ };
 
 const actions = {
   createUser({ commit }, newUser) {
@@ -14,20 +16,15 @@ const actions = {
       api
         .createUser(newUser)
         .then(res => {
-          let { user_id, first_name, last_name, email } = res.data.users[0];
           commit('setUser', {
-            userId: user_id,
-            firstName: first_name,
-            lastName: last_name,
-            email: email,
+            accessToken: res.data.accessToken,
+            firstName: res.data.first_name,
           });
           window.localStorage.setItem(
             'user',
             JSON.stringify({
-              userId: user_id,
-              firstName: first_name,
-              lastName: last_name,
-              email: email,
+              accessToken: res.data.accessToken,
+              firstName: res.data.first_name,
             })
           );
           resolve();
@@ -57,7 +54,6 @@ const actions = {
       api
         .login(user)
         .then(res => {
-          console.log(res.data);
           commit('setUser', {
             accessToken: res.data.accessToken,
             firstName: res.data.first_name,

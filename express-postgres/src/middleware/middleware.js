@@ -9,11 +9,11 @@ export const authenticateToken = (req, res, next) => {
 
   jwt.verify(token, jwtAccessTokenSecret, (err, user) => {
     if (err) {
-      if (err.name === 'TokenExpiredError')
+       if (err.name === 'TokenExpiredError')
         return res.status(403).json({ error: true, message: 'Token Expired' });
       return res.sendStatus(403).json({ error: true, message: 'Invalid Token Authorization' });
     }
-    req.user = user;
+    req.body.user = user;
     next();
   });
 };

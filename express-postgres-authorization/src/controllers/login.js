@@ -50,10 +50,29 @@ const storeRefreshToken = async (user_id, jwtRefreshToken) => {
   // return jwtExpiresAt.exp;
 };
 
+export const createUser = async (req, res) => {
+  let values = '';
+  let columns = [];
+  for (const [key, value] of Object.entries(req.body)) {
+    columns.push(key);
+    if (values.length === 0) {
+      values = `'${value}'`;
+    } else {
+      values += `, '${value}'`;
+    }
+  }
+  columns = columns.join(', ');
+  try {
+    const data = await usersModel.insertWithReturn(columns, values);
+    res.status(200).json({ user: data.rows[0].first_name });
+  } catch (err) {
+    res.status(406).json({ users: err.stack, message: 'DataBase Error' });
+  }
+};
+
 export const login = async (req, res) => {
   const user_id = { user_id: req.body.user_id };
   const jwtAccessToken = generateJWTAccessToken(user_id);
-  // let accessExpiresAt = expiresAt(jwtAccessToken, true);
   const jwtRefreshToken = generateJWTRefreshToken(user_id);
   await storeRefreshToken(user_id, jwtRefreshToken); // only storing long term refresh token in db
   // res.cookie('refreshToken', jwtRefreshToken, { httpOnly: true, secure: true, sameSite: 'strict' });
@@ -86,7 +105,7 @@ export const refreshJWTAuthToken = async (req, res) => {
 };
 
 export const logoutUser = async (req, res) => {
-  const user = req.user
+  const user = req.body.user;
   await storeRefreshToken(user, '');
   res.clearCookie('refreshToken');
   res.sendStatus(204);

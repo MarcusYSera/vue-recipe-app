@@ -96,9 +96,9 @@ export default {
         this.setDateForDBQuery(date.join('-'));
         let here = new Intl.DateTimeFormat('default');
         this.getEventsByUserIdDate([
-          this.user.userId,
           date.join('-'),
           here.resolvedOptions().timeZone,
+          this.user.accessToken,
         ]);
       }
     },
