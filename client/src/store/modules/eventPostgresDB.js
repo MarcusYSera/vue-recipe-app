@@ -28,6 +28,7 @@ const actions = {
           resolve();
         })
         .catch(err => {
+          console.log(err.response.data);
           reject(err);
         });
     });
@@ -38,9 +39,8 @@ const actions = {
       api
         .createEvent(arr)
         .then(res => {
-          console.log(res);
           commit;
-          resolve();
+          resolve(res);
         })
         .catch(err => {
           console.log(err);

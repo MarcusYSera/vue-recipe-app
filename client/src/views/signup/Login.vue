@@ -67,6 +67,9 @@ export default {
     ...mapActions(['getUserByEmail', 'login', 'logout']),
     async onSubmit() {
       this.errors = [];
+      if (!this.user.email) {
+        this.errors.push('Email Required');
+      }
       if (!this.user.password) {
         this.errors.push('Password Required');
         return;

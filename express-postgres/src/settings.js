@@ -8,6 +8,8 @@ export const connectionString = process.env.CONNECTION_STRING;
 
 export const corsOrigin = process.env.CORS_ORIGIN;
 
+export const corsOriginLocal = process.env.CORS_ORIGIN_LOCAL;
+
 export const jwtAccessTokenSecret = process.env.ACCESS_TOKEN_SECRET;
 
 export const jwtRefreshTokenSecret = process.env.REFRESH_TOKEN_SECRET;
