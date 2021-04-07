@@ -6,6 +6,8 @@ import Profile from '@/views/profile/Profile';
 import SignUp from '@/views/signup/SignUp';
 import Login from '@/views/signup/Login';
 
+import Auth from '@/views/signup/Auth';
+
 import Dev from '@/views/dev/Dev';
 
 const routes = [
@@ -29,6 +31,7 @@ const routes = [
   { path: '/signup', name: 'signup', component: SignUp },
   { path: '/login', name: 'login', component: Login },
   { path: '/dev', name: 'dev', component: Dev },
+  { path: '/auth', name: 'auth', components: Auth },
   {
     path: '/:pathMatch(.*)*',
     name: 'home',
@@ -41,6 +44,18 @@ const router = createRouter({
   history: createWebHistory(process.env.BASE_URL),
   routes,
   // scrollBehavior()
+});
+
+router.beforeEach((to, from, next) => {
+  const publicPages = ['/signup', '/login', '/schedule', '/auth'];
+  const authRequired = !publicPages.includes(to.path);
+  const loggedIn = localStorage.getItem('user');
+
+  if (authRequired && !loggedIn) {
+    next('/login');
+  } else {
+    next();
+  }
 });
 
 export default router;

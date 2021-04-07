@@ -1,4 +1,4 @@
-import api from '../../api/postgresEventAPI';
+import api from '../../_api/event.service.js';
 
 const state = {
   selectedDate: null,
@@ -28,8 +28,7 @@ const actions = {
           resolve();
         })
         .catch(err => {
-          console.log(err.response.data);
-          reject(err);
+          reject(err.response.data);
         });
     });
   },
@@ -43,8 +42,7 @@ const actions = {
           resolve(res);
         })
         .catch(err => {
-          console.log(err);
-          reject(err);
+          reject(err.response.data);
         });
     });
   },

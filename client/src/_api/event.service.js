@@ -1,8 +1,8 @@
 import axios from 'axios';
+import authHeader from './auth-header.js';
 
 // swap these
-// const POSTGRES_SERVER = process.env.VUE_APP_POSTGRES_SERVER_ONE;
-const POSTGRES_SERVER = process.env.VUE_APP_POSTGRES_SERVER_ONE_NETWORK;
+const POSTGRES_SERVER = process.env.VUE_APP_POSTGRES_SERVER_ONE;
 
 export default {
   async createEvent(arr) {
@@ -10,15 +10,9 @@ export default {
       `${POSTGRES_SERVER}/event/create`,
       arr[0],
       {
-        headers: { Authorization: `Bearer ${arr[1]}` },
+        headers: authHeader(),
       }
     );
-    // .then(res => {
-    //   return res;
-    // })
-    // .catch(err => {
-    //   return err;
-    // });
     return responseBack;
   },
   async getEventsByIdAndDate(arr) {
@@ -26,15 +20,9 @@ export default {
     let responseBack = await axios.get(
       `${POSTGRES_SERVER}/events/findBy/${arr[0]}/${arr[1]}`,
       {
-        headers: { Authorization: `Bearer ${arr[2]}` },
+        headers: authHeader(),
       }
     );
-    // .then(res => {
-    //   return res;
-    // })
-    // .catch(err => {
-    //   return err;
-    // });
     return responseBack;
   },
 };

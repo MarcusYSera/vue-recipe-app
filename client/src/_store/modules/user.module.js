@@ -1,4 +1,4 @@
-import api from '../../api/postgresUserAPI';
+import api from '../../_api/user.service.js';
 import router from '../../router';
 
 const state = {
@@ -8,7 +8,7 @@ const state = {
 const getters = {
   user: state => state.user,
   isLoggedIn: state => !!state.user,
- };
+};
 
 const actions = {
   createUser({ commit }, newUser) {
@@ -30,8 +30,7 @@ const actions = {
           resolve();
         })
         .catch(err => {
-          console.log(err);
-          reject(err);
+          reject(err.response.data);
         });
     });
   },
@@ -44,8 +43,7 @@ const actions = {
           resolve(res);
         })
         .catch(err => {
-          console.log(err);
-          reject(err);
+          reject(err.response.data);
         });
     });
   },
@@ -70,6 +68,16 @@ const actions = {
         .catch(err => {
           reject(err.response.data);
         });
+    });
+  },
+  refreshToken: ({ commit }) => {
+    return new Promise((resolve, reject) => {
+      try {
+        api.retrieveTokenWithRefresh();
+        console.log('success fully refreshed tokens');
+      } catch (error) {
+        throw error;
+      }
     });
   },
   logout: ({ commit }) => {
