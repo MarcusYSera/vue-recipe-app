@@ -5,7 +5,6 @@ import Profile from '@/views/profile/Profile';
 
 import SignUp from '@/views/signup/SignUp';
 import Login from '@/views/signup/Login';
-
 import Auth from '@/views/signup/Auth';
 
 import Dev from '@/views/dev/Dev';
@@ -30,8 +29,8 @@ const routes = [
   { path: '/profile', name: 'profile', component: Profile },
   { path: '/signup', name: 'signup', component: SignUp },
   { path: '/login', name: 'login', component: Login },
+  { path: '/auth', name: 'auth', component: Auth },
   { path: '/dev', name: 'dev', component: Dev },
-  { path: '/auth', name: 'auth', components: Auth },
   {
     path: '/:pathMatch(.*)*',
     name: 'home',

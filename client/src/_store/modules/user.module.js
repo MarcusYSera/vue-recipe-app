@@ -72,18 +72,32 @@ const actions = {
   },
   refreshToken: ({ commit }) => {
     return new Promise((resolve, reject) => {
-      try {
-        api.retrieveTokenWithRefresh();
-        console.log('success fully refreshed tokens');
-      } catch (error) {
-        throw error;
-      }
+      api
+        .retrieveTokenWithRefresh()
+        .then(res => {
+          commit;
+          console.log('success fully refreshed tokens');
+          resolve(res);
+        })
+        .catch(err => {
+          reject(err.response.data);
+        });
     });
   },
   logout: ({ commit }) => {
-    commit('setUser', null);
-    window.localStorage.clear();
-    router.push('/login');
+    return new Promise((resolve, reject) => {
+      api
+        .logout()
+        .then(res => {
+          resolve(res);
+          commit('setUser', null);
+          window.localStorage.clear();
+          router.push('/login');
+        })
+        .catch(err => {
+          reject(err.response.data);
+        });
+    });
   },
 };
 

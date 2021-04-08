@@ -20,13 +20,23 @@ export default {
   async login(user) {
     let responseBack = await axios.post(
       `${POSTGRES_SERVER}/users/auth/login`,
-      user
+      user,
+      { withCredentials: true, credentials: 'include' }
     );
     return responseBack;
   },
   async retrieveTokenWithRefresh() {
     let responseBack = await axios.post(
-      `${POSTGRES_SERVER}/users/auth/refresh`
+      `${POSTGRES_SERVER}/users/auth/refresh`,
+      {},
+      { withCredentials: true, credentials: 'include' }
+    );
+    return responseBack;
+  },
+  async logout() {
+    let responseBack = await axios.delete(
+      `${POSTGRES_SERVER}/users/auth/logout`,
+      { withCredentials: true, credentials: 'include' }
     );
     return responseBack;
   },

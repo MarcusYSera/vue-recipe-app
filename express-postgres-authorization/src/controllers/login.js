@@ -24,12 +24,6 @@ const expiresAt = (token, access) => {
   }
 };
 
-const getStoredRefreshToken = async (user_id, jwtRefreshToken) => {
-  let columns = `JWT_REFRESH_TOKEN`;
-  let clause = `WHERE user_id = '${user_id.user_id}'`;
-  return await usersModel.select(columns, clause);
-};
-
 const storeRefreshToken = async (user_id, jwtRefreshToken) => {
   let jwtExpiresAt;
   let update;
@@ -80,33 +74,19 @@ export const login = async (req, res) => {
   return res.status(200).json({ accessToken: jwtAccessToken, first_name: req.body.first_name });
 };
 
-export const refreshJWTAuthToken = async (req, res) => {
-  if (!req.cookies.refreshToken)
-    return res.status(403).json({ error: true, message: 'Not Logged In' });
-  const refreshToken = req.cookies.refreshToken;
-  let decodedUser;
-  jwt.verify(refreshToken, jwtRefreshTokenSecret, (err, user) => {
-    if (err) {
-      return res.status(403).json({ error: true, message: `${err.message}` });
-    }
-    decodedUser = user;
-  });
-  if (!decodedUser) return;
-  let storedRefreshToken = await getStoredRefreshToken(decodedUser, refreshToken);
-  storedRefreshToken = storedRefreshToken.rows[0].jwt_refresh_token;
-  if (refreshToken !== storedRefreshToken)
-    return res.status(403).json({ error: true, message: 'Unauthorized Refresh Token, logout' });
-  const jwtAccessToken = generateJWTAccessToken({ user_id: decodedUser.user_id });
-  const jwtRefreshToken = generateJWTRefreshToken({ user_id: decodedUser.user_id });
-  await storeRefreshToken(decodedUser, jwtRefreshToken);
-  // res.cookie('refreshToken', jwtRefreshToken, { httpOnly: true, secure: true, sameSite: 'strict' });
-  res.cookie('refreshToken', jwtRefreshToken, { httpOnly: true, sameSite: 'strict' });
-  return res.status(200).json({ accessToken: jwtAccessToken });
-};
+// export const refreshJWTAuthToken = async (req, res) => {
+//   const user_id = { user_id: req.body.user_id };
+//   const jwtAccessToken = generateJWTAccessToken(user_id);
+//   const jwtRefreshToken = generateJWTRefreshToken(user_id);
+//   await storeRefreshToken(user_id, jwtRefreshToken);
+//   // res.cookie('refreshToken', jwtRefreshToken, { httpOnly: true, secure: true, sameSite: 'strict' });
+//   res.cookie('refreshToken', jwtRefreshToken, { httpOnly: true, sameSite: 'strict' });
+//   return res.status(200).json({ accessToken: jwtAccessToken });
+// };
 
 export const logoutUser = async (req, res) => {
-  const user = req.body.user;
-  await storeRefreshToken(user, '');
+  const user_id = { user_id: req.body.user_id };
+  await storeRefreshToken(user_id, '');
   res.clearCookie('refreshToken');
   res.sendStatus(204);
 };
