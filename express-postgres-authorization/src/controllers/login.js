@@ -58,7 +58,16 @@ export const createUser = async (req, res) => {
   columns = columns.join(', ');
   try {
     const data = await usersModel.insertWithReturn(columns, values);
-    res.status(200).json({ user: data.rows[0].first_name });
+    const user_id = { user_id: data.rows[0].user_id };
+    const jwtAccessToken = generateJWTAccessToken(user_id);
+    const jwtRefreshToken = generateJWTRefreshToken(user_id);
+    const jwtAccessTokenExpire = expiresAt(jwtAccessToken, true);
+    await storeRefreshToken(user_id, jwtRefreshToken);
+    res.status(200).json({
+      accessToken: jwtAccessToken,
+      accessTokenExpiresAt: jwtAccessTokenExpire.exp,
+      first_name: data.rows[0].first_name,
+    });
   } catch (err) {
     res.status(406).json({ users: err.stack, message: 'DataBase Error' });
   }
@@ -68,10 +77,15 @@ export const login = async (req, res) => {
   const user_id = { user_id: req.body.user_id };
   const jwtAccessToken = generateJWTAccessToken(user_id);
   const jwtRefreshToken = generateJWTRefreshToken(user_id);
+  const jwtAccessTokenExpire = expiresAt(jwtAccessToken, true);
   await storeRefreshToken(user_id, jwtRefreshToken); // only storing long term refresh token in db
   // res.cookie('refreshToken', jwtRefreshToken, { httpOnly: true, secure: true, sameSite: 'strict' });
   res.cookie('refreshToken', jwtRefreshToken, { httpOnly: true, sameSite: 'strict' });
-  return res.status(200).json({ accessToken: jwtAccessToken, first_name: req.body.first_name });
+  return res.status(200).json({
+    accessToken: jwtAccessToken,
+    accessTokenExpiresAt: jwtAccessTokenExpire.exp,
+    first_name: req.body.first_name,
+  });
 };
 
 // export const refreshJWTAuthToken = async (req, res) => {

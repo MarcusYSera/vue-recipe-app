@@ -18,12 +18,14 @@ const actions = {
         .then(res => {
           commit('setUser', {
             accessToken: res.data.accessToken,
+            tokenExpires: res.data.accessTokenExpiresAt,
             firstName: res.data.first_name,
           });
           window.localStorage.setItem(
             'user',
             JSON.stringify({
               accessToken: res.data.accessToken,
+              tokenExpires: res.data.accessTokenExpiresAt,
               firstName: res.data.first_name,
             })
           );
@@ -54,12 +56,14 @@ const actions = {
         .then(res => {
           commit('setUser', {
             accessToken: res.data.accessToken,
+            tokenExpires: res.data.accessTokenExpiresAt,
             firstName: res.data.first_name,
           });
           window.localStorage.setItem(
             'user',
             JSON.stringify({
               accessToken: res.data.accessToken,
+              tokenExpires: res.data.accessTokenExpiresAt,
               firstName: res.data.first_name,
             })
           );
@@ -75,8 +79,19 @@ const actions = {
       api
         .retrieveTokenWithRefresh()
         .then(res => {
-          commit;
-          console.log('success fully refreshed tokens');
+          commit('setUser', {
+            accessToken: res.data.accessToken,
+            tokenExpires: res.data.accessTokenExpiresAt,
+            firstName: res.data.first_name,
+          });
+          window.localStorage.setItem(
+            'user',
+            JSON.stringify({
+              accessToken: res.data.accessToken,
+              tokenExpires: res.data.accessTokenExpiresAt,
+              firstName: res.data.first_name,
+            })
+          );
           resolve(res);
         })
         .catch(err => {
