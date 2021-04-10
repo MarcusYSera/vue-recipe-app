@@ -95,7 +95,7 @@ const actions = {
           resolve(res);
         })
         .catch(err => {
-          reject(err.response.data);
+          reject(err.response);
         });
     });
   },
