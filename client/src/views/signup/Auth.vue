@@ -9,6 +9,7 @@ export default {
   name: 'Auth',
   methods: mapActions(['refreshToken']),
   created() {
+    console.log('created');
     this.refreshToken();
   },
 };
