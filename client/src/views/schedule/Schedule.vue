@@ -80,7 +80,7 @@ export default {
         .toLocaleDateString(undefined, options)
         .split(' ');
     },
-    createDate() {
+    async createDate() {
       let rightNow = new Date();
       this.setSelectedDate(rightNow);
       this.updateSelectedDate(rightNow);
@@ -95,7 +95,7 @@ export default {
         date.pop();
         this.setDateForDBQuery(date.join('-'));
         let here = new Intl.DateTimeFormat('default');
-        this.getEventsByUserIdDate([
+        await this.getEventsByUserIdDate([
           date.join('-'),
           here.resolvedOptions().timeZone,
           this.user.accessToken,

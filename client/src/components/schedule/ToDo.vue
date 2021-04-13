@@ -71,7 +71,7 @@ export default {
   },
   updated() {
     if (!this.isLoggedIn) return;
-    if (this.eventData.length > 0) {
+    if (this.eventData && this.eventData.length > 0) {
       let options = {
         weekday: 'long',
         year: 'numeric',

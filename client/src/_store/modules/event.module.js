@@ -20,17 +20,22 @@ const actions = {
     commit('setSelectedDateForDBQuery', truncatedDate);
   },
   getEventsByUserIdDate({ commit }, arr) {
-    return new Promise((resolve, reject) => {
-      api
-        .getEventsByIdAndDate(arr)
-        .then(res => {
-          commit('setEvents', res.data.events);
-          resolve();
-        })
-        .catch(err => {
-          reject(err.response.data);
-        });
-    });
+    // return new Promise((resolve, reject) => {
+    // api
+    //   .getEventsByIdAndDate(arr)
+    //   .then(res => {
+    //     commit('setEvents', res.data.events);
+    //     resolve();
+    //   })
+    //   .catch(err => {
+    //     reject(err.response.data);
+    //   });
+    commit;
+    return api.getEventsByIdAndDate(arr);
+
+    //   resolve(response);
+    //   reject(response);
+    // });
   },
 
   createEventByUserId({ commit }, arr) {

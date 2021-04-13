@@ -15,14 +15,29 @@ export default {
     );
     return responseBack;
   },
-  async getEventsByIdAndDate(arr) {
+  // async getEventsByIdAndDate(arr) {
+  //   arr[1] = arr[1].split('/').join('-');
+  //   let responseBack = await axios.get(
+  //     `${POSTGRES_SERVER}/events/findBy/${arr[0]}/${arr[1]}`,
+  //     {
+  //       headers: authHeader(),
+  //     }
+  //   );
+  //   console.log(responseBack);
+  //   return responseBack;
+  // },
+  getEventsByIdAndDate(arr) {
     arr[1] = arr[1].split('/').join('-');
-    let responseBack = await axios.get(
-      `${POSTGRES_SERVER}/events/findBy/${arr[0]}/${arr[1]}`,
-      {
+    return axios
+      .get(`${POSTGRES_SERVER}/events/findBy/${arr[0]}/${arr[1]}`, {
         headers: authHeader(),
-      }
-    );
-    return responseBack;
+      })
+      .then(res => {
+        return res;
+      })
+      .catch(err => {
+        console.error(err.response.data.message);
+        // throw err.response.data.message;
+      });
   },
 };

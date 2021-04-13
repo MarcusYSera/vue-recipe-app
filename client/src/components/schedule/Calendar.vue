@@ -126,7 +126,7 @@ export default {
       this.displayedDate = new Date(this.displayedYear, this.displayedMonth);
       this.getDaysInCurrentMonth();
     },
-    clickedDate(x) {
+    async clickedDate(x) {
       if (x < 10) {
         x = `0${x}`;
       } else {
@@ -145,7 +145,7 @@ export default {
       this.setDateForDBQuery(formatedDate);
       if (this.user) {
         let here = new Intl.DateTimeFormat('default');
-        this.getEventsByUserIdDate([
+        await this.getEventsByUserIdDate([
           formatedDate,
           here.resolvedOptions().timeZone,
           this.user.accessToken,

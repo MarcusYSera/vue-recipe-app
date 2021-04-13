@@ -8,6 +8,7 @@ import { jwtAccessTokenSecret, jwtRefreshTokenSecret } from './../settings.js';
 
 const generateJWTAccessToken = (user) => {
   return jwt.sign(user, jwtAccessTokenSecret, { expiresIn: '15m' });
+  // return jwt.sign(user, jwtAccessTokenSecret, { expiresIn: '1m' });
   // return jwt.sign(user, jwtAccessTokenSecret, { expiresIn: '5sec' }); // testing purposes
 };
 

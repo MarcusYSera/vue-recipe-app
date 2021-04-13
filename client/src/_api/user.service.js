@@ -3,12 +3,6 @@ import axios from 'axios';
 // const POSTGRES_SERVER = process.env.VUE_APP_POSTGRES_SERVER_TWO;
 const POSTGRES_SERVER = process.env.VUE_APP_POSTGRES_SERVER_TWO;
 
-axios.interceptors.request.use(req => {
-  console.log(`${req.method} ${req.url}`);
-  // Important: request interceptors **must** return the request.
-  return req;
-});
-
 export default {
   async createUser(newUser) {
     let responseBack = await axios.post(

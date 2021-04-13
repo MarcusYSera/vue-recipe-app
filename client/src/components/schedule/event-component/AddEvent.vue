@@ -176,7 +176,7 @@ export default {
         }
         await this.createEventByUserId([newEvent, this.user.accessToken]);
         let here = new Intl.DateTimeFormat('default');
-        this.getEventsByUserIdDate([
+        await this.getEventsByUserIdDate([
           this.selectedDateForDBQuery,
           here.resolvedOptions().timeZone,
           this.user.accessToken,
