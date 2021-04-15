@@ -45,7 +45,8 @@ const actions = {
           resolve(res);
         })
         .catch(err => {
-          reject(err.response.data);
+          console.log(err);
+          reject(err.response);
         });
     });
   },

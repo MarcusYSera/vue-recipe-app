@@ -37,6 +37,17 @@
         </p>
       </div>
     </article>
+    <div class="flex-container column legend">
+      <div class="legend-title">Legend</div>
+      <div class="flex-container row legend-items">
+        <div class="green">&#x2014;</div>
+        Today
+      </div>
+      <div class="flex-container row legend-items">
+        <div class="black">&#x2014;</div>
+        Selected
+      </div>
+    </div>
   </aside>
 </template>
 
@@ -271,11 +282,29 @@ export default {
 .circle-today {
   height: 100%;
   width: 100%;
-  background-color: #7dcea0;
+  border: 2px solid #7dcea0;
   border-radius: 50%;
   z-index: 1;
 }
 .selected-date {
   border-bottom: double thick black;
+}
+.legend {
+  border-top: 2px solid rgba(0, 0, 0, 0.178);
+  margin: 0 1vw;
+  padding: 1vh 0 1vh;
+  font-size: 0.85rem;
+  color: white;
+  gap: 0.25vw;
+  z-index: 2;
+}
+.legend-title {
+  border-bottom: 1px solid white;
+  align-self: center;
+}
+.legend-items {
+  align-self: center;
+  width: 6vw;
+  gap: 5%;
 }
 </style>

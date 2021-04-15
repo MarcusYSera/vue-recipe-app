@@ -82,6 +82,7 @@ export default {
         this.errors.push('Invalid Email');
         return;
       }
+      console.log(this.user.email);
       let response = await this.getUserByEmail(this.user.email);
       let user = response.data.users;
       if (user.length === 0) {
@@ -90,6 +91,7 @@ export default {
         return;
       }
       try {
+        console.log('login');
         await this.login(this.user); // response should be a jwt
         router.push('/schedule');
       } catch (error) {

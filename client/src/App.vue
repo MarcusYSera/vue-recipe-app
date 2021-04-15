@@ -77,6 +77,12 @@ body {
   background: #2a2e4140;
   border-radius: 25px;
 }
+.green {
+  color: #7dcea0;
+}
+.black {
+  color: #000000;
+}
 </style>
 
 <style scoped>
