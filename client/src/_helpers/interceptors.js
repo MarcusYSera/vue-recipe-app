@@ -1,5 +1,6 @@
 import axios from 'axios';
 import store from './../_store';
+import router from './../router';
 
 let refresh = false;
 
@@ -37,7 +38,7 @@ export default function setup() {
           .dispatch('refreshToken')
           .then(({ status }) => {
             if (status === 200 || status === 204) {
-              // console.log('token refreshed');
+              console.log('token refreshed');
               refresh = false;
               // console.log(status);
               // console.log(err.config);
@@ -48,6 +49,14 @@ export default function setup() {
             // console.error(err);
             return err;
           });
+      }
+      if (
+        err.response &&
+        err.response.status == 403 &&
+        err.response.data.message == 'Not Logged In'
+      ) {
+        console.log('missing refresh token');
+        router.push('/login');
       }
       return Promise.reject(err);
     }

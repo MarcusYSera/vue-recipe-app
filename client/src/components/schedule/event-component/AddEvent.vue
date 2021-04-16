@@ -33,18 +33,8 @@
         :min="currentDate"
         class="recipe-name date"
       />
-      <div v-if="!timeChoice" class="start-or-end-button-group">
-        <button @click="timeOption('Start')" class="start-button">
-          Start Time
-        </button>
-        <p class="or-text">or</p>
-        <button @click="timeOption('End')" class="end-button">End Time</button>
-      </div>
-      <input v-else type="time" v-model="currentTime" class="recipe-name" />
-      <SelectDurationTimer
-        @durationSelected="durationClicked"
-      ></SelectDurationTimer>
-      <!-- <input type="time" v-model="duration" /> -->
+      <StartOrEndTimer @selected-time="selectedTime"></StartOrEndTimer>
+      <DurationTimer @durationSelected="durationClicked"></DurationTimer>
       <input type="submit" value="Create" class="create-event-button" />
     </form>
   </aside>
@@ -53,15 +43,15 @@
 <script>
 // issue with hitting enter on name input and the box closes. Adjust button down for this.openAddEvent/ openEvent()
 import { mapActions, mapGetters } from 'vuex';
-import SelectDurationTimer from '@/components/schedule/event-component/SelectDurationTimer';
+import DurationTimer from '@/components/schedule/event-component/DurationTimer';
+import StartOrEndTimer from '@/components/schedule/event-component/StartOrEndTimer';
 
 export default {
   name: 'AddEvent',
-  components: { SelectDurationTimer },
+  components: { DurationTimer, StartOrEndTimer },
   data() {
     return {
       openAddEvent: false,
-      timeChoice: false,
       recipeName: '',
       associateRecipe: '',
       description: '',
@@ -83,34 +73,18 @@ export default {
   },
   methods: {
     ...mapActions(['createEventByUserId', 'getEventsByUserIdDate']),
-    timeOption(choice) {
-      this.endOrStart = choice;
-      this.timeChoice = true;
-    },
     clearEvent() {
       this.openAddEvent = !this.openAddEvent;
-      this.timeChoice = false;
       this.recipeName = '';
       this.associateRecipe = '';
       this.description = '';
       this.endOrStart = '';
-      this.currentTime = this.getCurrentTime();
+      this.currentTime = '';
       this.currentDate = this.getCurrentDate();
       this.duration = '';
     },
     openEvent() {
       this.openAddEvent = !this.openAddEvent;
-      this.timeChoice = false;
-    },
-    getCurrentTime() {
-      let newTime = new Date()
-        .toLocaleTimeString(undefined, { hour12: false })
-        .split(':');
-      newTime.pop();
-      if (newTime[0] === '24') {
-        newTime[0] = '00';
-      }
-      return newTime.join(':');
     },
     getCurrentDate() {
       let t = new Date().toLocaleDateString().split('/');
@@ -124,9 +98,9 @@ export default {
       t.unshift(holder);
       return t.join('-');
     },
-    calculateStartOrEndTime() {
+    calculateStartOrEndTime(chosenDate) {
       return new Promise(resolve => {
-        this.oppositeTime = new Date(this.currentDate);
+        this.oppositeTime = new Date(chosenDate);
         let baseTimeHours = this.oppositeTime.getHours();
         let baseTimeMinutes = this.oppositeTime.getMinutes();
         let timePassed = [
@@ -149,9 +123,9 @@ export default {
     },
     async addEventOnSubmit() {
       if (this.isLoggedIn) {
-        this.currentDate = `${this.currentDate} ${this.currentTime}`;
-        this.currentDate = new Date(this.currentDate).toISOString();
-        await this.calculateStartOrEndTime();
+        const chosenDate = `${this.currentDate} ${this.currentTime}`;
+        const chosenDateAndTime = new Date(chosenDate).toISOString();
+        await this.calculateStartOrEndTime(chosenDateAndTime);
         this.duration[1] =
           this.duration[1] < 10 && this.duration[1] !== '00'
             ? `0${this.duration[1]}`
@@ -165,17 +139,17 @@ export default {
           event_name: this.recipeName,
           event_associate_recipe: this.associateRecipe,
           event_description: this.description,
-          event_start: this.currentDate,
+          event_start: chosenDateAndTime,
           event_end: this.oppositeTime,
           event_duration: this.duration,
         };
         if (this.endOrStart === 'End') {
-          let end = newEvent.event_start;
+          const end = newEvent.event_start;
           newEvent.event_start = newEvent.event_end;
           newEvent.event_end = end;
         }
         await this.createEventByUserId([newEvent, this.user.accessToken]);
-        let here = new Intl.DateTimeFormat('default');
+        const here = new Intl.DateTimeFormat('default');
         await this.getEventsByUserIdDate([
           this.selectedDateForDBQuery,
           here.resolvedOptions().timeZone,
@@ -198,6 +172,10 @@ export default {
       }
       this.duration = arr;
     },
+    selectedTime(arr) {
+      this.currentTime = arr[0];
+      this.endOrStart = arr[1];
+    },
   },
   created() {
     this.region = new Date();
@@ -205,37 +183,12 @@ export default {
       .toString()
       .split(' ')[5]
       .split('-')[0];
-    this.currentTime = this.getCurrentTime();
     this.currentDate = this.getCurrentDate();
   },
 };
 </script>
 
 <style scoped>
-.start-or-end-button-group button {
-  border-radius: 8px;
-  padding: 0 1vw;
-  margin: 0 0.4vw;
-}
-.start-or-end-button-group > * {
-  height: 3.5vh;
-  display: inline;
-  position: relative;
-}
-.or-text {
-  z-index: 100;
-  margin: 0 -1vw;
-  padding: 0 0.25vw;
-  border-radius: 12px;
-  background-color: #ffffff;
-}
-.end-button {
-  color: #ffffff;
-  background-color: #7dcea0;
-}
-.start-button {
-  background-color: #e0e1e2;
-}
 .add-container {
   position: absolute;
   height: 250px;
@@ -258,8 +211,7 @@ export default {
 /* .addevent-form > * { */
 /* margin: 1vh 2vw; */
 /* } */
-.recipe-name,
-.start-or-end-button-group button {
+.recipe-name {
   border: none;
 }
 .addevent-form {

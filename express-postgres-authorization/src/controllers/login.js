@@ -64,6 +64,7 @@ export const createUser = async (req, res) => {
     const jwtRefreshToken = generateJWTRefreshToken(user_id);
     const jwtAccessTokenExpire = expiresAt(jwtAccessToken, true);
     await storeRefreshToken(user_id, jwtRefreshToken);
+    res.cookie('refreshToken', jwtRefreshToken, { httpOnly: true, sameSite: 'strict' });
     res.status(200).json({
       accessToken: jwtAccessToken,
       accessTokenExpiresAt: jwtAccessTokenExpire.exp,
