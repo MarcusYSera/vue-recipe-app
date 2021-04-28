@@ -24,3 +24,15 @@ do joins for users to events / refine queries
 #### PM2
 
 `pm2 start npm -- run server1`
+
+find if an item is running on port
+
+`sudo netstat -tunlp`
+
+to kill process running on port, ie: port 8081
+
+`sudo kill -9 $(sudo lsof -t -i:8081)`
+
+issue with super user also running its own pm2 instances:
+
+https://stackoverflow.com/questions/50987848/node-express-ubuntu-pm2-eaddrinuse
