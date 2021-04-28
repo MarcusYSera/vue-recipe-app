@@ -3,7 +3,7 @@ import express from 'express';
 import cookieParser from 'cookie-parser';
 import cors from 'cors';
 import indexRouter from './routes/index.js';
-import { corsOrigin, corsOriginLocal } from './settings.js';
+import { corsOrigin } from './settings.js';
 
 const app = express();
 
@@ -15,7 +15,6 @@ const app = express();
 
 app.use(
   cors({
-    // origin: `${corsOriginLocal}`,
     origin: `${corsOrigin}`,
     methods: 'GET, POST, PUT',
     optionsSuccessStatus: 204,

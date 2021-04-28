@@ -4,14 +4,12 @@ import cookieParser from 'cookie-parser';
 import cors from 'cors';
 import authorizationRouter from './routes/index.js';
 import { corsOrigin } from './settings.js';
-// import { corsOriginLocal } from './settings.js';
 
 const app = express();
 
 app.use(
   cors({
     origin: `${corsOrigin}`,
-    // origin: `${corsOriginLocal}`,
     methods: 'GET, POST, PUT, DELETE',
     optionsSuccessStatus: 204,
     credentials: true,
