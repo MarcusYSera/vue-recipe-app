@@ -23,7 +23,16 @@ do joins for users to events / refine queries
 
 #### PM2
 
+singler server instance
+
 `pm2 start npm -- run server1`
+
+multiple server instances: require name to differentiate
+
+```
+pm2 start --name=server1 npm -- run server1
+pm2 start --name=server2 npm -- run server2
+```
 
 find if an item is running on port
 

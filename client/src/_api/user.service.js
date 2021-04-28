@@ -1,6 +1,5 @@
 import axios from 'axios';
 
-// const POSTGRES_SERVER = process.env.VUE_APP_POSTGRES_SERVER_TWO;
 const POSTGRES_SERVER = process.env.VUE_APP_POSTGRES_SERVER_TWO;
 
 export default {
