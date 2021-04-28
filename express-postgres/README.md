@@ -18,3 +18,9 @@ enter node env
 Finish JWT implementation, create another server and host auth to authentication on an additional pm2 instance
 
 do joins for users to events / refine queries
+
+---
+
+#### PM2
+
+`pm2 start npm -- run server1`
