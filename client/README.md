@@ -101,3 +101,5 @@ today not marking correctly(March 20th, circle ends up at the end of calendar), 
 #### Deployment Notes
 
 env variables don't get quotes in deployment
+
+keep note of aws security inbound and outbound rules, will need to adjust to allow git fetch: 443 error if rules are too strict

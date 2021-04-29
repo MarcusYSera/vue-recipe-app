@@ -76,6 +76,11 @@ export default {
       reader.readAsArrayBuffer(file);
     },
   },
+  created() {
+    alert(
+      'Experimental Component - Parser happens on the client side, so you may experience significant delays if you upload a file'
+    );
+  },
 };
 </script>
 
