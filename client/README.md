@@ -95,3 +95,9 @@ today not marking correctly(March 20th, circle ends up at the end of calendar), 
 ~~fix duration display: days/hrs/mins vs day/hr/min~~
 
 ~~when opening calendar, resets date~~
+
+---
+
+#### Deployment Notes
+
+env variables don't get quotes in deployment

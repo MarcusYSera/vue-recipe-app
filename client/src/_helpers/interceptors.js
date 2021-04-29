@@ -56,6 +56,7 @@ export default function setup() {
         err.response.data.message == 'Not Logged In'
       ) {
         console.log('missing refresh token');
+        window.localStorage.clear();
         router.push('/login');
       }
       return Promise.reject(err);
