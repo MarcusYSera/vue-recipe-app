@@ -25,7 +25,7 @@ export const authenticateToken = async (req, res, next) => {
 };
 
 export const authenticateRefreshToken = async (req, res, next) => {
-  console.log(req.cokkies);
+  console.log(req.cookies);
   if (!req.cookies.refreshToken)
     return res.status(403).json({ error: true, message: 'Not Logged In' });
   const refreshToken = req.cookies.refreshToken;
