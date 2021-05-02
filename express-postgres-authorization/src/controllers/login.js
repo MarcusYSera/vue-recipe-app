@@ -28,6 +28,7 @@ const expiresAt = (token, access) => {
 const storeRefreshToken = async (user_id, jwtRefreshToken) => {
   let jwtExpiresAt;
   let update;
+  console.log('hello');
   if (jwtRefreshToken.length !== 0) {
     jwtExpiresAt = expiresAt(jwtRefreshToken, false);
     update = `JWT_REFRESH_TOKEN='${jwtRefreshToken}', JWT_EXPIRES_AT=${jwtExpiresAt.exp}`;

@@ -6,6 +6,7 @@ import { jwtAccessTokenSecret, jwtRefreshTokenSecret } from './../settings.js';
 const getStoredRefreshToken = async (user_id) => {
   let columns = `JWT_REFRESH_TOKEN`;
   let clause = `WHERE user_id = '${user_id}'`;
+  console.log('hello');
   return await usersModel.select(columns, clause);
 };
 
@@ -37,7 +38,12 @@ export const authenticateRefreshToken = async (req, res, next) => {
     req.body.user_id = user.user_id;
   });
   const user_id = req.body.user_id;
-  const storedRefreshToken = await getStoredRefreshToken(user_id);
+  try {
+    const storedRefreshToken = await getStoredRefreshToken(user_id);
+  } catch (e) {
+    console.log('error');
+    console.log(e);
+  }
   const storedRefreshTkn = storedRefreshToken.rows[0].jwt_refresh_token;
   if (refreshToken !== storedRefreshTkn)
     return res.status(403).json({ error: true, message: 'Unauthorized Refresh Token, logout' });
