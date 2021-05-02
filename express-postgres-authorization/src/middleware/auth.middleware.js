@@ -31,6 +31,7 @@ export const authenticateRefreshToken = async (req, res, next) => {
   const refreshToken = req.cookies.refreshToken;
   jwt.verify(refreshToken, jwtRefreshTokenSecret, async (err, user) => {
     if (err) {
+      console.error(`error from verificaiton of refresh token: ${err.message}`);
       return res.status(403).json({ error: true, message: `${err.message}` });
     }
     req.body.user_id = user.user_id;
