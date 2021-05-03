@@ -6,7 +6,6 @@ import { jwtAccessTokenSecret, jwtRefreshTokenSecret } from './../settings.js';
 const getStoredRefreshToken = async (user_id) => {
   let columns = `JWT_REFRESH_TOKEN`;
   let clause = `WHERE user_id = '${user_id}'`;
-  console.log('hello');
   return await usersModel.select(columns, clause);
 };
 
@@ -32,18 +31,14 @@ export const authenticateRefreshToken = async (req, res, next) => {
   const refreshToken = req.cookies.refreshToken;
   jwt.verify(refreshToken, jwtRefreshTokenSecret, async (err, user) => {
     if (err) {
-      console.error(`error from verificaiton of refresh token: ${err.message}`);
+      // console.error(`error from verificaiton of refresh token: ${err.message}`);
       return res.status(403).json({ error: true, message: `${err.message}` });
     }
     req.body.user_id = user.user_id;
   });
   const user_id = req.body.user_id;
-  try {
-    const storedRefreshToken = await getStoredRefreshToken(user_id);
-  } catch (e) {
-    console.log('error');
-    console.log(e);
-  }
+  if (!user_id) return;
+  const storedRefreshToken = await getStoredRefreshToken(user_id);
   const storedRefreshTkn = storedRefreshToken.rows[0].jwt_refresh_token;
   if (refreshToken !== storedRefreshTkn)
     return res.status(403).json({ error: true, message: 'Unauthorized Refresh Token, logout' });

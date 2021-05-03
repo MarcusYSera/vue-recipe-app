@@ -51,11 +51,13 @@ export default function setup() {
           });
       }
       if (
-        err.response &&
-        err.response.status == 403 &&
-        err.response.data.message == 'Not Logged In'
+        (err.response &&
+          err.response.status == 403 &&
+          err.response.data.message == 'Not Logged In') ||
+        (err.response &&
+          err.response.status == 403 &&
+          err.response.data.message == 'jwt expired')
       ) {
-        console.log('missing refresh token');
         window.localStorage.clear();
         router.push('/login');
       }
