@@ -1,5 +1,5 @@
 <template>
-  <section class="grid-container weekview"></section>
+  <article class="grid-container weekview">Week View</article>
 </template>
 
 <script>

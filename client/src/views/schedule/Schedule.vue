@@ -2,7 +2,12 @@
   <article class="grid-container schedule-article-grid">
     <header class="flex-container row schedule-header">
       <time>{{ selectedDateDisplay }}</time>
-      <h4 v-if="user">{{ user.firstName }}</h4>
+      <div>
+        <button @click="displayChoice('day')">Day</button>
+        <button @click="displayChoice('week')">Week</button>
+        <button @click="displayChoice('month')">Month</button>
+      </div>
+      <!-- <h4 v-if="user">{{ user.firstName }}</h4> -->
       <nav class="flex-container row schedule-header-right">
         <SearchBar @search-query="onSearchTerm"></SearchBar>
         <AddEvent></AddEvent>
@@ -11,13 +16,17 @@
         </button>
       </nav>
     </header>
-    <DayView></DayView>
+    <DayView v-if="displayDay"></DayView>
+    <WeekView v-if="displayWeek"></WeekView>
+    <MonthView v-if="displayMonth"></MonthView>
     <CalendarComponent v-if="openCalendar"></CalendarComponent>
   </article>
 </template>
 
 <script>
 import DayView from '@/views/schedule/DayView';
+import WeekView from '@/views/schedule/WeekView';
+import MonthView from '@/views/schedule/MonthView';
 import SearchBar from '@/components/schedule/SearchBar';
 import CalendarComponent from '@/components/schedule/Calendar';
 import AddEvent from '@/components/schedule/event-component/AddEvent';
@@ -30,9 +39,19 @@ import {
 
 export default {
   name: 'Schedule',
-  components: { DayView, SearchBar, CalendarComponent, AddEvent },
+  components: {
+    DayView,
+    WeekView,
+    MonthView,
+    SearchBar,
+    CalendarComponent,
+    AddEvent,
+  },
   data() {
     return {
+      displayDay: true,
+      displayWeek: false,
+      displayMonth: false,
       currentMonth: null,
       currentDate: null,
       currentYear: null,
@@ -62,6 +81,23 @@ export default {
       'getEventsByUserIdDate',
       'setDateForDBQuery',
     ]),
+    displayChoice(choice) {
+      if (choice == 'day') {
+        this.displayDay = true;
+        this.displayWeek = false;
+        this.displayMonth = false;
+      }
+      if (choice == 'week') {
+        this.displayDay = false;
+        this.displayWeek = true;
+        this.displayMonth = false;
+      }
+      if (choice == 'month') {
+        this.displayDay = false;
+        this.displayWeek = false;
+        this.displayMonth = true;
+      }
+    },
     timeRefData(x) {
       this.timeArr = x;
     },
