@@ -9,6 +9,7 @@ export default {
 </script>
 
 <style scoped>
-/* .weekview {
-} */
+.weekview {
+  grid-area: dayview;
+}
 </style>

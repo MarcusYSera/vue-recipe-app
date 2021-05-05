@@ -1,5 +1,5 @@
 <template>
-  <article class="grid-container weekview">Month View</article>
+  <article class="grid-container monthview">Month View</article>
 </template>
 
 <script>
@@ -8,4 +8,8 @@ export default {
 };
 </script>
 
-<style scoped></style>
+<style scoped>
+.monthview {
+  grid-area: dayview;
+}
+</style>
