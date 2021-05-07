@@ -14,14 +14,16 @@
 </template>
 
 <script>
-import twentyFourData from '@/components/data/TwentyFourHourTimeByFifteenMinutes';
+import twentyFourFifteenData from '@/components/data/TwentyFourHourTimeByFifteenMinutes';
+import twentyFourHourData from '@/components/data/TwentyFourHourTimeByHour';
 
 export default {
   name: 'TimeBar',
   data() {
     return {
       // realTwentyFour: null,
-      hourData: twentyFourData,
+      hourData: twentyFourFifteenData,
+      hourByHourData: twentyFourHourData,
       twentyFour: false,
     };
   },
