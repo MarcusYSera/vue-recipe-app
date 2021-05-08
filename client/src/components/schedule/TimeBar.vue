@@ -1,7 +1,19 @@
 <template>
   <!-- <section class="flex-container column time-bar"> -->
   <time
-    v-for="(current, index) in hourData"
+    v-if="byFifteen"
+    v-for="(current, index) in hourByFifteenData"
+    :key="`timebar-${index}`"
+    :value="current"
+    class="time-item"
+    :style="{ gridRow: ` ${index + 1}` }"
+    :ref="current"
+  >
+    {{ current }}
+  </time>
+  <time
+    v-if="byHour"
+    v-for="(current, index) in hourByFifteenData"
     :key="`timebar-${index}`"
     :value="current"
     class="time-item"
@@ -22,8 +34,10 @@ export default {
   data() {
     return {
       // realTwentyFour: null,
-      hourData: twentyFourFifteenData,
+      hourByFifteenData: twentyFourFifteenData,
+      byFifteen: true,
       hourByHourData: twentyFourHourData,
+      byHour: false,
       twentyFour: false,
     };
   },
@@ -62,9 +76,9 @@ export default {
       return rightNow;
     },
     twelveHourFormat() {
-      for (let i = 0; i < this.hourData.length; i++) {
-        let hour = this.hourData[i].split(':')[0];
-        let minute = this.hourData[i].split(':')[1];
+      for (let i = 0; i < this.hourByFifteenData.length; i++) {
+        let hour = this.hourByFifteenData[i].split(':')[0];
+        let minute = this.hourByFifteenData[i].split(':')[1];
         if (parseInt(hour) < 12 || parseInt(hour) > 23) {
           hour = parseInt(hour).toString();
           if (!minute.split(' ')[1]) {
@@ -84,7 +98,7 @@ export default {
           }
           minute = minute + ' P.M.';
         }
-        this.hourData[i] = [hour, minute].join(':');
+        this.hourByFifteenData[i] = [hour, minute].join(':');
       }
     },
   },
@@ -98,7 +112,7 @@ export default {
       let currentTime = this.$refs[current];
       currentTime.scrollIntoView();
     });
-    // this.$emit('time-ref', this.hourData);
+    // this.$emit('time-ref', this.hourByFifteenData);
     // this.realTwentyFour.forEach((time, index) => {
     //   this.realTwentyFour[index] = time.split(':').join('');
     // });
